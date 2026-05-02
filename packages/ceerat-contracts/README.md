@@ -31,9 +31,10 @@ go test ./...
 Install the protobuf plugins, then run from this directory:
 
 ```bash
-protoc --go_out=. --go-grpc_out=. proto/auth/auth.proto
-protoc --go_out=. --go-grpc_out=. proto/patient/patient.proto
+make proto
 ```
+
+The `proto` target uses source-relative paths so generated Go files stay under `proto/auth` and `proto/patient`.
 
 The `go_package` options point to:
 

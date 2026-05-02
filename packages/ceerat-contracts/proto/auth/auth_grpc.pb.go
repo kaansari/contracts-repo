@@ -27,6 +27,8 @@ type AuthClient interface {
 	GetAll(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Auth(ctx context.Context, in *User, opts ...grpc.CallOption) (*Token, error)
 	ValidateToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Token, error)
+	UpdateProfile(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
+	UpdatePassword(ctx context.Context, in *PasswordUpdate, opts ...grpc.CallOption) (*Response, error)
 }
 
 type authClient struct {
@@ -82,6 +84,24 @@ func (c *authClient) ValidateToken(ctx context.Context, in *Token, opts ...grpc.
 	return out, nil
 }
 
+func (c *authClient) UpdateProfile(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/auth.Auth/UpdateProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) UpdatePassword(ctx context.Context, in *PasswordUpdate, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/auth.Auth/UpdatePassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -91,6 +111,8 @@ type AuthServer interface {
 	GetAll(context.Context, *Request) (*Response, error)
 	Auth(context.Context, *User) (*Token, error)
 	ValidateToken(context.Context, *Token) (*Token, error)
+	UpdateProfile(context.Context, *User) (*Response, error)
+	UpdatePassword(context.Context, *PasswordUpdate) (*Response, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -112,6 +134,12 @@ func (UnimplementedAuthServer) Auth(context.Context, *User) (*Token, error) {
 }
 func (UnimplementedAuthServer) ValidateToken(context.Context, *Token) (*Token, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
+}
+func (UnimplementedAuthServer) UpdateProfile(context.Context, *User) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
+}
+func (UnimplementedAuthServer) UpdatePassword(context.Context, *PasswordUpdate) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -216,6 +244,42 @@ func _Auth_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(User)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/UpdateProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).UpdateProfile(ctx, req.(*User))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_UpdatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PasswordUpdate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).UpdatePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/UpdatePassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).UpdatePassword(ctx, req.(*PasswordUpdate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +306,14 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ValidateToken",
 			Handler:    _Auth_ValidateToken_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _Auth_UpdateProfile_Handler,
+		},
+		{
+			MethodName: "UpdatePassword",
+			Handler:    _Auth_UpdatePassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

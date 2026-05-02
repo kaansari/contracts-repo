@@ -9,6 +9,8 @@ service Auth {
     rpc GetAll(Request) returns (Response) {}
     rpc Auth(User) returns (Token) {}
     rpc ValidateToken(Token) returns (Token) {}
+    rpc UpdateProfile(User) returns (Response) {}
+    rpc UpdatePassword(PasswordUpdate) returns (Response) {}
 }
 
 message User {
@@ -21,6 +23,12 @@ message User {
 }
 
 message Request {}
+
+message PasswordUpdate {
+    string id = 1;
+    string current_password = 2;
+    string new_password = 3;
+}
 
 message Response {
     User user = 1;

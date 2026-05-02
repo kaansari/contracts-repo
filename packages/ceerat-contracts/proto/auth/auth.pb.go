@@ -145,6 +145,69 @@ func (*Request) Descriptor() ([]byte, []int) {
 	return file_proto_auth_auth_proto_rawDescGZIP(), []int{1}
 }
 
+type PasswordUpdate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id              string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CurrentPassword string `protobuf:"bytes,2,opt,name=current_password,json=currentPassword,proto3" json:"current_password,omitempty"`
+	NewPassword     string `protobuf:"bytes,3,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
+}
+
+func (x *PasswordUpdate) Reset() {
+	*x = PasswordUpdate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_auth_auth_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PasswordUpdate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PasswordUpdate) ProtoMessage() {}
+
+func (x *PasswordUpdate) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PasswordUpdate.ProtoReflect.Descriptor instead.
+func (*PasswordUpdate) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PasswordUpdate) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PasswordUpdate) GetCurrentPassword() string {
+	if x != nil {
+		return x.CurrentPassword
+	}
+	return ""
+}
+
+func (x *PasswordUpdate) GetNewPassword() string {
+	if x != nil {
+		return x.NewPassword
+	}
+	return ""
+}
+
 type Response struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -159,7 +222,7 @@ type Response struct {
 func (x *Response) Reset() {
 	*x = Response{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_auth_auth_proto_msgTypes[2]
+		mi := &file_proto_auth_auth_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -172,7 +235,7 @@ func (x *Response) String() string {
 func (*Response) ProtoMessage() {}
 
 func (x *Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_auth_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -185,7 +248,7 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Response.ProtoReflect.Descriptor instead.
 func (*Response) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{2}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Response) GetUser() *User {
@@ -229,7 +292,7 @@ type Token struct {
 func (x *Token) Reset() {
 	*x = Token{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_auth_auth_proto_msgTypes[3]
+		mi := &file_proto_auth_auth_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -242,7 +305,7 @@ func (x *Token) String() string {
 func (*Token) ProtoMessage() {}
 
 func (x *Token) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_auth_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,7 +318,7 @@ func (x *Token) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Token.ProtoReflect.Descriptor instead.
 func (*Token) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{3}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Token) GetToken() string {
@@ -291,7 +354,7 @@ type Error struct {
 func (x *Error) Reset() {
 	*x = Error{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_auth_auth_proto_msgTypes[4]
+		mi := &file_proto_auth_auth_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -304,7 +367,7 @@ func (x *Error) String() string {
 func (*Error) ProtoMessage() {}
 
 func (x *Error) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_auth_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -317,7 +380,7 @@ func (x *Error) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Error.ProtoReflect.Descriptor instead.
 func (*Error) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{4}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Error) GetCode() int32 {
@@ -348,7 +411,14 @@ var file_proto_auth_auth_proto_rawDesc = []byte{
 	0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61,
 	0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18,
 	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x09, 0x0a, 0x07,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x94, 0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x6e, 0x0a, 0x0e, 0x50, 0x61, 0x73, 0x73, 0x77,
+	0x6f, 0x72, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x75, 0x72,
+	0x72, 0x65, 0x6e, 0x74, 0x5f, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0f, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x50, 0x61, 0x73, 0x73,
+	0x77, 0x6f, 0x72, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x6e, 0x65, 0x77, 0x5f, 0x70, 0x61, 0x73, 0x73,
+	0x77, 0x6f, 0x72, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6e, 0x65, 0x77, 0x50,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0x94, 0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1e, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x04,
 	0x75, 0x73, 0x65, 0x72, 0x12, 0x20, 0x0a, 0x05, 0x75, 0x73, 0x65, 0x72, 0x73, 0x18, 0x02, 0x20,
@@ -367,7 +437,7 @@ var file_proto_auth_auth_proto_rawDesc = []byte{
 	0x72, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
 	0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70,
 	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63,
-	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x32, 0xce, 0x01, 0x0a, 0x04, 0x41, 0x75, 0x74, 0x68,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x32, 0xb7, 0x02, 0x0a, 0x04, 0x41, 0x75, 0x74, 0x68,
 	0x12, 0x26, 0x0a, 0x06, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x12, 0x0a, 0x2e, 0x61, 0x75, 0x74,
 	0x68, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x1a, 0x0e, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x23, 0x0a, 0x03, 0x47, 0x65, 0x74, 0x12,
@@ -380,8 +450,19 @@ var file_proto_auth_auth_proto_rawDesc = []byte{
 	0x75, 0x74, 0x68, 0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x00, 0x12, 0x2b, 0x0a, 0x0d, 0x56,
 	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x0b, 0x2e, 0x61,
 	0x75, 0x74, 0x68, 0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x1a, 0x0b, 0x2e, 0x61, 0x75, 0x74, 0x68,
-	0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x00, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x00, 0x12, 0x2d, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x12, 0x0a, 0x2e, 0x61, 0x75, 0x74, 0x68,
+	0x2e, 0x55, 0x73, 0x65, 0x72, 0x1a, 0x0e, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x38, 0x0a, 0x0e, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x12, 0x14, 0x2e, 0x61, 0x75, 0x74, 0x68,
+	0x2e, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x1a,
+	0x0e, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x42, 0x4a, 0x5a, 0x48, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x6b, 0x61, 0x61, 0x6e, 0x73, 0x61, 0x72, 0x69, 0x2f, 0x63, 0x65, 0x65, 0x72, 0x61, 0x74, 0x2d,
+	0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x70, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65,
+	0x73, 0x2f, 0x63, 0x65, 0x65, 0x72, 0x61, 0x74, 0x2d, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x73, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -396,32 +477,37 @@ func file_proto_auth_auth_proto_rawDescGZIP() []byte {
 	return file_proto_auth_auth_proto_rawDescData
 }
 
-var file_proto_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_auth_auth_proto_goTypes = []interface{}{
-	(*User)(nil),     // 0: auth.User
-	(*Request)(nil),  // 1: auth.Request
-	(*Response)(nil), // 2: auth.Response
-	(*Token)(nil),    // 3: auth.Token
-	(*Error)(nil),    // 4: auth.Error
+	(*User)(nil),           // 0: auth.User
+	(*Request)(nil),        // 1: auth.Request
+	(*PasswordUpdate)(nil), // 2: auth.PasswordUpdate
+	(*Response)(nil),       // 3: auth.Response
+	(*Token)(nil),          // 4: auth.Token
+	(*Error)(nil),          // 5: auth.Error
 }
 var file_proto_auth_auth_proto_depIdxs = []int32{
 	0,  // 0: auth.Response.user:type_name -> auth.User
 	0,  // 1: auth.Response.users:type_name -> auth.User
-	4,  // 2: auth.Response.errors:type_name -> auth.Error
-	3,  // 3: auth.Response.token:type_name -> auth.Token
-	4,  // 4: auth.Token.errors:type_name -> auth.Error
+	5,  // 2: auth.Response.errors:type_name -> auth.Error
+	4,  // 3: auth.Response.token:type_name -> auth.Token
+	5,  // 4: auth.Token.errors:type_name -> auth.Error
 	0,  // 5: auth.Auth.Create:input_type -> auth.User
 	0,  // 6: auth.Auth.Get:input_type -> auth.User
 	1,  // 7: auth.Auth.GetAll:input_type -> auth.Request
 	0,  // 8: auth.Auth.Auth:input_type -> auth.User
-	3,  // 9: auth.Auth.ValidateToken:input_type -> auth.Token
-	2,  // 10: auth.Auth.Create:output_type -> auth.Response
-	2,  // 11: auth.Auth.Get:output_type -> auth.Response
-	2,  // 12: auth.Auth.GetAll:output_type -> auth.Response
-	3,  // 13: auth.Auth.Auth:output_type -> auth.Token
-	3,  // 14: auth.Auth.ValidateToken:output_type -> auth.Token
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
+	4,  // 9: auth.Auth.ValidateToken:input_type -> auth.Token
+	0,  // 10: auth.Auth.UpdateProfile:input_type -> auth.User
+	2,  // 11: auth.Auth.UpdatePassword:input_type -> auth.PasswordUpdate
+	3,  // 12: auth.Auth.Create:output_type -> auth.Response
+	3,  // 13: auth.Auth.Get:output_type -> auth.Response
+	3,  // 14: auth.Auth.GetAll:output_type -> auth.Response
+	4,  // 15: auth.Auth.Auth:output_type -> auth.Token
+	4,  // 16: auth.Auth.ValidateToken:output_type -> auth.Token
+	3,  // 17: auth.Auth.UpdateProfile:output_type -> auth.Response
+	3,  // 18: auth.Auth.UpdatePassword:output_type -> auth.Response
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -458,7 +544,7 @@ func file_proto_auth_auth_proto_init() {
 			}
 		}
 		file_proto_auth_auth_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Response); i {
+			switch v := v.(*PasswordUpdate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -470,7 +556,7 @@ func file_proto_auth_auth_proto_init() {
 			}
 		}
 		file_proto_auth_auth_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Token); i {
+			switch v := v.(*Response); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -482,6 +568,18 @@ func file_proto_auth_auth_proto_init() {
 			}
 		}
 		file_proto_auth_auth_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Token); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_auth_auth_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Error); i {
 			case 0:
 				return &v.state
@@ -500,7 +598,7 @@ func file_proto_auth_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_auth_auth_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
