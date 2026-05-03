@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service";
+
+import "proto/customer/customer.proto";
+
+service ServiceManager {
+  rpc CreateService(CreateServiceRequest) returns (ServiceResponse) {}
+  rpc GetService(GetServiceRequest) returns (ServiceResponse) {}
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {}
+  rpc UpdateService(UpdateServiceRequest) returns (ServiceResponse) {}
+  rpc DeleteService(DeleteServiceRequest) returns (DeleteServiceResponse) {}
+  rpc AssignServiceToCustomer(AssignServiceToCustomerRequest) returns (CustomerServiceResponse) {}
+  rpc GetCustomerService(GetCustomerServiceRequest) returns (CustomerServiceResponse) {}
+  rpc ListCustomerServices(ListCustomerServicesRequest) returns (ListCustomerServicesResponse) {}
+  rpc UpdateCustomerService(UpdateCustomerServiceRequest) returns (CustomerServiceResponse) {}
+  rpc RemoveServiceFromCustomer(RemoveServiceFromCustomerRequest) returns (RemoveServiceFromCustomerResponse) {}
+}
+
+message Service {
+  string id = 1;
+
+  string name = 2;
+  string category = 3;
+  double price = 4;
+  string type = 5;
+
+  string schedule_date = 6;
+  string start_date = 7;
+
+  string agent_name = 8;
+  string description = 9;
+
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message CustomerService {
+  string id = 1;
+
+  // Relationship: one customer can order many services
+  string customer_id = 2;
+  string service_id = 3;
+
+  customer.Customer customer = 4;
+  Service service = 5;
+
+  string status = 6;
+  string ordered_at = 7;
+}
+
+message CreateServiceRequest {
+  Service service = 1;
+}
+
+message GetServiceRequest {
+  string id = 1;
+}
+
+message ListServicesRequest {
+  string category = 1;
+  string type = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+
+message UpdateServiceRequest {
+  Service service = 1;
+}
+
+message DeleteServiceRequest {
+  string id = 1;
+}
+
+message AssignServiceToCustomerRequest {
+  string customer_id = 1;
+  string service_id = 2;
+  string status = 3;
+  string ordered_at = 4;
+}
+
+message GetCustomerServiceRequest {
+  string id = 1;
+}
+
+message ListCustomerServicesRequest {
+  string customer_id = 1;
+  string service_id = 2;
+  string status = 3;
+  int32 page_size = 4;
+  string page_token = 5;
+}
+
+message UpdateCustomerServiceRequest {
+  CustomerService customer_service = 1;
+}
+
+message RemoveServiceFromCustomerRequest {
+  string id = 1;
+}
+
+message ServiceResponse {
+  Service service = 1;
+  repeated Error errors = 2;
+}
+
+message ListServicesResponse {
+  repeated Service services = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message DeleteServiceResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
+}
+
+message CustomerServiceResponse {
+  CustomerService customer_service = 1;
+  repeated Error errors = 2;
+}
+
+message ListCustomerServicesResponse {
+  repeated CustomerService customer_services = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message RemoveServiceFromCustomerResponse {
+  bool removed = 1;
+  repeated Error errors = 2;
+}
+
+message Error {
+  int32 code = 1;
+  string description = 2;
+}

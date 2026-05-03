@@ -6,9 +6,18 @@ Shared contracts for Ceerat services.
 
 ```text
 proto/auth/       Auth service protobuf definitions and generated Go code
+proto/customer/   Customer protobuf definitions and generated Go code
 proto/patient/    Patient protobuf definitions and generated Go code
+proto/service/    Service protobuf definitions and generated Go code
 domain/           Pure shared business objects
 mapper/           Conversion helpers between protobuf messages and domain objects
+```
+
+The customer and service protos expose these gRPC services:
+
+```text
+customer.CustomerService
+service.ServiceManager
 ```
 
 ## Important boundary
@@ -34,13 +43,15 @@ Install the protobuf plugins, then run from this directory:
 make proto
 ```
 
-The `proto` target uses source-relative paths so generated Go files stay under `proto/auth` and `proto/patient`.
+The `proto` target uses source-relative paths so generated Go files stay under their source directories.
 
 The `go_package` options point to:
 
 ```text
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth
+github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient
+github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service
 ```
 ## Make commands
 
