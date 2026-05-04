@@ -4,6 +4,7 @@ import (
 	"github.com/kaansari/ceerat-platform/packages/ceerat-contracts/domain"
 	authpb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth"
 	customerpb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer"
+	orderpb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/order"
 	patientpb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient"
 	servicepb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service"
 )
@@ -250,6 +251,148 @@ func CustomerServicesToProto(in []*domain.CustomerService) []*servicepb.Customer
 	out := make([]*servicepb.CustomerService, 0, len(in))
 	for _, cs := range in {
 		out = append(out, CustomerServiceToProto(cs))
+	}
+	return out
+}
+
+func OrderFromProto(in *orderpb.Order) *domain.Order {
+	if in == nil {
+		return nil
+	}
+	return &domain.Order{
+		ID:           in.Id,
+		CustomerID:   in.CustomerId,
+		UserID:       in.UserId,
+		OrderNumber:  in.OrderNumber,
+		Status:       in.Status,
+		ScheduleDate: in.ScheduleDate,
+		StartDate:    in.StartDate,
+		DueDate:      in.DueDate,
+		Subtotal:     in.Subtotal,
+		Tax:          in.Tax,
+		Total:        in.Total,
+		Notes:        in.Notes,
+		Customer:     CustomerFromProto(in.Customer),
+		Services:     OrderServicesFromProto(in.Services),
+		CreatedAt:    in.CreatedAt,
+		UpdatedAt:    in.UpdatedAt,
+	}
+}
+
+func OrderToProto(in *domain.Order) *orderpb.Order {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.Order{
+		Id:           in.ID,
+		CustomerId:   in.CustomerID,
+		UserId:       in.UserID,
+		OrderNumber:  in.OrderNumber,
+		Status:       in.Status,
+		ScheduleDate: in.ScheduleDate,
+		StartDate:    in.StartDate,
+		DueDate:      in.DueDate,
+		Subtotal:     in.Subtotal,
+		Tax:          in.Tax,
+		Total:        in.Total,
+		Notes:        in.Notes,
+		Customer:     CustomerToProto(in.Customer),
+		Services:     OrderServicesToProto(in.Services),
+		CreatedAt:    in.CreatedAt,
+		UpdatedAt:    in.UpdatedAt,
+	}
+}
+
+func OrdersToProto(in []*domain.Order) []*orderpb.Order {
+	out := make([]*orderpb.Order, 0, len(in))
+	for _, order := range in {
+		out = append(out, OrderToProto(order))
+	}
+	return out
+}
+
+func OrderServiceFromProto(in *orderpb.OrderService) *domain.OrderService {
+	if in == nil {
+		return nil
+	}
+	return &domain.OrderService{
+		ID:           in.Id,
+		OrderID:      in.OrderId,
+		ServiceID:    in.ServiceId,
+		ServiceName:  in.ServiceName,
+		Category:     in.Category,
+		Type:         in.Type,
+		UnitPrice:    in.UnitPrice,
+		Quantity:     in.Quantity,
+		TotalPrice:   in.TotalPrice,
+		AgentName:    in.AgentName,
+		ScheduleDate: in.ScheduleDate,
+		StartDate:    in.StartDate,
+		DueDate:      in.DueDate,
+		Service:      ServiceFromProto(in.Service),
+		CreatedAt:    in.CreatedAt,
+		UpdatedAt:    in.UpdatedAt,
+	}
+}
+
+func OrderServiceToProto(in *domain.OrderService) *orderpb.OrderService {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.OrderService{
+		Id:           in.ID,
+		OrderId:      in.OrderID,
+		ServiceId:    in.ServiceID,
+		ServiceName:  in.ServiceName,
+		Category:     in.Category,
+		Type:         in.Type,
+		UnitPrice:    in.UnitPrice,
+		Quantity:     in.Quantity,
+		TotalPrice:   in.TotalPrice,
+		AgentName:    in.AgentName,
+		ScheduleDate: in.ScheduleDate,
+		StartDate:    in.StartDate,
+		DueDate:      in.DueDate,
+		Service:      ServiceToProto(in.Service),
+		CreatedAt:    in.CreatedAt,
+		UpdatedAt:    in.UpdatedAt,
+	}
+}
+
+func OrderServicesFromProto(in []*orderpb.OrderService) []*domain.OrderService {
+	out := make([]*domain.OrderService, 0, len(in))
+	for _, service := range in {
+		out = append(out, OrderServiceFromProto(service))
+	}
+	return out
+}
+
+func OrderServicesToProto(in []*domain.OrderService) []*orderpb.OrderService {
+	out := make([]*orderpb.OrderService, 0, len(in))
+	for _, service := range in {
+		out = append(out, OrderServiceToProto(service))
+	}
+	return out
+}
+
+func CreateOrderServiceInputFromProto(in *orderpb.CreateOrderServiceInput) domain.CreateOrderServiceInput {
+	if in == nil {
+		return domain.CreateOrderServiceInput{}
+	}
+	return domain.CreateOrderServiceInput{
+		ServiceID:    in.ServiceId,
+		Quantity:     in.Quantity,
+		AgentName:    in.AgentName,
+		ScheduleDate: in.ScheduleDate,
+		StartDate:    in.StartDate,
+		DueDate:      in.DueDate,
+	}
+}
+
+func CreateOrderServiceInputsFromProto(in []*orderpb.CreateOrderServiceInput) []domain.CreateOrderServiceInput {
+	out := make([]domain.CreateOrderServiceInput, 0, len(in))
+	for _, service := range in {
+		out = append(out, CreateOrderServiceInputFromProto(service))
 	}
 	return out
 }

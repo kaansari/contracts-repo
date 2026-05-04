@@ -80,3 +80,53 @@ type CustomerService struct {
 	Status     string
 	OrderedAt  string
 }
+
+// Order groups one or more services for a customer.
+type Order struct {
+	ID           string
+	CustomerID   string
+	UserID       string
+	OrderNumber  string
+	Status       string
+	ScheduleDate string
+	StartDate    string
+	DueDate      string
+	Subtotal     float64
+	Tax          float64
+	Total        float64
+	Notes        string
+	Customer     *Customer
+	Services     []*OrderService
+	CreatedAt    string
+	UpdatedAt    string
+}
+
+// OrderService stores the service snapshot captured when an order is created.
+type OrderService struct {
+	ID           string
+	OrderID      string
+	ServiceID    string
+	ServiceName  string
+	Category     string
+	Type         string
+	UnitPrice    float64
+	Quantity     int32
+	TotalPrice   float64
+	AgentName    string
+	ScheduleDate string
+	StartDate    string
+	DueDate      string
+	Service      *Service
+	CreatedAt    string
+	UpdatedAt    string
+}
+
+// CreateOrderServiceInput is the domain input for adding a service to an order.
+type CreateOrderServiceInput struct {
+	ServiceID    string
+	Quantity     int32
+	AgentName    string
+	ScheduleDate string
+	StartDate    string
+	DueDate      string
+}
