@@ -1,26 +1,30 @@
 # Ceerat Contracts
 
-Shared contracts for Ceerat services.
+Shared protobuf contracts, generated Go code, domain DTOs, and mappers for Ceerat services.
 
 ## Contains
 
 ```text
 proto/auth/       Auth service protobuf definitions and generated Go code
 proto/customer/   Customer protobuf definitions and generated Go code
+proto/order/      Order protobuf definitions and generated Go code
 proto/patient/    Patient protobuf definitions and generated Go code
 proto/service/    Service protobuf definitions and generated Go code
 domain/           Pure shared business objects
 mapper/           Conversion helpers between protobuf messages and domain objects
 ```
 
-The customer and service protos expose these gRPC services:
+## gRPC Services
 
 ```text
+auth.Auth
 customer.CustomerService
+order.OrderService
+patient.PatientService
 service.ServiceManager
 ```
 
-## Important boundary
+## Important Boundary
 
 This module should stay free of service-specific persistence concerns:
 
@@ -29,13 +33,7 @@ This module should stay free of service-specific persistence concerns:
 - no repository interfaces
 - no service implementation logic
 
-## Test
-
-```bash
-go test ./...
-```
-
-## Regenerate protobuf code
+## Regenerate Protobuf Code
 
 Install the protobuf plugins, then run from this directory:
 
@@ -50,15 +48,24 @@ The `go_package` options point to:
 ```text
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer
+github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/order
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service
 ```
-## Make commands
+
+## Test
+
+```bash
+go test ./...
+```
+
+## Make Commands
 
 ```bash
 make help
 make tidy
 make test
+make proto
 make push GITHUB_USER=kaansari
 make tag VERSION=v0.1.0
 ```
