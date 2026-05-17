@@ -24,8 +24,10 @@ const _ = grpc.SupportPackageIsVersion7
 type CustomerServiceClient interface {
 	CreateCustomer(ctx context.Context, in *CreateCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 	GetCustomer(ctx context.Context, in *GetCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
+	GetMyCustomerProfile(ctx context.Context, in *GetMyCustomerProfileRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
+	UpdateMyCustomerProfile(ctx context.Context, in *UpdateMyCustomerProfileRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*DeleteCustomerResponse, error)
 	AssignCustomerToUser(ctx context.Context, in *AssignCustomerToUserRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 }
@@ -56,6 +58,15 @@ func (c *customerServiceClient) GetCustomer(ctx context.Context, in *GetCustomer
 	return out, nil
 }
 
+func (c *customerServiceClient) GetMyCustomerProfile(ctx context.Context, in *GetMyCustomerProfileRequest, opts ...grpc.CallOption) (*CustomerResponse, error) {
+	out := new(CustomerResponse)
+	err := c.cc.Invoke(ctx, "/customer.CustomerService/GetMyCustomerProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *customerServiceClient) ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error) {
 	out := new(ListCustomersResponse)
 	err := c.cc.Invoke(ctx, "/customer.CustomerService/ListCustomers", in, out, opts...)
@@ -68,6 +79,15 @@ func (c *customerServiceClient) ListCustomers(ctx context.Context, in *ListCusto
 func (c *customerServiceClient) UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error) {
 	out := new(CustomerResponse)
 	err := c.cc.Invoke(ctx, "/customer.CustomerService/UpdateCustomer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) UpdateMyCustomerProfile(ctx context.Context, in *UpdateMyCustomerProfileRequest, opts ...grpc.CallOption) (*CustomerResponse, error) {
+	out := new(CustomerResponse)
+	err := c.cc.Invoke(ctx, "/customer.CustomerService/UpdateMyCustomerProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +118,10 @@ func (c *customerServiceClient) AssignCustomerToUser(ctx context.Context, in *As
 type CustomerServiceServer interface {
 	CreateCustomer(context.Context, *CreateCustomerRequest) (*CustomerResponse, error)
 	GetCustomer(context.Context, *GetCustomerRequest) (*CustomerResponse, error)
+	GetMyCustomerProfile(context.Context, *GetMyCustomerProfileRequest) (*CustomerResponse, error)
 	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
 	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*CustomerResponse, error)
+	UpdateMyCustomerProfile(context.Context, *UpdateMyCustomerProfileRequest) (*CustomerResponse, error)
 	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error)
 	AssignCustomerToUser(context.Context, *AssignCustomerToUserRequest) (*CustomerResponse, error)
 	mustEmbedUnimplementedCustomerServiceServer()
@@ -115,11 +137,17 @@ func (UnimplementedCustomerServiceServer) CreateCustomer(context.Context, *Creat
 func (UnimplementedCustomerServiceServer) GetCustomer(context.Context, *GetCustomerRequest) (*CustomerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCustomer not implemented")
 }
+func (UnimplementedCustomerServiceServer) GetMyCustomerProfile(context.Context, *GetMyCustomerProfileRequest) (*CustomerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyCustomerProfile not implemented")
+}
 func (UnimplementedCustomerServiceServer) ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCustomers not implemented")
 }
 func (UnimplementedCustomerServiceServer) UpdateCustomer(context.Context, *UpdateCustomerRequest) (*CustomerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCustomer not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateMyCustomerProfile(context.Context, *UpdateMyCustomerProfileRequest) (*CustomerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyCustomerProfile not implemented")
 }
 func (UnimplementedCustomerServiceServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomer not implemented")
@@ -176,6 +204,24 @@ func _CustomerService_GetCustomer_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomerService_GetMyCustomerProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyCustomerProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetMyCustomerProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/customer.CustomerService/GetMyCustomerProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetMyCustomerProfile(ctx, req.(*GetMyCustomerProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CustomerService_ListCustomers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListCustomersRequest)
 	if err := dec(in); err != nil {
@@ -208,6 +254,24 @@ func _CustomerService_UpdateCustomer_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CustomerServiceServer).UpdateCustomer(ctx, req.(*UpdateCustomerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_UpdateMyCustomerProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMyCustomerProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateMyCustomerProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/customer.CustomerService/UpdateMyCustomerProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateMyCustomerProfile(ctx, req.(*UpdateMyCustomerProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -264,12 +328,20 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CustomerService_GetCustomer_Handler,
 		},
 		{
+			MethodName: "GetMyCustomerProfile",
+			Handler:    _CustomerService_GetMyCustomerProfile_Handler,
+		},
+		{
 			MethodName: "ListCustomers",
 			Handler:    _CustomerService_ListCustomers_Handler,
 		},
 		{
 			MethodName: "UpdateCustomer",
 			Handler:    _CustomerService_UpdateCustomer_Handler,
+		},
+		{
+			MethodName: "UpdateMyCustomerProfile",
+			Handler:    _CustomerService_UpdateMyCustomerProfile_Handler,
 		},
 		{
 			MethodName: "DeleteCustomer",

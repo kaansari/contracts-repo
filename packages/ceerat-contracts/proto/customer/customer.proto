@@ -9,8 +9,10 @@ import "proto/auth/auth.proto";
 service CustomerService {
   rpc CreateCustomer(CreateCustomerRequest) returns (CustomerResponse) {}
   rpc GetCustomer(GetCustomerRequest) returns (CustomerResponse) {}
+  rpc GetMyCustomerProfile(GetMyCustomerProfileRequest) returns (CustomerResponse) {}
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {}
   rpc UpdateCustomer(UpdateCustomerRequest) returns (CustomerResponse) {}
+  rpc UpdateMyCustomerProfile(UpdateMyCustomerProfileRequest) returns (CustomerResponse) {}
   rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse) {}
   rpc AssignCustomerToUser(AssignCustomerToUserRequest) returns (CustomerResponse) {}
 }
@@ -55,6 +57,8 @@ message GetCustomerRequest {
   string id = 1;
 }
 
+message GetMyCustomerProfileRequest {}
+
 message ListCustomersRequest {
   string user_id = 1;
   int32 page_size = 2;
@@ -63,6 +67,14 @@ message ListCustomersRequest {
 
 message UpdateCustomerRequest {
   Customer customer = 1;
+}
+
+message UpdateMyCustomerProfileRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string phone = 4;
+  Address address = 5;
 }
 
 message DeleteCustomerRequest {

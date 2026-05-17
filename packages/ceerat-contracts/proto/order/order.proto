@@ -9,8 +9,11 @@ import "proto/service/service.proto";
 
 service OrderManager {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
+  rpc CreateMyOrder(CreateMyOrderRequest) returns (CreateOrderResponse) {}
   rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {}
+  rpc GetMyOrder(GetMyOrderRequest) returns (GetOrderResponse) {}
   rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {}
+  rpc ListMyOrders(ListMyOrdersRequest) returns (ListOrdersResponse) {}
   rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse) {}
   rpc AddServiceToOrder(AddServiceToOrderRequest) returns (AddServiceToOrderResponse) {}
   rpc RemoveServiceFromOrder(RemoveServiceFromOrderRequest) returns (RemoveServiceFromOrderResponse) {}
@@ -79,6 +82,15 @@ message CreateOrderResponse {
   repeated Error errors = 2;
 }
 
+message CreateMyOrderRequest {
+  string schedule_date = 1;
+  string start_date = 2;
+  string due_date = 3;
+  string notes = 4;
+  repeated CreateOrderServiceInput services = 5;
+  string status = 6;
+}
+
 message GetOrderRequest {
   string id = 1;
   string user_id = 2;
@@ -87,6 +99,10 @@ message GetOrderRequest {
 message GetOrderResponse {
   Order order = 1;
   repeated Error errors = 2;
+}
+
+message GetMyOrderRequest {
+  string id = 1;
 }
 
 message ListOrdersRequest {
@@ -101,6 +117,12 @@ message ListOrdersResponse {
   repeated Order orders = 1;
   string next_page_token = 2;
   repeated Error errors = 3;
+}
+
+message ListMyOrdersRequest {
+  string status = 1;
+  int32 page_size = 2;
+  string page_token = 3;
 }
 
 message UpdateOrderStatusRequest {

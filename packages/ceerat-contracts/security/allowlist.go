@@ -3,6 +3,7 @@ package security
 var DefaultPublicMethods = []string{
 	"/auth.Auth/Auth",
 	"/auth.Auth/Create",
+	"/auth.Auth/RegisterCustomer",
 	"/auth.Auth/Register",
 	"/auth.Auth/Login",
 	"/auth.Auth/ValidateToken",

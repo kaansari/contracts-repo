@@ -9,6 +9,7 @@ type User struct {
 	Email    string
 	Password string
 	Token    string
+	Role     string
 }
 
 // Patient is the shared business representation of a patient.

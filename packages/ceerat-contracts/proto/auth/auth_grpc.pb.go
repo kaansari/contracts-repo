@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthClient interface {
 	Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
+	RegisterCustomer(ctx context.Context, in *RegisterCustomerRequest, opts ...grpc.CallOption) (*Response, error)
 	Get(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 	GetAll(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	Auth(ctx context.Context, in *User, opts ...grpc.CallOption) (*Token, error)
@@ -42,6 +43,15 @@ func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
 func (c *authClient) Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
 	err := c.cc.Invoke(ctx, "/auth.Auth/Create", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) RegisterCustomer(ctx context.Context, in *RegisterCustomerRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/auth.Auth/RegisterCustomer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -107,6 +117,7 @@ func (c *authClient) UpdatePassword(ctx context.Context, in *PasswordUpdate, opt
 // for forward compatibility
 type AuthServer interface {
 	Create(context.Context, *User) (*Response, error)
+	RegisterCustomer(context.Context, *RegisterCustomerRequest) (*Response, error)
 	Get(context.Context, *User) (*Response, error)
 	GetAll(context.Context, *Request) (*Response, error)
 	Auth(context.Context, *User) (*Token, error)
@@ -122,6 +133,9 @@ type UnimplementedAuthServer struct {
 
 func (UnimplementedAuthServer) Create(context.Context, *User) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedAuthServer) RegisterCustomer(context.Context, *RegisterCustomerRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterCustomer not implemented")
 }
 func (UnimplementedAuthServer) Get(context.Context, *User) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
@@ -168,6 +182,24 @@ func _Auth_Create_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServer).Create(ctx, req.(*User))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_RegisterCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterCustomerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).RegisterCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/RegisterCustomer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).RegisterCustomer(ctx, req.(*RegisterCustomerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,6 +322,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _Auth_Create_Handler,
+		},
+		{
+			MethodName: "RegisterCustomer",
+			Handler:    _Auth_RegisterCustomer_Handler,
 		},
 		{
 			MethodName: "Get",

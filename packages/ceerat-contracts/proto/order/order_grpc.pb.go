@@ -23,8 +23,11 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderManagerClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	CreateMyOrder(ctx context.Context, in *CreateMyOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error)
+	GetMyOrder(ctx context.Context, in *GetMyOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
+	ListMyOrders(ctx context.Context, in *ListMyOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	UpdateOrderStatus(ctx context.Context, in *UpdateOrderStatusRequest, opts ...grpc.CallOption) (*UpdateOrderStatusResponse, error)
 	AddServiceToOrder(ctx context.Context, in *AddServiceToOrderRequest, opts ...grpc.CallOption) (*AddServiceToOrderResponse, error)
 	RemoveServiceFromOrder(ctx context.Context, in *RemoveServiceFromOrderRequest, opts ...grpc.CallOption) (*RemoveServiceFromOrderResponse, error)
@@ -47,6 +50,15 @@ func (c *orderManagerClient) CreateOrder(ctx context.Context, in *CreateOrderReq
 	return out, nil
 }
 
+func (c *orderManagerClient) CreateMyOrder(ctx context.Context, in *CreateMyOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
+	out := new(CreateOrderResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/CreateMyOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderManagerClient) GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error) {
 	out := new(GetOrderResponse)
 	err := c.cc.Invoke(ctx, "/order.OrderManager/GetOrder", in, out, opts...)
@@ -56,9 +68,27 @@ func (c *orderManagerClient) GetOrder(ctx context.Context, in *GetOrderRequest, 
 	return out, nil
 }
 
+func (c *orderManagerClient) GetMyOrder(ctx context.Context, in *GetMyOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error) {
+	out := new(GetOrderResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/GetMyOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderManagerClient) ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error) {
 	out := new(ListOrdersResponse)
 	err := c.cc.Invoke(ctx, "/order.OrderManager/ListOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) ListMyOrders(ctx context.Context, in *ListMyOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error) {
+	out := new(ListOrdersResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/ListMyOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,8 +127,11 @@ func (c *orderManagerClient) RemoveServiceFromOrder(ctx context.Context, in *Rem
 // for forward compatibility
 type OrderManagerServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
+	CreateMyOrder(context.Context, *CreateMyOrderRequest) (*CreateOrderResponse, error)
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error)
+	GetMyOrder(context.Context, *GetMyOrderRequest) (*GetOrderResponse, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
+	ListMyOrders(context.Context, *ListMyOrdersRequest) (*ListOrdersResponse, error)
 	UpdateOrderStatus(context.Context, *UpdateOrderStatusRequest) (*UpdateOrderStatusResponse, error)
 	AddServiceToOrder(context.Context, *AddServiceToOrderRequest) (*AddServiceToOrderResponse, error)
 	RemoveServiceFromOrder(context.Context, *RemoveServiceFromOrderRequest) (*RemoveServiceFromOrderResponse, error)
@@ -112,11 +145,20 @@ type UnimplementedOrderManagerServer struct {
 func (UnimplementedOrderManagerServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
+func (UnimplementedOrderManagerServer) CreateMyOrder(context.Context, *CreateMyOrderRequest) (*CreateOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMyOrder not implemented")
+}
 func (UnimplementedOrderManagerServer) GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrder not implemented")
 }
+func (UnimplementedOrderManagerServer) GetMyOrder(context.Context, *GetMyOrderRequest) (*GetOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyOrder not implemented")
+}
 func (UnimplementedOrderManagerServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
+}
+func (UnimplementedOrderManagerServer) ListMyOrders(context.Context, *ListMyOrdersRequest) (*ListOrdersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMyOrders not implemented")
 }
 func (UnimplementedOrderManagerServer) UpdateOrderStatus(context.Context, *UpdateOrderStatusRequest) (*UpdateOrderStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrderStatus not implemented")
@@ -158,6 +200,24 @@ func _OrderManager_CreateOrder_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderManager_CreateMyOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMyOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).CreateMyOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/CreateMyOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).CreateMyOrder(ctx, req.(*CreateMyOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderManager_GetOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrderRequest)
 	if err := dec(in); err != nil {
@@ -176,6 +236,24 @@ func _OrderManager_GetOrder_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderManager_GetMyOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).GetMyOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/GetMyOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).GetMyOrder(ctx, req.(*GetMyOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderManager_ListOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOrdersRequest)
 	if err := dec(in); err != nil {
@@ -190,6 +268,24 @@ func _OrderManager_ListOrders_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderManagerServer).ListOrders(ctx, req.(*ListOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_ListMyOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMyOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).ListMyOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/ListMyOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).ListMyOrders(ctx, req.(*ListMyOrdersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -260,12 +356,24 @@ var OrderManager_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderManager_CreateOrder_Handler,
 		},
 		{
+			MethodName: "CreateMyOrder",
+			Handler:    _OrderManager_CreateMyOrder_Handler,
+		},
+		{
 			MethodName: "GetOrder",
 			Handler:    _OrderManager_GetOrder_Handler,
 		},
 		{
+			MethodName: "GetMyOrder",
+			Handler:    _OrderManager_GetMyOrder_Handler,
+		},
+		{
 			MethodName: "ListOrders",
 			Handler:    _OrderManager_ListOrders_Handler,
+		},
+		{
+			MethodName: "ListMyOrders",
+			Handler:    _OrderManager_ListMyOrders_Handler,
 		},
 		{
 			MethodName: "UpdateOrderStatus",
