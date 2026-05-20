@@ -1,0 +1,400 @@
+{
+  "schema_version": "1.0",
+  "generated_on": "2026-05-20",
+  "purpose": "Inventory of Ceerat shared contracts: protobuf packages, gRPC services, RPC methods, messages, generated Go packages, shared domain models, mapper functions, and security hooks. Builder agents should check this before adding or changing contracts.",
+  "inventory_rules": [
+    "Check this inventory before creating a new proto package, message, RPC, generated client/server dependency, domain model, mapper, or security hook.",
+    "If a requested capability belongs to an existing proto package or gRPC service, extend that contract instead of creating a duplicate.",
+    "When adding a protected RPC, update KnownGRPCMethods and DefaultRolePermissions in the same change.",
+    "When adding an intentionally public RPC, update DefaultPublicMethods and document why it is public.",
+    "When adding or changing proto messages used by services/apps/agents, regenerate protobuf Go code with make proto.",
+    "Keep contracts free of persistence concerns: no GORM tags, database models, repository interfaces, or service implementation logic.",
+    "Update this inventory in the same change that adds or changes contract surfaces."
+  ],
+  "contract_package": {
+    "name": "ceerat-contracts",
+    "path": "packages/ceerat-contracts",
+    "go_module": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts",
+    "readme": "packages/ceerat-contracts/README.md",
+    "makefile": "packages/ceerat-contracts/Makefile",
+    "regenerate_command": "make proto",
+    "test_command": "go test ./...",
+    "build_command": "go build ./..."
+  },
+  "source_of_truth": {
+    "proto_root": "packages/ceerat-contracts/proto",
+    "domain_models": "packages/ceerat-contracts/domain/models.go",
+    "mappers": "packages/ceerat-contracts/mapper/mapper.go",
+    "known_grpc_methods": "packages/ceerat-contracts/security/grpc_methods.go",
+    "public_methods": "packages/ceerat-contracts/security/allowlist.go",
+    "jwt_interceptor": "packages/ceerat-contracts/security/jwt_interceptor.go",
+    "rbac_interceptor": "packages/ceerat-contracts/security/rbac_interceptor.go",
+    "auth_context": "packages/ceerat-contracts/security/auth_context.go"
+  },
+  "proto_packages": [
+    {
+      "package": "auth",
+      "proto_path": "packages/ceerat-contracts/proto/auth/auth.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/auth/auth.pb.go",
+        "packages/ceerat-contracts/proto/auth/auth_grpc.pb.go"
+      ],
+      "imports": [],
+      "service": {
+        "name": "Auth",
+        "full_service": "auth.Auth",
+        "domain": "Authentication, users, registration, token validation, profile, and password operations",
+        "rpcs": [
+          {"name": "Create", "full_method": "/auth.Auth/Create", "request": "User", "response": "Response", "public": true},
+          {"name": "RegisterCustomer", "full_method": "/auth.Auth/RegisterCustomer", "request": "RegisterCustomerRequest", "response": "Response", "public": true},
+          {"name": "Get", "full_method": "/auth.Auth/Get", "request": "User", "response": "Response", "public": false},
+          {"name": "GetAll", "full_method": "/auth.Auth/GetAll", "request": "Request", "response": "Response", "public": false},
+          {"name": "Auth", "full_method": "/auth.Auth/Auth", "request": "User", "response": "Token", "public": true},
+          {"name": "ValidateToken", "full_method": "/auth.Auth/ValidateToken", "request": "Token", "response": "Token", "public": true},
+          {"name": "UpdateProfile", "full_method": "/auth.Auth/UpdateProfile", "request": "User", "response": "Response", "public": false},
+          {"name": "UpdatePassword", "full_method": "/auth.Auth/UpdatePassword", "request": "PasswordUpdate", "response": "Response", "public": false}
+        ]
+      },
+      "messages": [
+        {"name": "User", "fields": ["id", "name", "company", "email", "password", "token", "role"]},
+        {"name": "Request", "fields": []},
+        {"name": "RegisterCustomerRequest", "fields": ["first_name", "last_name", "company", "email", "password", "phone", "address_line1", "address_line2", "city", "state", "postal_code", "country"]},
+        {"name": "PasswordUpdate", "fields": ["id", "current_password", "new_password"]},
+        {"name": "Response", "fields": ["user", "users", "errors", "token"]},
+        {"name": "Token", "fields": ["token", "valid", "errors"]},
+        {"name": "Error", "fields": ["code", "description"]}
+      ]
+    },
+    {
+      "package": "customer",
+      "proto_path": "packages/ceerat-contracts/proto/customer/customer.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/customer/customer.pb.go",
+        "packages/ceerat-contracts/proto/customer/customer_grpc.pb.go"
+      ],
+      "imports": [
+        "proto/auth/auth.proto"
+      ],
+      "service": {
+        "name": "CustomerService",
+        "full_service": "customer.CustomerService",
+        "domain": "Customer profiles, ownership, and customer-to-user assignment",
+        "rpcs": [
+          {"name": "CreateCustomer", "full_method": "/customer.CustomerService/CreateCustomer", "request": "CreateCustomerRequest", "response": "CustomerResponse", "public": false},
+          {"name": "GetCustomer", "full_method": "/customer.CustomerService/GetCustomer", "request": "GetCustomerRequest", "response": "CustomerResponse", "public": false},
+          {"name": "GetMyCustomerProfile", "full_method": "/customer.CustomerService/GetMyCustomerProfile", "request": "GetMyCustomerProfileRequest", "response": "CustomerResponse", "public": false},
+          {"name": "ListCustomers", "full_method": "/customer.CustomerService/ListCustomers", "request": "ListCustomersRequest", "response": "ListCustomersResponse", "public": false},
+          {"name": "UpdateCustomer", "full_method": "/customer.CustomerService/UpdateCustomer", "request": "UpdateCustomerRequest", "response": "CustomerResponse", "public": false},
+          {"name": "UpdateMyCustomerProfile", "full_method": "/customer.CustomerService/UpdateMyCustomerProfile", "request": "UpdateMyCustomerProfileRequest", "response": "CustomerResponse", "public": false},
+          {"name": "DeleteCustomer", "full_method": "/customer.CustomerService/DeleteCustomer", "request": "DeleteCustomerRequest", "response": "DeleteCustomerResponse", "public": false},
+          {"name": "AssignCustomerToUser", "full_method": "/customer.CustomerService/AssignCustomerToUser", "request": "AssignCustomerToUserRequest", "response": "CustomerResponse", "public": false}
+        ]
+      },
+      "messages": [
+        {"name": "Address", "fields": ["line1", "line2", "city", "state", "country", "postal_code"]},
+        {"name": "Customer", "fields": ["id", "first_name", "last_name", "email", "phone", "address", "user_id", "user", "created_at", "updated_at"]},
+        {"name": "CreateCustomerRequest", "fields": ["customer", "user_id"]},
+        {"name": "GetCustomerRequest", "fields": ["id"]},
+        {"name": "GetMyCustomerProfileRequest", "fields": []},
+        {"name": "ListCustomersRequest", "fields": ["user_id", "page_size", "page_token"]},
+        {"name": "UpdateCustomerRequest", "fields": ["customer"]},
+        {"name": "UpdateMyCustomerProfileRequest", "fields": ["first_name", "last_name", "email", "phone", "address"]},
+        {"name": "DeleteCustomerRequest", "fields": ["id"]},
+        {"name": "AssignCustomerToUserRequest", "fields": ["customer_id", "user_id"]},
+        {"name": "CustomerResponse", "fields": ["customer", "errors"]},
+        {"name": "ListCustomersResponse", "fields": ["customers", "next_page_token", "errors"]},
+        {"name": "DeleteCustomerResponse", "fields": ["deleted", "errors"]},
+        {"name": "Error", "fields": ["code", "description"]}
+      ]
+    },
+    {
+      "package": "service",
+      "proto_path": "packages/ceerat-contracts/proto/service/service.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/service/service.pb.go",
+        "packages/ceerat-contracts/proto/service/service_grpc.pb.go"
+      ],
+      "imports": [
+        "proto/customer/customer.proto"
+      ],
+      "service": {
+        "name": "ServiceManager",
+        "full_service": "service.ServiceManager",
+        "domain": "Service catalog and customer-service assignments",
+        "rpcs": [
+          {"name": "CreateService", "full_method": "/service.ServiceManager/CreateService", "request": "CreateServiceRequest", "response": "ServiceResponse", "public": false},
+          {"name": "GetService", "full_method": "/service.ServiceManager/GetService", "request": "GetServiceRequest", "response": "ServiceResponse", "public": false},
+          {"name": "ListServices", "full_method": "/service.ServiceManager/ListServices", "request": "ListServicesRequest", "response": "ListServicesResponse", "public": false},
+          {"name": "UpdateService", "full_method": "/service.ServiceManager/UpdateService", "request": "UpdateServiceRequest", "response": "ServiceResponse", "public": false},
+          {"name": "DeleteService", "full_method": "/service.ServiceManager/DeleteService", "request": "DeleteServiceRequest", "response": "DeleteServiceResponse", "public": false},
+          {"name": "AssignServiceToCustomer", "full_method": "/service.ServiceManager/AssignServiceToCustomer", "request": "AssignServiceToCustomerRequest", "response": "CustomerServiceResponse", "public": false},
+          {"name": "GetCustomerService", "full_method": "/service.ServiceManager/GetCustomerService", "request": "GetCustomerServiceRequest", "response": "CustomerServiceResponse", "public": false},
+          {"name": "ListCustomerServices", "full_method": "/service.ServiceManager/ListCustomerServices", "request": "ListCustomerServicesRequest", "response": "ListCustomerServicesResponse", "public": false},
+          {"name": "UpdateCustomerService", "full_method": "/service.ServiceManager/UpdateCustomerService", "request": "UpdateCustomerServiceRequest", "response": "CustomerServiceResponse", "public": false},
+          {"name": "RemoveServiceFromCustomer", "full_method": "/service.ServiceManager/RemoveServiceFromCustomer", "request": "RemoveServiceFromCustomerRequest", "response": "RemoveServiceFromCustomerResponse", "public": false}
+        ]
+      },
+      "messages": [
+        {"name": "Service", "fields": ["id", "name", "category", "price", "type", "schedule_date", "start_date", "agent_name", "description", "created_at", "updated_at"]},
+        {"name": "CustomerService", "fields": ["id", "customer_id", "service_id", "customer", "service", "status", "ordered_at"]},
+        {"name": "CreateServiceRequest", "fields": ["service"]},
+        {"name": "GetServiceRequest", "fields": ["id"]},
+        {"name": "ListServicesRequest", "fields": ["category", "type", "page_size", "page_token"]},
+        {"name": "UpdateServiceRequest", "fields": ["service"]},
+        {"name": "DeleteServiceRequest", "fields": ["id"]},
+        {"name": "AssignServiceToCustomerRequest", "fields": ["customer_id", "service_id", "status", "ordered_at"]},
+        {"name": "GetCustomerServiceRequest", "fields": ["id"]},
+        {"name": "ListCustomerServicesRequest", "fields": ["customer_id", "service_id", "status", "page_size", "page_token"]},
+        {"name": "UpdateCustomerServiceRequest", "fields": ["customer_service"]},
+        {"name": "RemoveServiceFromCustomerRequest", "fields": ["id"]},
+        {"name": "ServiceResponse", "fields": ["service", "errors"]},
+        {"name": "ListServicesResponse", "fields": ["services", "next_page_token", "errors"]},
+        {"name": "DeleteServiceResponse", "fields": ["deleted", "errors"]},
+        {"name": "CustomerServiceResponse", "fields": ["customer_service", "errors"]},
+        {"name": "ListCustomerServicesResponse", "fields": ["customer_services", "next_page_token", "errors"]},
+        {"name": "RemoveServiceFromCustomerResponse", "fields": ["removed", "errors"]},
+        {"name": "Error", "fields": ["code", "description"]}
+      ]
+    },
+    {
+      "package": "order",
+      "proto_path": "packages/ceerat-contracts/proto/order/order.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/order",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/order/order.pb.go",
+        "packages/ceerat-contracts/proto/order/order_grpc.pb.go"
+      ],
+      "imports": [
+        "proto/customer/customer.proto",
+        "proto/service/service.proto"
+      ],
+      "service": {
+        "name": "OrderManager",
+        "full_service": "order.OrderManager",
+        "domain": "Orders, order status, order line items, and customer self-service order flows",
+        "rpcs": [
+          {"name": "CreateOrder", "full_method": "/order.OrderManager/CreateOrder", "request": "CreateOrderRequest", "response": "CreateOrderResponse", "public": false},
+          {"name": "CreateMyOrder", "full_method": "/order.OrderManager/CreateMyOrder", "request": "CreateMyOrderRequest", "response": "CreateOrderResponse", "public": false},
+          {"name": "GetOrder", "full_method": "/order.OrderManager/GetOrder", "request": "GetOrderRequest", "response": "GetOrderResponse", "public": false},
+          {"name": "GetMyOrder", "full_method": "/order.OrderManager/GetMyOrder", "request": "GetMyOrderRequest", "response": "GetOrderResponse", "public": false},
+          {"name": "ListOrders", "full_method": "/order.OrderManager/ListOrders", "request": "ListOrdersRequest", "response": "ListOrdersResponse", "public": false},
+          {"name": "ListMyOrders", "full_method": "/order.OrderManager/ListMyOrders", "request": "ListMyOrdersRequest", "response": "ListOrdersResponse", "public": false},
+          {"name": "UpdateOrderStatus", "full_method": "/order.OrderManager/UpdateOrderStatus", "request": "UpdateOrderStatusRequest", "response": "UpdateOrderStatusResponse", "public": false},
+          {"name": "AddServiceToOrder", "full_method": "/order.OrderManager/AddServiceToOrder", "request": "AddServiceToOrderRequest", "response": "AddServiceToOrderResponse", "public": false},
+          {"name": "RemoveServiceFromOrder", "full_method": "/order.OrderManager/RemoveServiceFromOrder", "request": "RemoveServiceFromOrderRequest", "response": "RemoveServiceFromOrderResponse", "public": false}
+        ]
+      },
+      "messages": [
+        {"name": "Order", "fields": ["id", "customer_id", "user_id", "order_number", "status", "schedule_date", "start_date", "due_date", "subtotal", "tax", "total", "notes", "customer", "services", "created_at", "updated_at"]},
+        {"name": "OrderService", "fields": ["id", "order_id", "service_id", "service_name", "category", "type", "unit_price", "quantity", "total_price", "agent_name", "schedule_date", "start_date", "due_date", "service", "created_at", "updated_at"]},
+        {"name": "CreateOrderRequest", "fields": ["customer_id", "user_id", "status", "schedule_date", "start_date", "due_date", "notes", "services"]},
+        {"name": "CreateOrderServiceInput", "fields": ["service_id", "quantity", "agent_name", "schedule_date", "start_date", "due_date"]},
+        {"name": "CreateOrderResponse", "fields": ["order", "errors"]},
+        {"name": "CreateMyOrderRequest", "fields": ["status", "schedule_date", "start_date", "due_date", "notes", "services"]},
+        {"name": "GetOrderRequest", "fields": ["id", "user_id"]},
+        {"name": "GetOrderResponse", "fields": ["order", "errors"]},
+        {"name": "GetMyOrderRequest", "fields": ["id"]},
+        {"name": "ListOrdersRequest", "fields": ["user_id", "customer_id", "status", "page_size", "page_token"]},
+        {"name": "ListOrdersResponse", "fields": ["orders", "next_page_token", "errors"]},
+        {"name": "ListMyOrdersRequest", "fields": ["customer_id", "status", "page_size", "page_token"]},
+        {"name": "UpdateOrderStatusRequest", "fields": ["id", "user_id", "status"]},
+        {"name": "UpdateOrderStatusResponse", "fields": ["order", "errors"]},
+        {"name": "AddServiceToOrderRequest", "fields": ["order_id", "user_id", "service"]},
+        {"name": "AddServiceToOrderResponse", "fields": ["order", "errors"]},
+        {"name": "RemoveServiceFromOrderRequest", "fields": ["order_id", "user_id", "order_service_id"]},
+        {"name": "RemoveServiceFromOrderResponse", "fields": ["order", "errors"]},
+        {"name": "Error", "fields": ["code", "description"]}
+      ]
+    },
+    {
+      "package": "patient",
+      "proto_path": "packages/ceerat-contracts/proto/patient/patient.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/patient/patient.pb.go",
+        "packages/ceerat-contracts/proto/patient/patient_grpc.pb.go"
+      ],
+      "imports": [],
+      "service": {
+        "name": "patient",
+        "full_service": "patient.patient",
+        "domain": "Simple patient CRUD and legacy auth/token placeholders",
+        "notes": "The service name is lowercase in the proto; preserve exact full method names in security lists.",
+        "rpcs": [
+          {"name": "Create", "full_method": "/patient.patient/Create", "request": "Patient", "response": "PatientResponse", "public": false},
+          {"name": "Get", "full_method": "/patient.patient/Get", "request": "GetPatientRequest", "response": "Patient", "public": false},
+          {"name": "GetAll", "full_method": "/patient.patient/GetAll", "request": "GetAllRequest", "response": "GetAllResponse", "public": false},
+          {"name": "Auth", "full_method": "/patient.patient/Auth", "request": "Patient", "response": "Token", "public": false},
+          {"name": "ValidateToken", "full_method": "/patient.patient/ValidateToken", "request": "Token", "response": "Token", "public": false}
+        ]
+      },
+      "messages": [
+        {"name": "Patient", "fields": ["id", "fname", "lname", "dob", "dos", "location", "icdcodes", "covid_test", "covid_test_result", "rsv_test", "rsv_test_result", "strep_test", "strep_test_result", "flu_test", "flu_test_result"]},
+        {"name": "GetAllRequest", "fields": []},
+        {"name": "GetPatientRequest", "fields": ["id"]},
+        {"name": "GetAllResponse", "fields": ["patients", "errors"]},
+        {"name": "PatientResponse", "fields": ["patient", "errors"]},
+        {"name": "Token", "fields": ["token", "valid", "errors"]},
+        {"name": "Error", "fields": ["code", "description"]}
+      ]
+    }
+  ],
+  "domain_models": [
+    {"name": "User", "fields": ["ID", "Name", "Company", "Email", "Password", "Token", "Role"]},
+    {"name": "Patient", "fields": ["ID", "FirstName", "LastName", "DOB", "DOS", "Location", "ICDCodes", "COVIDTest", "COVIDTestResult", "RSVTest", "RSVTestResult", "StrepTest", "StrepTestResult", "FluTest", "FluTestResult"]},
+    {"name": "Address", "fields": ["Line1", "Line2", "City", "State", "Country", "PostalCode"]},
+    {"name": "Customer", "fields": ["ID", "FirstName", "LastName", "Email", "Phone", "Address", "UserID", "User", "CreatedAt", "UpdatedAt"]},
+    {"name": "Service", "fields": ["ID", "Name", "Category", "Price", "Type", "ScheduleDate", "StartDate", "AgentName", "Description", "CreatedAt", "UpdatedAt"]},
+    {"name": "CustomerService", "fields": ["ID", "CustomerID", "ServiceID", "Customer", "Service", "Status", "OrderedAt"]},
+    {"name": "Order", "fields": ["ID", "CustomerID", "UserID", "OrderNumber", "Status", "ScheduleDate", "StartDate", "DueDate", "Subtotal", "Tax", "Total", "Notes", "Customer", "Services", "CreatedAt", "UpdatedAt"]},
+    {"name": "OrderService", "fields": ["ID", "OrderID", "ServiceID", "ServiceName", "Category", "Type", "UnitPrice", "Quantity", "TotalPrice", "AgentName", "ScheduleDate", "StartDate", "DueDate", "Service", "CreatedAt", "UpdatedAt"]},
+    {"name": "CreateOrderServiceInput", "fields": ["ServiceID", "Quantity", "AgentName", "ScheduleDate", "StartDate", "DueDate"]}
+  ],
+  "mapper_functions": [
+    "UserFromProto",
+    "UserToProto",
+    "UsersToProto",
+    "PatientFromProto",
+    "PatientToProto",
+    "PatientsToProto",
+    "AddressFromProto",
+    "AddressToProto",
+    "CustomerFromProto",
+    "CustomerToProto",
+    "CustomersToProto",
+    "ServiceFromProto",
+    "ServiceToProto",
+    "ServicesToProto",
+    "CustomerServiceFromProto",
+    "CustomerServiceToProto",
+    "CustomerServicesToProto",
+    "OrderFromProto",
+    "OrderToProto",
+    "OrdersToProto",
+    "OrderServiceFromProto",
+    "OrderServiceToProto",
+    "OrderServicesFromProto",
+    "OrderServicesToProto",
+    "CreateOrderServiceInputFromProto",
+    "CreateOrderServiceInputsFromProto"
+  ],
+  "security_contracts": {
+    "known_grpc_methods_count": 40,
+    "known_grpc_methods": [
+      "/auth.Auth/Create",
+      "/auth.Auth/RegisterCustomer",
+      "/auth.Auth/Get",
+      "/auth.Auth/GetAll",
+      "/auth.Auth/Auth",
+      "/auth.Auth/ValidateToken",
+      "/auth.Auth/UpdateProfile",
+      "/auth.Auth/UpdatePassword",
+      "/customer.CustomerService/CreateCustomer",
+      "/customer.CustomerService/GetCustomer",
+      "/customer.CustomerService/GetMyCustomerProfile",
+      "/customer.CustomerService/ListCustomers",
+      "/customer.CustomerService/UpdateCustomer",
+      "/customer.CustomerService/UpdateMyCustomerProfile",
+      "/customer.CustomerService/DeleteCustomer",
+      "/customer.CustomerService/AssignCustomerToUser",
+      "/service.ServiceManager/CreateService",
+      "/service.ServiceManager/GetService",
+      "/service.ServiceManager/ListServices",
+      "/service.ServiceManager/UpdateService",
+      "/service.ServiceManager/DeleteService",
+      "/service.ServiceManager/AssignServiceToCustomer",
+      "/service.ServiceManager/GetCustomerService",
+      "/service.ServiceManager/ListCustomerServices",
+      "/service.ServiceManager/UpdateCustomerService",
+      "/service.ServiceManager/RemoveServiceFromCustomer",
+      "/order.OrderManager/CreateOrder",
+      "/order.OrderManager/CreateMyOrder",
+      "/order.OrderManager/GetOrder",
+      "/order.OrderManager/GetMyOrder",
+      "/order.OrderManager/ListOrders",
+      "/order.OrderManager/ListMyOrders",
+      "/order.OrderManager/UpdateOrderStatus",
+      "/order.OrderManager/AddServiceToOrder",
+      "/order.OrderManager/RemoveServiceFromOrder",
+      "/patient.patient/Create",
+      "/patient.patient/Get",
+      "/patient.patient/GetAll",
+      "/patient.patient/Auth",
+      "/patient.patient/ValidateToken"
+    ],
+    "default_public_methods": [
+      "/auth.Auth/Auth",
+      "/auth.Auth/Create",
+      "/auth.Auth/RegisterCustomer",
+      "/auth.Auth/Register",
+      "/auth.Auth/Login",
+      "/auth.Auth/ValidateToken",
+      "/grpc.health.v1.Health/Check",
+      "/health.Health/Check"
+    ],
+    "default_role_permissions": {
+      "admin": ["*"],
+      "agent": [
+        "/customer.CustomerService/CreateCustomer",
+        "/customer.CustomerService/GetCustomer",
+        "/customer.CustomerService/ListCustomers",
+        "/customer.CustomerService/UpdateCustomer",
+        "/service.ServiceManager/ListServices",
+        "/service.ServiceManager/AssignServiceToCustomer",
+        "/order.OrderManager/CreateOrder",
+        "/order.OrderManager/GetOrder",
+        "/order.OrderManager/ListOrders",
+        "/order.OrderManager/AddServiceToOrder",
+        "/order.OrderManager/UpdateOrderStatus"
+      ],
+      "customer": [
+        "/auth.Auth/Get",
+        "/auth.Auth/GetAll",
+        "/auth.Auth/UpdateProfile",
+        "/auth.Auth/UpdatePassword",
+        "/customer.CustomerService/CreateCustomer",
+        "/customer.CustomerService/GetCustomer",
+        "/customer.CustomerService/GetMyCustomerProfile",
+        "/customer.CustomerService/UpdateMyCustomerProfile",
+        "/service.ServiceManager/ListServices",
+        "/service.ServiceManager/GetCustomerService",
+        "/service.ServiceManager/ListCustomerServices",
+        "/order.OrderManager/GetOrder",
+        "/order.OrderManager/GetMyOrder",
+        "/order.OrderManager/ListOrders",
+        "/order.OrderManager/ListMyOrders",
+        "/order.OrderManager/CreateMyOrder"
+      ]
+    },
+    "shared_hooks": [
+      "DefaultPublicMethods",
+      "KnownGRPCMethods",
+      "DefaultRolePermissions",
+      "NewJWTInterceptor",
+      "NewRBACInterceptor",
+      "WithAuthenticatedUser",
+      "AuthenticatedUserFromContext"
+    ]
+  },
+  "proto_dependency_graph": [
+    {"package": "auth", "imports": []},
+    {"package": "patient", "imports": []},
+    {"package": "customer", "imports": ["auth"]},
+    {"package": "service", "imports": ["customer"]},
+    {"package": "order", "imports": ["customer", "service"]}
+  ],
+  "builder_checklist_before_contract_change": [
+    "Read this inventory.",
+    "Check whether the desired concept already exists as a proto package, message, RPC, domain model, mapper, or security method.",
+    "Prefer extending the existing owner package when the domain already exists.",
+    "For new RPCs, add the proto method, regenerate generated Go files, update KnownGRPCMethods, update role permissions, and add tests/docs.",
+    "For public RPCs, update DefaultPublicMethods only with an explicit reason.",
+    "For new shared domain objects, add mapper functions when transport/domain conversion is needed.",
+    "Update services-repo/docs/grpc-service-inventory.json if service-visible gRPC methods change.",
+    "Update apps-repo/docs/app-surface-inventory.json if app routes or AI tools change because of the contract change.",
+    "Update this inventory in the same change."
+  ]
+}
