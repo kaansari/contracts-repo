@@ -12,6 +12,11 @@ service ServiceManager {
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {}
   rpc UpdateService(UpdateServiceRequest) returns (ServiceResponse) {}
   rpc DeleteService(DeleteServiceRequest) returns (DeleteServiceResponse) {}
+  rpc CreateProduct(CreateProductRequest) returns (ProductResponse) {}
+  rpc GetProduct(GetProductRequest) returns (ProductResponse) {}
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
+  rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse) {}
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
   rpc AssignServiceToCustomer(AssignServiceToCustomerRequest) returns (CustomerServiceResponse) {}
   rpc GetCustomerService(GetCustomerServiceRequest) returns (CustomerServiceResponse) {}
   rpc ListCustomerServices(ListCustomerServicesRequest) returns (ListCustomerServicesResponse) {}
@@ -35,6 +40,20 @@ message Service {
 
   string created_at = 10;
   string updated_at = 11;
+
+  string sku = 12;
+  bool active = 13;
+}
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string sku = 4;
+  double price = 5;
+  bool active = 6;
+  string created_at = 7;
+  string updated_at = 8;
 }
 
 message CustomerService {
@@ -71,6 +90,28 @@ message UpdateServiceRequest {
 }
 
 message DeleteServiceRequest {
+  string id = 1;
+}
+
+message CreateProductRequest {
+  Product product = 1;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message ListProductsRequest {
+  bool active_only = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message UpdateProductRequest {
+  Product product = 1;
+}
+
+message DeleteProductRequest {
   string id = 1;
 }
 
@@ -113,6 +154,22 @@ message ListServicesResponse {
 }
 
 message DeleteServiceResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
+}
+
+message ProductResponse {
+  Product product = 1;
+  repeated Error errors = 2;
+}
+
+message ListProductsResponse {
+  repeated Product products = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message DeleteProductResponse {
   bool deleted = 1;
   repeated Error errors = 2;
 }

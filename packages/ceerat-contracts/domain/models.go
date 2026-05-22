@@ -69,6 +69,20 @@ type Service struct {
 	Description  string
 	CreatedAt    string
 	UpdatedAt    string
+	SKU          string
+	Active       bool
+}
+
+// Product is a service-catalog product exposed through the catalog service boundary.
+type Product struct {
+	ID          string
+	Name        string
+	Description string
+	SKU         string
+	Price       float64
+	Active      bool
+	CreatedAt   string
+	UpdatedAt   string
 }
 
 // CustomerService links a customer to an ordered service.

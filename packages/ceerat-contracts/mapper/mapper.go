@@ -189,6 +189,8 @@ func ServiceFromProto(in *servicepb.Service) *domain.Service {
 		Description:  in.Description,
 		CreatedAt:    in.CreatedAt,
 		UpdatedAt:    in.UpdatedAt,
+		SKU:          in.Sku,
+		Active:       in.Active,
 	}
 }
 
@@ -208,6 +210,8 @@ func ServiceToProto(in *domain.Service) *servicepb.Service {
 		Description:  in.Description,
 		CreatedAt:    in.CreatedAt,
 		UpdatedAt:    in.UpdatedAt,
+		Sku:          in.SKU,
+		Active:       in.Active,
 	}
 }
 
@@ -215,6 +219,46 @@ func ServicesToProto(in []*domain.Service) []*servicepb.Service {
 	out := make([]*servicepb.Service, 0, len(in))
 	for _, s := range in {
 		out = append(out, ServiceToProto(s))
+	}
+	return out
+}
+
+func ProductFromProto(in *servicepb.Product) *domain.Product {
+	if in == nil {
+		return nil
+	}
+	return &domain.Product{
+		ID:          in.Id,
+		Name:        in.Name,
+		Description: in.Description,
+		SKU:         in.Sku,
+		Price:       in.Price,
+		Active:      in.Active,
+		CreatedAt:   in.CreatedAt,
+		UpdatedAt:   in.UpdatedAt,
+	}
+}
+
+func ProductToProto(in *domain.Product) *servicepb.Product {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.Product{
+		Id:          in.ID,
+		Name:        in.Name,
+		Description: in.Description,
+		Sku:         in.SKU,
+		Price:       in.Price,
+		Active:      in.Active,
+		CreatedAt:   in.CreatedAt,
+		UpdatedAt:   in.UpdatedAt,
+	}
+}
+
+func ProductsToProto(in []*domain.Product) []*servicepb.Product {
+	out := make([]*servicepb.Product, 0, len(in))
+	for _, product := range in {
+		out = append(out, ProductToProto(product))
 	}
 	return out
 }
