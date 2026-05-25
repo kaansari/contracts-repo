@@ -46,11 +46,6 @@ var KnownGRPCMethods = []string{
 	"/order.OrderManager/UpdateOrderStatus",
 	"/order.OrderManager/AddServiceToOrder",
 	"/order.OrderManager/RemoveServiceFromOrder",
-	"/patient.patient/Create",
-	"/patient.patient/Get",
-	"/patient.patient/GetAll",
-	"/patient.patient/Auth",
-	"/patient.patient/ValidateToken",
 }
 
 var DefaultRolePermissions = map[string][]string{

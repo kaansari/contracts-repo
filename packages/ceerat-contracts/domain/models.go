@@ -13,26 +13,6 @@ type User struct {
 	Status   string
 }
 
-// Patient is the shared business representation of a patient.
-// It intentionally has no transport, database, or framework annotations.
-type Patient struct {
-	ID              string
-	FirstName       string
-	LastName        string
-	DOB             string
-	DOS             string
-	Location        string
-	ICDCodes        string
-	COVIDTest       bool
-	COVIDTestResult bool
-	RSVTest         bool
-	RSVTestResult   bool
-	StrepTest       bool
-	StrepTestResult bool
-	FluTest         bool
-	FluTestResult   bool
-}
-
 // Address is the shared business representation of a customer address.
 type Address struct {
 	Line1      string

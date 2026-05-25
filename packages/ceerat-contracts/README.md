@@ -8,7 +8,6 @@ Shared protobuf contracts, generated Go code, domain DTOs, and mappers for Ceera
 proto/auth/       Auth service protobuf definitions and generated Go code
 proto/customer/   Customer protobuf definitions and generated Go code
 proto/order/      Order protobuf definitions and generated Go code
-proto/patient/    Patient protobuf definitions and generated Go code
 proto/service/    Service protobuf definitions and generated Go code
 domain/           Pure shared business objects
 mapper/           Conversion helpers between protobuf messages and domain objects
@@ -20,7 +19,6 @@ mapper/           Conversion helpers between protobuf messages and domain object
 auth.Auth
 customer.CustomerService
 order.OrderService
-patient.PatientService
 service.ServiceManager
 ```
 
@@ -49,7 +47,6 @@ The `go_package` options point to:
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/order
-github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service
 ```
 

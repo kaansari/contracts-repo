@@ -46,24 +46,131 @@
         "full_service": "auth.Auth",
         "domain": "Authentication, users, registration, token validation, profile, and password operations",
         "rpcs": [
-          {"name": "Create", "full_method": "/auth.Auth/Create", "request": "User", "response": "Response", "public": true},
-          {"name": "RegisterCustomer", "full_method": "/auth.Auth/RegisterCustomer", "request": "RegisterCustomerRequest", "response": "Response", "public": true},
-          {"name": "Get", "full_method": "/auth.Auth/Get", "request": "User", "response": "Response", "public": false},
-          {"name": "GetAll", "full_method": "/auth.Auth/GetAll", "request": "Request", "response": "Response", "public": false},
-          {"name": "Auth", "full_method": "/auth.Auth/Auth", "request": "User", "response": "Token", "public": true},
-          {"name": "ValidateToken", "full_method": "/auth.Auth/ValidateToken", "request": "Token", "response": "Token", "public": true},
-          {"name": "UpdateProfile", "full_method": "/auth.Auth/UpdateProfile", "request": "User", "response": "Response", "public": false},
-          {"name": "UpdatePassword", "full_method": "/auth.Auth/UpdatePassword", "request": "PasswordUpdate", "response": "Response", "public": false}
+          {
+            "name": "Create",
+            "full_method": "/auth.Auth/Create",
+            "request": "User",
+            "response": "Response",
+            "public": true
+          },
+          {
+            "name": "RegisterCustomer",
+            "full_method": "/auth.Auth/RegisterCustomer",
+            "request": "RegisterCustomerRequest",
+            "response": "Response",
+            "public": true
+          },
+          {
+            "name": "Get",
+            "full_method": "/auth.Auth/Get",
+            "request": "User",
+            "response": "Response",
+            "public": false
+          },
+          {
+            "name": "GetAll",
+            "full_method": "/auth.Auth/GetAll",
+            "request": "Request",
+            "response": "Response",
+            "public": false
+          },
+          {
+            "name": "Auth",
+            "full_method": "/auth.Auth/Auth",
+            "request": "User",
+            "response": "Token",
+            "public": true
+          },
+          {
+            "name": "ValidateToken",
+            "full_method": "/auth.Auth/ValidateToken",
+            "request": "Token",
+            "response": "Token",
+            "public": true
+          },
+          {
+            "name": "UpdateProfile",
+            "full_method": "/auth.Auth/UpdateProfile",
+            "request": "User",
+            "response": "Response",
+            "public": false
+          },
+          {
+            "name": "UpdatePassword",
+            "full_method": "/auth.Auth/UpdatePassword",
+            "request": "PasswordUpdate",
+            "response": "Response",
+            "public": false
+          }
         ]
       },
       "messages": [
-        {"name": "User", "fields": ["id", "name", "company", "email", "password", "token", "role", "status"]},
-        {"name": "Request", "fields": []},
-        {"name": "RegisterCustomerRequest", "fields": ["first_name", "last_name", "company", "email", "password", "phone", "address_line1", "address_line2", "city", "state", "postal_code", "country"]},
-        {"name": "PasswordUpdate", "fields": ["id", "current_password", "new_password"]},
-        {"name": "Response", "fields": ["user", "users", "errors", "token"]},
-        {"name": "Token", "fields": ["token", "valid", "errors"]},
-        {"name": "Error", "fields": ["code", "description"]}
+        {
+          "name": "User",
+          "fields": [
+            "id",
+            "name",
+            "company",
+            "email",
+            "password",
+            "token",
+            "role",
+            "status"
+          ]
+        },
+        {
+          "name": "Request",
+          "fields": []
+        },
+        {
+          "name": "RegisterCustomerRequest",
+          "fields": [
+            "first_name",
+            "last_name",
+            "company",
+            "email",
+            "password",
+            "phone",
+            "address_line1",
+            "address_line2",
+            "city",
+            "state",
+            "postal_code",
+            "country"
+          ]
+        },
+        {
+          "name": "PasswordUpdate",
+          "fields": [
+            "id",
+            "current_password",
+            "new_password"
+          ]
+        },
+        {
+          "name": "Response",
+          "fields": [
+            "user",
+            "users",
+            "errors",
+            "token"
+          ]
+        },
+        {
+          "name": "Token",
+          "fields": [
+            "token",
+            "valid",
+            "errors"
+          ]
+        },
+        {
+          "name": "Error",
+          "fields": [
+            "code",
+            "description"
+          ]
+        }
       ]
     },
     {
@@ -82,31 +189,174 @@
         "full_service": "customer.CustomerService",
         "domain": "Customer profiles, ownership, and customer-to-user assignment",
         "rpcs": [
-          {"name": "CreateCustomer", "full_method": "/customer.CustomerService/CreateCustomer", "request": "CreateCustomerRequest", "response": "CustomerResponse", "public": false},
-          {"name": "GetCustomer", "full_method": "/customer.CustomerService/GetCustomer", "request": "GetCustomerRequest", "response": "CustomerResponse", "public": false},
-          {"name": "GetMyCustomerProfile", "full_method": "/customer.CustomerService/GetMyCustomerProfile", "request": "GetMyCustomerProfileRequest", "response": "CustomerResponse", "public": false},
-          {"name": "ListCustomers", "full_method": "/customer.CustomerService/ListCustomers", "request": "ListCustomersRequest", "response": "ListCustomersResponse", "public": false},
-          {"name": "UpdateCustomer", "full_method": "/customer.CustomerService/UpdateCustomer", "request": "UpdateCustomerRequest", "response": "CustomerResponse", "public": false},
-          {"name": "UpdateMyCustomerProfile", "full_method": "/customer.CustomerService/UpdateMyCustomerProfile", "request": "UpdateMyCustomerProfileRequest", "response": "CustomerResponse", "public": false},
-          {"name": "DeleteCustomer", "full_method": "/customer.CustomerService/DeleteCustomer", "request": "DeleteCustomerRequest", "response": "DeleteCustomerResponse", "public": false},
-          {"name": "AssignCustomerToUser", "full_method": "/customer.CustomerService/AssignCustomerToUser", "request": "AssignCustomerToUserRequest", "response": "CustomerResponse", "public": false}
+          {
+            "name": "CreateCustomer",
+            "full_method": "/customer.CustomerService/CreateCustomer",
+            "request": "CreateCustomerRequest",
+            "response": "CustomerResponse",
+            "public": false
+          },
+          {
+            "name": "GetCustomer",
+            "full_method": "/customer.CustomerService/GetCustomer",
+            "request": "GetCustomerRequest",
+            "response": "CustomerResponse",
+            "public": false
+          },
+          {
+            "name": "GetMyCustomerProfile",
+            "full_method": "/customer.CustomerService/GetMyCustomerProfile",
+            "request": "GetMyCustomerProfileRequest",
+            "response": "CustomerResponse",
+            "public": false
+          },
+          {
+            "name": "ListCustomers",
+            "full_method": "/customer.CustomerService/ListCustomers",
+            "request": "ListCustomersRequest",
+            "response": "ListCustomersResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCustomer",
+            "full_method": "/customer.CustomerService/UpdateCustomer",
+            "request": "UpdateCustomerRequest",
+            "response": "CustomerResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateMyCustomerProfile",
+            "full_method": "/customer.CustomerService/UpdateMyCustomerProfile",
+            "request": "UpdateMyCustomerProfileRequest",
+            "response": "CustomerResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteCustomer",
+            "full_method": "/customer.CustomerService/DeleteCustomer",
+            "request": "DeleteCustomerRequest",
+            "response": "DeleteCustomerResponse",
+            "public": false
+          },
+          {
+            "name": "AssignCustomerToUser",
+            "full_method": "/customer.CustomerService/AssignCustomerToUser",
+            "request": "AssignCustomerToUserRequest",
+            "response": "CustomerResponse",
+            "public": false
+          }
         ]
       },
       "messages": [
-        {"name": "Address", "fields": ["line1", "line2", "city", "state", "country", "postal_code"]},
-        {"name": "Customer", "fields": ["id", "first_name", "last_name", "email", "phone", "address", "user_id", "user", "created_at", "updated_at"]},
-        {"name": "CreateCustomerRequest", "fields": ["customer", "user_id"]},
-        {"name": "GetCustomerRequest", "fields": ["id"]},
-        {"name": "GetMyCustomerProfileRequest", "fields": []},
-        {"name": "ListCustomersRequest", "fields": ["user_id", "page_size", "page_token"]},
-        {"name": "UpdateCustomerRequest", "fields": ["customer"]},
-        {"name": "UpdateMyCustomerProfileRequest", "fields": ["first_name", "last_name", "email", "phone", "address"]},
-        {"name": "DeleteCustomerRequest", "fields": ["id"]},
-        {"name": "AssignCustomerToUserRequest", "fields": ["customer_id", "user_id"]},
-        {"name": "CustomerResponse", "fields": ["customer", "errors"]},
-        {"name": "ListCustomersResponse", "fields": ["customers", "next_page_token", "errors"]},
-        {"name": "DeleteCustomerResponse", "fields": ["deleted", "errors"]},
-        {"name": "Error", "fields": ["code", "description"]}
+        {
+          "name": "Address",
+          "fields": [
+            "line1",
+            "line2",
+            "city",
+            "state",
+            "country",
+            "postal_code"
+          ]
+        },
+        {
+          "name": "Customer",
+          "fields": [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "address",
+            "user_id",
+            "user",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CreateCustomerRequest",
+          "fields": [
+            "customer",
+            "user_id"
+          ]
+        },
+        {
+          "name": "GetCustomerRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "GetMyCustomerProfileRequest",
+          "fields": []
+        },
+        {
+          "name": "ListCustomersRequest",
+          "fields": [
+            "user_id",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "UpdateCustomerRequest",
+          "fields": [
+            "customer"
+          ]
+        },
+        {
+          "name": "UpdateMyCustomerProfileRequest",
+          "fields": [
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "address"
+          ]
+        },
+        {
+          "name": "DeleteCustomerRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "AssignCustomerToUserRequest",
+          "fields": [
+            "customer_id",
+            "user_id"
+          ]
+        },
+        {
+          "name": "CustomerResponse",
+          "fields": [
+            "customer",
+            "errors"
+          ]
+        },
+        {
+          "name": "ListCustomersResponse",
+          "fields": [
+            "customers",
+            "next_page_token",
+            "errors"
+          ]
+        },
+        {
+          "name": "DeleteCustomerResponse",
+          "fields": [
+            "deleted",
+            "errors"
+          ]
+        },
+        {
+          "name": "Error",
+          "fields": [
+            "code",
+            "description"
+          ]
+        }
       ]
     },
     {
@@ -125,65 +375,444 @@
         "full_service": "service.ServiceManager",
         "domain": "Service/product catalog, customer carts, and customer-service assignments",
         "rpcs": [
-          {"name": "CreateService", "full_method": "/service.ServiceManager/CreateService", "request": "CreateServiceRequest", "response": "ServiceResponse", "public": false},
-          {"name": "GetService", "full_method": "/service.ServiceManager/GetService", "request": "GetServiceRequest", "response": "ServiceResponse", "public": false},
-          {"name": "ListServices", "full_method": "/service.ServiceManager/ListServices", "request": "ListServicesRequest", "response": "ListServicesResponse", "public": false},
-          {"name": "UpdateService", "full_method": "/service.ServiceManager/UpdateService", "request": "UpdateServiceRequest", "response": "ServiceResponse", "public": false},
-          {"name": "DeleteService", "full_method": "/service.ServiceManager/DeleteService", "request": "DeleteServiceRequest", "response": "DeleteServiceResponse", "public": false},
-          {"name": "CreateProduct", "full_method": "/service.ServiceManager/CreateProduct", "request": "CreateProductRequest", "response": "ProductResponse", "public": false},
-          {"name": "GetProduct", "full_method": "/service.ServiceManager/GetProduct", "request": "GetProductRequest", "response": "ProductResponse", "public": false},
-          {"name": "ListProducts", "full_method": "/service.ServiceManager/ListProducts", "request": "ListProductsRequest", "response": "ListProductsResponse", "public": false},
-          {"name": "UpdateProduct", "full_method": "/service.ServiceManager/UpdateProduct", "request": "UpdateProductRequest", "response": "ProductResponse", "public": false},
-          {"name": "DeleteProduct", "full_method": "/service.ServiceManager/DeleteProduct", "request": "DeleteProductRequest", "response": "DeleteProductResponse", "public": false},
-          {"name": "GetCart", "full_method": "/service.ServiceManager/GetCart", "request": "GetCartRequest", "response": "CartResponse", "public": false},
-          {"name": "AddCartItem", "full_method": "/service.ServiceManager/AddCartItem", "request": "AddCartItemRequest", "response": "CartResponse", "public": false},
-          {"name": "UpdateCartItem", "full_method": "/service.ServiceManager/UpdateCartItem", "request": "UpdateCartItemRequest", "response": "CartResponse", "public": false},
-          {"name": "RemoveCartItem", "full_method": "/service.ServiceManager/RemoveCartItem", "request": "RemoveCartItemRequest", "response": "CartResponse", "public": false},
-          {"name": "ClearCart", "full_method": "/service.ServiceManager/ClearCart", "request": "ClearCartRequest", "response": "CartResponse", "public": false},
-          {"name": "AssignServiceToCustomer", "full_method": "/service.ServiceManager/AssignServiceToCustomer", "request": "AssignServiceToCustomerRequest", "response": "CustomerServiceResponse", "public": false},
-          {"name": "GetCustomerService", "full_method": "/service.ServiceManager/GetCustomerService", "request": "GetCustomerServiceRequest", "response": "CustomerServiceResponse", "public": false},
-          {"name": "ListCustomerServices", "full_method": "/service.ServiceManager/ListCustomerServices", "request": "ListCustomerServicesRequest", "response": "ListCustomerServicesResponse", "public": false},
-          {"name": "UpdateCustomerService", "full_method": "/service.ServiceManager/UpdateCustomerService", "request": "UpdateCustomerServiceRequest", "response": "CustomerServiceResponse", "public": false},
-          {"name": "RemoveServiceFromCustomer", "full_method": "/service.ServiceManager/RemoveServiceFromCustomer", "request": "RemoveServiceFromCustomerRequest", "response": "RemoveServiceFromCustomerResponse", "public": false}
+          {
+            "name": "CreateService",
+            "full_method": "/service.ServiceManager/CreateService",
+            "request": "CreateServiceRequest",
+            "response": "ServiceResponse",
+            "public": false
+          },
+          {
+            "name": "GetService",
+            "full_method": "/service.ServiceManager/GetService",
+            "request": "GetServiceRequest",
+            "response": "ServiceResponse",
+            "public": false
+          },
+          {
+            "name": "ListServices",
+            "full_method": "/service.ServiceManager/ListServices",
+            "request": "ListServicesRequest",
+            "response": "ListServicesResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateService",
+            "full_method": "/service.ServiceManager/UpdateService",
+            "request": "UpdateServiceRequest",
+            "response": "ServiceResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteService",
+            "full_method": "/service.ServiceManager/DeleteService",
+            "request": "DeleteServiceRequest",
+            "response": "DeleteServiceResponse",
+            "public": false
+          },
+          {
+            "name": "CreateProduct",
+            "full_method": "/service.ServiceManager/CreateProduct",
+            "request": "CreateProductRequest",
+            "response": "ProductResponse",
+            "public": false
+          },
+          {
+            "name": "GetProduct",
+            "full_method": "/service.ServiceManager/GetProduct",
+            "request": "GetProductRequest",
+            "response": "ProductResponse",
+            "public": false
+          },
+          {
+            "name": "ListProducts",
+            "full_method": "/service.ServiceManager/ListProducts",
+            "request": "ListProductsRequest",
+            "response": "ListProductsResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateProduct",
+            "full_method": "/service.ServiceManager/UpdateProduct",
+            "request": "UpdateProductRequest",
+            "response": "ProductResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteProduct",
+            "full_method": "/service.ServiceManager/DeleteProduct",
+            "request": "DeleteProductRequest",
+            "response": "DeleteProductResponse",
+            "public": false
+          },
+          {
+            "name": "GetCart",
+            "full_method": "/service.ServiceManager/GetCart",
+            "request": "GetCartRequest",
+            "response": "CartResponse",
+            "public": false
+          },
+          {
+            "name": "AddCartItem",
+            "full_method": "/service.ServiceManager/AddCartItem",
+            "request": "AddCartItemRequest",
+            "response": "CartResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCartItem",
+            "full_method": "/service.ServiceManager/UpdateCartItem",
+            "request": "UpdateCartItemRequest",
+            "response": "CartResponse",
+            "public": false
+          },
+          {
+            "name": "RemoveCartItem",
+            "full_method": "/service.ServiceManager/RemoveCartItem",
+            "request": "RemoveCartItemRequest",
+            "response": "CartResponse",
+            "public": false
+          },
+          {
+            "name": "ClearCart",
+            "full_method": "/service.ServiceManager/ClearCart",
+            "request": "ClearCartRequest",
+            "response": "CartResponse",
+            "public": false
+          },
+          {
+            "name": "AssignServiceToCustomer",
+            "full_method": "/service.ServiceManager/AssignServiceToCustomer",
+            "request": "AssignServiceToCustomerRequest",
+            "response": "CustomerServiceResponse",
+            "public": false
+          },
+          {
+            "name": "GetCustomerService",
+            "full_method": "/service.ServiceManager/GetCustomerService",
+            "request": "GetCustomerServiceRequest",
+            "response": "CustomerServiceResponse",
+            "public": false
+          },
+          {
+            "name": "ListCustomerServices",
+            "full_method": "/service.ServiceManager/ListCustomerServices",
+            "request": "ListCustomerServicesRequest",
+            "response": "ListCustomerServicesResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCustomerService",
+            "full_method": "/service.ServiceManager/UpdateCustomerService",
+            "request": "UpdateCustomerServiceRequest",
+            "response": "CustomerServiceResponse",
+            "public": false
+          },
+          {
+            "name": "RemoveServiceFromCustomer",
+            "full_method": "/service.ServiceManager/RemoveServiceFromCustomer",
+            "request": "RemoveServiceFromCustomerRequest",
+            "response": "RemoveServiceFromCustomerResponse",
+            "public": false
+          }
         ]
       },
       "messages": [
-        {"name": "Service", "fields": ["id", "name", "category", "price", "type", "schedule_date", "start_date", "agent_name", "description", "created_at", "updated_at", "sku", "active"]},
-        {"name": "Product", "fields": ["id", "name", "description", "sku", "price", "active", "created_at", "updated_at"]},
-        {"name": "CustomerService", "fields": ["id", "customer_id", "service_id", "customer", "service", "status", "ordered_at"]},
-        {"name": "Cart", "fields": ["id", "customer_id", "customer", "items", "subtotal", "total", "created_at", "updated_at"]},
-        {"name": "CartItem", "fields": ["id", "cart_id", "item_type", "service_id", "product_id", "service", "product", "quantity", "unit_price", "total_price", "notes", "created_at", "updated_at"]},
-        {"name": "CreateServiceRequest", "fields": ["service"]},
-        {"name": "GetServiceRequest", "fields": ["id"]},
-        {"name": "ListServicesRequest", "fields": ["category", "type", "page_size", "page_token"]},
-        {"name": "UpdateServiceRequest", "fields": ["service"]},
-        {"name": "DeleteServiceRequest", "fields": ["id"]},
-        {"name": "CreateProductRequest", "fields": ["product"]},
-        {"name": "GetProductRequest", "fields": ["id"]},
-        {"name": "ListProductsRequest", "fields": ["active_only", "page_size", "page_token"]},
-        {"name": "UpdateProductRequest", "fields": ["product"]},
-        {"name": "DeleteProductRequest", "fields": ["id"]},
-        {"name": "GetCartRequest", "fields": ["customer_id"]},
-        {"name": "AddCartItemRequest", "fields": ["customer_id", "item_type", "service_id", "product_id", "quantity", "notes"]},
-        {"name": "UpdateCartItemRequest", "fields": ["customer_id", "item_id", "quantity", "notes"]},
-        {"name": "RemoveCartItemRequest", "fields": ["customer_id", "item_id"]},
-        {"name": "ClearCartRequest", "fields": ["customer_id"]},
-        {"name": "AssignServiceToCustomerRequest", "fields": ["customer_id", "service_id", "status", "ordered_at"]},
-        {"name": "GetCustomerServiceRequest", "fields": ["id"]},
-        {"name": "ListCustomerServicesRequest", "fields": ["customer_id", "service_id", "status", "page_size", "page_token"]},
-        {"name": "UpdateCustomerServiceRequest", "fields": ["customer_service"]},
-        {"name": "RemoveServiceFromCustomerRequest", "fields": ["id"]},
-        {"name": "ServiceResponse", "fields": ["service", "errors"]},
-        {"name": "ListServicesResponse", "fields": ["services", "next_page_token", "errors"]},
-        {"name": "DeleteServiceResponse", "fields": ["deleted", "errors"]},
-        {"name": "ProductResponse", "fields": ["product", "errors"]},
-        {"name": "ListProductsResponse", "fields": ["products", "next_page_token", "errors"]},
-        {"name": "DeleteProductResponse", "fields": ["deleted", "errors"]},
-        {"name": "CartResponse", "fields": ["cart", "errors"]},
-        {"name": "CustomerServiceResponse", "fields": ["customer_service", "errors"]},
-        {"name": "ListCustomerServicesResponse", "fields": ["customer_services", "next_page_token", "errors"]},
-        {"name": "RemoveServiceFromCustomerResponse", "fields": ["removed", "errors"]},
-        {"name": "Error", "fields": ["code", "description"]}
+        {
+          "name": "Service",
+          "fields": [
+            "id",
+            "name",
+            "category",
+            "price",
+            "type",
+            "schedule_date",
+            "start_date",
+            "agent_name",
+            "description",
+            "created_at",
+            "updated_at",
+            "sku",
+            "active"
+          ]
+        },
+        {
+          "name": "Product",
+          "fields": [
+            "id",
+            "name",
+            "description",
+            "sku",
+            "price",
+            "active",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CustomerService",
+          "fields": [
+            "id",
+            "customer_id",
+            "service_id",
+            "customer",
+            "service",
+            "status",
+            "ordered_at"
+          ]
+        },
+        {
+          "name": "Cart",
+          "fields": [
+            "id",
+            "customer_id",
+            "customer",
+            "items",
+            "subtotal",
+            "total",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CartItem",
+          "fields": [
+            "id",
+            "cart_id",
+            "item_type",
+            "service_id",
+            "product_id",
+            "service",
+            "product",
+            "quantity",
+            "unit_price",
+            "total_price",
+            "notes",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CreateServiceRequest",
+          "fields": [
+            "service"
+          ]
+        },
+        {
+          "name": "GetServiceRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListServicesRequest",
+          "fields": [
+            "category",
+            "type",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "UpdateServiceRequest",
+          "fields": [
+            "service"
+          ]
+        },
+        {
+          "name": "DeleteServiceRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "CreateProductRequest",
+          "fields": [
+            "product"
+          ]
+        },
+        {
+          "name": "GetProductRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListProductsRequest",
+          "fields": [
+            "active_only",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "UpdateProductRequest",
+          "fields": [
+            "product"
+          ]
+        },
+        {
+          "name": "DeleteProductRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "GetCartRequest",
+          "fields": [
+            "customer_id"
+          ]
+        },
+        {
+          "name": "AddCartItemRequest",
+          "fields": [
+            "customer_id",
+            "item_type",
+            "service_id",
+            "product_id",
+            "quantity",
+            "notes"
+          ]
+        },
+        {
+          "name": "UpdateCartItemRequest",
+          "fields": [
+            "customer_id",
+            "item_id",
+            "quantity",
+            "notes"
+          ]
+        },
+        {
+          "name": "RemoveCartItemRequest",
+          "fields": [
+            "customer_id",
+            "item_id"
+          ]
+        },
+        {
+          "name": "ClearCartRequest",
+          "fields": [
+            "customer_id"
+          ]
+        },
+        {
+          "name": "AssignServiceToCustomerRequest",
+          "fields": [
+            "customer_id",
+            "service_id",
+            "status",
+            "ordered_at"
+          ]
+        },
+        {
+          "name": "GetCustomerServiceRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListCustomerServicesRequest",
+          "fields": [
+            "customer_id",
+            "service_id",
+            "status",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "UpdateCustomerServiceRequest",
+          "fields": [
+            "customer_service"
+          ]
+        },
+        {
+          "name": "RemoveServiceFromCustomerRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ServiceResponse",
+          "fields": [
+            "service",
+            "errors"
+          ]
+        },
+        {
+          "name": "ListServicesResponse",
+          "fields": [
+            "services",
+            "next_page_token",
+            "errors"
+          ]
+        },
+        {
+          "name": "DeleteServiceResponse",
+          "fields": [
+            "deleted",
+            "errors"
+          ]
+        },
+        {
+          "name": "ProductResponse",
+          "fields": [
+            "product",
+            "errors"
+          ]
+        },
+        {
+          "name": "ListProductsResponse",
+          "fields": [
+            "products",
+            "next_page_token",
+            "errors"
+          ]
+        },
+        {
+          "name": "DeleteProductResponse",
+          "fields": [
+            "deleted",
+            "errors"
+          ]
+        },
+        {
+          "name": "CartResponse",
+          "fields": [
+            "cart",
+            "errors"
+          ]
+        },
+        {
+          "name": "CustomerServiceResponse",
+          "fields": [
+            "customer_service",
+            "errors"
+          ]
+        },
+        {
+          "name": "ListCustomerServicesResponse",
+          "fields": [
+            "customer_services",
+            "next_page_token",
+            "errors"
+          ]
+        },
+        {
+          "name": "RemoveServiceFromCustomerResponse",
+          "fields": [
+            "removed",
+            "errors"
+          ]
+        },
+        {
+          "name": "Error",
+          "fields": [
+            "code",
+            "description"
+          ]
+        }
       ]
     },
     {
@@ -203,93 +832,430 @@
         "full_service": "order.OrderManager",
         "domain": "Orders, order status, order line items, and customer self-service order flows",
         "rpcs": [
-          {"name": "CreateOrder", "full_method": "/order.OrderManager/CreateOrder", "request": "CreateOrderRequest", "response": "CreateOrderResponse", "public": false},
-          {"name": "CreateMyOrder", "full_method": "/order.OrderManager/CreateMyOrder", "request": "CreateMyOrderRequest", "response": "CreateOrderResponse", "public": false},
-          {"name": "GetOrder", "full_method": "/order.OrderManager/GetOrder", "request": "GetOrderRequest", "response": "GetOrderResponse", "public": false},
-          {"name": "GetMyOrder", "full_method": "/order.OrderManager/GetMyOrder", "request": "GetMyOrderRequest", "response": "GetOrderResponse", "public": false},
-          {"name": "ListOrders", "full_method": "/order.OrderManager/ListOrders", "request": "ListOrdersRequest", "response": "ListOrdersResponse", "public": false},
-          {"name": "ListMyOrders", "full_method": "/order.OrderManager/ListMyOrders", "request": "ListMyOrdersRequest", "response": "ListOrdersResponse", "public": false},
-          {"name": "UpdateOrderStatus", "full_method": "/order.OrderManager/UpdateOrderStatus", "request": "UpdateOrderStatusRequest", "response": "UpdateOrderStatusResponse", "public": false},
-          {"name": "AddServiceToOrder", "full_method": "/order.OrderManager/AddServiceToOrder", "request": "AddServiceToOrderRequest", "response": "AddServiceToOrderResponse", "public": false},
-          {"name": "RemoveServiceFromOrder", "full_method": "/order.OrderManager/RemoveServiceFromOrder", "request": "RemoveServiceFromOrderRequest", "response": "RemoveServiceFromOrderResponse", "public": false}
+          {
+            "name": "CreateOrder",
+            "full_method": "/order.OrderManager/CreateOrder",
+            "request": "CreateOrderRequest",
+            "response": "CreateOrderResponse",
+            "public": false
+          },
+          {
+            "name": "CreateMyOrder",
+            "full_method": "/order.OrderManager/CreateMyOrder",
+            "request": "CreateMyOrderRequest",
+            "response": "CreateOrderResponse",
+            "public": false
+          },
+          {
+            "name": "GetOrder",
+            "full_method": "/order.OrderManager/GetOrder",
+            "request": "GetOrderRequest",
+            "response": "GetOrderResponse",
+            "public": false
+          },
+          {
+            "name": "GetMyOrder",
+            "full_method": "/order.OrderManager/GetMyOrder",
+            "request": "GetMyOrderRequest",
+            "response": "GetOrderResponse",
+            "public": false
+          },
+          {
+            "name": "ListOrders",
+            "full_method": "/order.OrderManager/ListOrders",
+            "request": "ListOrdersRequest",
+            "response": "ListOrdersResponse",
+            "public": false
+          },
+          {
+            "name": "ListMyOrders",
+            "full_method": "/order.OrderManager/ListMyOrders",
+            "request": "ListMyOrdersRequest",
+            "response": "ListOrdersResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateOrderStatus",
+            "full_method": "/order.OrderManager/UpdateOrderStatus",
+            "request": "UpdateOrderStatusRequest",
+            "response": "UpdateOrderStatusResponse",
+            "public": false
+          },
+          {
+            "name": "AddServiceToOrder",
+            "full_method": "/order.OrderManager/AddServiceToOrder",
+            "request": "AddServiceToOrderRequest",
+            "response": "AddServiceToOrderResponse",
+            "public": false
+          },
+          {
+            "name": "RemoveServiceFromOrder",
+            "full_method": "/order.OrderManager/RemoveServiceFromOrder",
+            "request": "RemoveServiceFromOrderRequest",
+            "response": "RemoveServiceFromOrderResponse",
+            "public": false
+          }
         ]
       },
       "messages": [
-        {"name": "Order", "fields": ["id", "customer_id", "user_id", "order_number", "status", "schedule_date", "start_date", "due_date", "subtotal", "tax", "total", "notes", "customer", "services", "created_at", "updated_at"]},
-        {"name": "OrderService", "fields": ["id", "order_id", "service_id", "service_name", "category", "type", "unit_price", "quantity", "total_price", "agent_name", "schedule_date", "start_date", "due_date", "service", "created_at", "updated_at"]},
-        {"name": "CreateOrderRequest", "fields": ["customer_id", "user_id", "status", "schedule_date", "start_date", "due_date", "notes", "services"]},
-        {"name": "CreateOrderServiceInput", "fields": ["service_id", "quantity", "agent_name", "schedule_date", "start_date", "due_date"]},
-        {"name": "CreateOrderResponse", "fields": ["order", "errors"]},
-        {"name": "CreateMyOrderRequest", "fields": ["status", "schedule_date", "start_date", "due_date", "notes", "services"]},
-        {"name": "GetOrderRequest", "fields": ["id", "user_id"]},
-        {"name": "GetOrderResponse", "fields": ["order", "errors"]},
-        {"name": "GetMyOrderRequest", "fields": ["id"]},
-        {"name": "ListOrdersRequest", "fields": ["user_id", "customer_id", "status", "page_size", "page_token"]},
-        {"name": "ListOrdersResponse", "fields": ["orders", "next_page_token", "errors"]},
-        {"name": "ListMyOrdersRequest", "fields": ["customer_id", "status", "page_size", "page_token"]},
-        {"name": "UpdateOrderStatusRequest", "fields": ["id", "user_id", "status"]},
-        {"name": "UpdateOrderStatusResponse", "fields": ["order", "errors"]},
-        {"name": "AddServiceToOrderRequest", "fields": ["order_id", "user_id", "service"]},
-        {"name": "AddServiceToOrderResponse", "fields": ["order", "errors"]},
-        {"name": "RemoveServiceFromOrderRequest", "fields": ["order_id", "user_id", "order_service_id"]},
-        {"name": "RemoveServiceFromOrderResponse", "fields": ["order", "errors"]},
-        {"name": "Error", "fields": ["code", "description"]}
-      ]
-    },
-    {
-      "package": "patient",
-      "proto_path": "packages/ceerat-contracts/proto/patient/patient.proto",
-      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/patient",
-      "generated_files": [
-        "packages/ceerat-contracts/proto/patient/patient.pb.go",
-        "packages/ceerat-contracts/proto/patient/patient_grpc.pb.go"
-      ],
-      "imports": [],
-      "service": {
-        "name": "patient",
-        "full_service": "patient.patient",
-        "domain": "Simple patient CRUD and legacy auth/token placeholders",
-        "notes": "The service name is lowercase in the proto; preserve exact full method names in security lists.",
-        "rpcs": [
-          {"name": "Create", "full_method": "/patient.patient/Create", "request": "Patient", "response": "PatientResponse", "public": false},
-          {"name": "Get", "full_method": "/patient.patient/Get", "request": "GetPatientRequest", "response": "Patient", "public": false},
-          {"name": "GetAll", "full_method": "/patient.patient/GetAll", "request": "GetAllRequest", "response": "GetAllResponse", "public": false},
-          {"name": "Auth", "full_method": "/patient.patient/Auth", "request": "Patient", "response": "Token", "public": false},
-          {"name": "ValidateToken", "full_method": "/patient.patient/ValidateToken", "request": "Token", "response": "Token", "public": false}
-        ]
-      },
-      "messages": [
-        {"name": "Patient", "fields": ["id", "fname", "lname", "dob", "dos", "location", "icdcodes", "covid_test", "covid_test_result", "rsv_test", "rsv_test_result", "strep_test", "strep_test_result", "flu_test", "flu_test_result"]},
-        {"name": "GetAllRequest", "fields": []},
-        {"name": "GetPatientRequest", "fields": ["id"]},
-        {"name": "GetAllResponse", "fields": ["patients", "errors"]},
-        {"name": "PatientResponse", "fields": ["patient", "errors"]},
-        {"name": "Token", "fields": ["token", "valid", "errors"]},
-        {"name": "Error", "fields": ["code", "description"]}
+        {
+          "name": "Order",
+          "fields": [
+            "id",
+            "customer_id",
+            "user_id",
+            "order_number",
+            "status",
+            "schedule_date",
+            "start_date",
+            "due_date",
+            "subtotal",
+            "tax",
+            "total",
+            "notes",
+            "customer",
+            "services",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "OrderService",
+          "fields": [
+            "id",
+            "order_id",
+            "service_id",
+            "service_name",
+            "category",
+            "type",
+            "unit_price",
+            "quantity",
+            "total_price",
+            "agent_name",
+            "schedule_date",
+            "start_date",
+            "due_date",
+            "service",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CreateOrderRequest",
+          "fields": [
+            "customer_id",
+            "user_id",
+            "status",
+            "schedule_date",
+            "start_date",
+            "due_date",
+            "notes",
+            "services"
+          ]
+        },
+        {
+          "name": "CreateOrderServiceInput",
+          "fields": [
+            "service_id",
+            "quantity",
+            "agent_name",
+            "schedule_date",
+            "start_date",
+            "due_date"
+          ]
+        },
+        {
+          "name": "CreateOrderResponse",
+          "fields": [
+            "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "CreateMyOrderRequest",
+          "fields": [
+            "status",
+            "schedule_date",
+            "start_date",
+            "due_date",
+            "notes",
+            "services"
+          ]
+        },
+        {
+          "name": "GetOrderRequest",
+          "fields": [
+            "id",
+            "user_id"
+          ]
+        },
+        {
+          "name": "GetOrderResponse",
+          "fields": [
+            "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "GetMyOrderRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListOrdersRequest",
+          "fields": [
+            "user_id",
+            "customer_id",
+            "status",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "ListOrdersResponse",
+          "fields": [
+            "orders",
+            "next_page_token",
+            "errors"
+          ]
+        },
+        {
+          "name": "ListMyOrdersRequest",
+          "fields": [
+            "customer_id",
+            "status",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "UpdateOrderStatusRequest",
+          "fields": [
+            "id",
+            "user_id",
+            "status"
+          ]
+        },
+        {
+          "name": "UpdateOrderStatusResponse",
+          "fields": [
+            "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "AddServiceToOrderRequest",
+          "fields": [
+            "order_id",
+            "user_id",
+            "service"
+          ]
+        },
+        {
+          "name": "AddServiceToOrderResponse",
+          "fields": [
+            "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "RemoveServiceFromOrderRequest",
+          "fields": [
+            "order_id",
+            "user_id",
+            "order_service_id"
+          ]
+        },
+        {
+          "name": "RemoveServiceFromOrderResponse",
+          "fields": [
+            "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "Error",
+          "fields": [
+            "code",
+            "description"
+          ]
+        }
       ]
     }
   ],
   "domain_models": [
-    {"name": "User", "fields": ["ID", "Name", "Company", "Email", "Password", "Token", "Role", "Status"]},
-    {"name": "Patient", "fields": ["ID", "FirstName", "LastName", "DOB", "DOS", "Location", "ICDCodes", "COVIDTest", "COVIDTestResult", "RSVTest", "RSVTestResult", "StrepTest", "StrepTestResult", "FluTest", "FluTestResult"]},
-    {"name": "Address", "fields": ["Line1", "Line2", "City", "State", "Country", "PostalCode"]},
-    {"name": "Customer", "fields": ["ID", "FirstName", "LastName", "Email", "Phone", "Address", "UserID", "User", "CreatedAt", "UpdatedAt"]},
-    {"name": "Service", "fields": ["ID", "Name", "Category", "Price", "Type", "ScheduleDate", "StartDate", "AgentName", "Description", "CreatedAt", "UpdatedAt", "SKU", "Active"]},
-    {"name": "Product", "fields": ["ID", "Name", "Description", "SKU", "Price", "Active", "CreatedAt", "UpdatedAt"]},
-    {"name": "CustomerService", "fields": ["ID", "CustomerID", "ServiceID", "Customer", "Service", "Status", "OrderedAt"]},
-    {"name": "Cart", "fields": ["ID", "CustomerID", "Customer", "Items", "Subtotal", "Total", "CreatedAt", "UpdatedAt"]},
-    {"name": "CartItem", "fields": ["ID", "CartID", "ItemType", "ServiceID", "ProductID", "Service", "Product", "Quantity", "UnitPrice", "TotalPrice", "Notes", "CreatedAt", "UpdatedAt"]},
-    {"name": "Order", "fields": ["ID", "CustomerID", "UserID", "OrderNumber", "Status", "ScheduleDate", "StartDate", "DueDate", "Subtotal", "Tax", "Total", "Notes", "Customer", "Services", "CreatedAt", "UpdatedAt"]},
-    {"name": "OrderService", "fields": ["ID", "OrderID", "ServiceID", "ServiceName", "Category", "Type", "UnitPrice", "Quantity", "TotalPrice", "AgentName", "ScheduleDate", "StartDate", "DueDate", "Service", "CreatedAt", "UpdatedAt"]},
-    {"name": "CreateOrderServiceInput", "fields": ["ServiceID", "Quantity", "AgentName", "ScheduleDate", "StartDate", "DueDate"]}
+    {
+      "name": "User",
+      "fields": [
+        "ID",
+        "Name",
+        "Company",
+        "Email",
+        "Password",
+        "Token",
+        "Role",
+        "Status"
+      ]
+    },
+    {
+      "name": "Address",
+      "fields": [
+        "Line1",
+        "Line2",
+        "City",
+        "State",
+        "Country",
+        "PostalCode"
+      ]
+    },
+    {
+      "name": "Customer",
+      "fields": [
+        "ID",
+        "FirstName",
+        "LastName",
+        "Email",
+        "Phone",
+        "Address",
+        "UserID",
+        "User",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "Service",
+      "fields": [
+        "ID",
+        "Name",
+        "Category",
+        "Price",
+        "Type",
+        "ScheduleDate",
+        "StartDate",
+        "AgentName",
+        "Description",
+        "CreatedAt",
+        "UpdatedAt",
+        "SKU",
+        "Active"
+      ]
+    },
+    {
+      "name": "Product",
+      "fields": [
+        "ID",
+        "Name",
+        "Description",
+        "SKU",
+        "Price",
+        "Active",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "CustomerService",
+      "fields": [
+        "ID",
+        "CustomerID",
+        "ServiceID",
+        "Customer",
+        "Service",
+        "Status",
+        "OrderedAt"
+      ]
+    },
+    {
+      "name": "Cart",
+      "fields": [
+        "ID",
+        "CustomerID",
+        "Customer",
+        "Items",
+        "Subtotal",
+        "Total",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "CartItem",
+      "fields": [
+        "ID",
+        "CartID",
+        "ItemType",
+        "ServiceID",
+        "ProductID",
+        "Service",
+        "Product",
+        "Quantity",
+        "UnitPrice",
+        "TotalPrice",
+        "Notes",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "Order",
+      "fields": [
+        "ID",
+        "CustomerID",
+        "UserID",
+        "OrderNumber",
+        "Status",
+        "ScheduleDate",
+        "StartDate",
+        "DueDate",
+        "Subtotal",
+        "Tax",
+        "Total",
+        "Notes",
+        "Customer",
+        "Services",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "OrderService",
+      "fields": [
+        "ID",
+        "OrderID",
+        "ServiceID",
+        "ServiceName",
+        "Category",
+        "Type",
+        "UnitPrice",
+        "Quantity",
+        "TotalPrice",
+        "AgentName",
+        "ScheduleDate",
+        "StartDate",
+        "DueDate",
+        "Service",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "CreateOrderServiceInput",
+      "fields": [
+        "ServiceID",
+        "Quantity",
+        "AgentName",
+        "ScheduleDate",
+        "StartDate",
+        "DueDate"
+      ]
+    }
   ],
   "mapper_functions": [
     "UserFromProto",
     "UserToProto",
     "UsersToProto",
-    "PatientFromProto",
-    "PatientToProto",
-    "PatientsToProto",
     "AddressFromProto",
     "AddressToProto",
     "CustomerFromProto",
@@ -321,7 +1287,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 50,
+    "known_grpc_methods_count": 45,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -367,12 +1333,7 @@
       "/order.OrderManager/ListMyOrders",
       "/order.OrderManager/UpdateOrderStatus",
       "/order.OrderManager/AddServiceToOrder",
-      "/order.OrderManager/RemoveServiceFromOrder",
-      "/patient.patient/Create",
-      "/patient.patient/Get",
-      "/patient.patient/GetAll",
-      "/patient.patient/Auth",
-      "/patient.patient/ValidateToken"
+      "/order.OrderManager/RemoveServiceFromOrder"
     ],
     "default_public_methods": [
       "/auth.Auth/Auth",
@@ -385,7 +1346,9 @@
       "/health.Health/Check"
     ],
     "default_role_permissions": {
-      "admin": ["*"],
+      "admin": [
+        "*"
+      ],
       "agent": [
         "/customer.CustomerService/CreateCustomer",
         "/customer.CustomerService/GetCustomer",
@@ -446,11 +1409,29 @@
     ]
   },
   "proto_dependency_graph": [
-    {"package": "auth", "imports": []},
-    {"package": "patient", "imports": []},
-    {"package": "customer", "imports": ["auth"]},
-    {"package": "service", "imports": ["customer"]},
-    {"package": "order", "imports": ["customer", "service"]}
+    {
+      "package": "auth",
+      "imports": []
+    },
+    {
+      "package": "customer",
+      "imports": [
+        "auth"
+      ]
+    },
+    {
+      "package": "service",
+      "imports": [
+        "customer"
+      ]
+    },
+    {
+      "package": "order",
+      "imports": [
+        "customer",
+        "service"
+      ]
+    }
   ],
   "builder_checklist_before_contract_change": [
     "Read this inventory.",
