@@ -96,6 +96,35 @@ type CustomerService struct {
 	OrderedAt  string
 }
 
+// Cart groups service and product items selected by a customer before checkout.
+type Cart struct {
+	ID         string
+	CustomerID string
+	Customer   *Customer
+	Items      []*CartItem
+	Subtotal   float64
+	Total      float64
+	CreatedAt  string
+	UpdatedAt  string
+}
+
+// CartItem stores one selected service or product in a cart.
+type CartItem struct {
+	ID         string
+	CartID     string
+	ItemType   string
+	ServiceID  string
+	ProductID  string
+	Service    *Service
+	Product    *Product
+	Quantity   int32
+	UnitPrice  float64
+	TotalPrice float64
+	Notes      string
+	CreatedAt  string
+	UpdatedAt  string
+}
+
 // Order groups one or more services for a customer.
 type Order struct {
 	ID           string

@@ -37,6 +37,11 @@ type ServiceManagerClient interface {
 	ListCustomerServices(ctx context.Context, in *ListCustomerServicesRequest, opts ...grpc.CallOption) (*ListCustomerServicesResponse, error)
 	UpdateCustomerService(ctx context.Context, in *UpdateCustomerServiceRequest, opts ...grpc.CallOption) (*CustomerServiceResponse, error)
 	RemoveServiceFromCustomer(ctx context.Context, in *RemoveServiceFromCustomerRequest, opts ...grpc.CallOption) (*RemoveServiceFromCustomerResponse, error)
+	GetCart(ctx context.Context, in *GetCartRequest, opts ...grpc.CallOption) (*CartResponse, error)
+	AddCartItem(ctx context.Context, in *AddCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error)
+	UpdateCartItem(ctx context.Context, in *UpdateCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error)
+	RemoveCartItem(ctx context.Context, in *RemoveCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error)
+	ClearCart(ctx context.Context, in *ClearCartRequest, opts ...grpc.CallOption) (*CartResponse, error)
 }
 
 type serviceManagerClient struct {
@@ -182,6 +187,51 @@ func (c *serviceManagerClient) RemoveServiceFromCustomer(ctx context.Context, in
 	return out, nil
 }
 
+func (c *serviceManagerClient) GetCart(ctx context.Context, in *GetCartRequest, opts ...grpc.CallOption) (*CartResponse, error) {
+	out := new(CartResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/GetCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) AddCartItem(ctx context.Context, in *AddCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error) {
+	out := new(CartResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/AddCartItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) UpdateCartItem(ctx context.Context, in *UpdateCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error) {
+	out := new(CartResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/UpdateCartItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) RemoveCartItem(ctx context.Context, in *RemoveCartItemRequest, opts ...grpc.CallOption) (*CartResponse, error) {
+	out := new(CartResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/RemoveCartItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) ClearCart(ctx context.Context, in *ClearCartRequest, opts ...grpc.CallOption) (*CartResponse, error) {
+	out := new(CartResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/ClearCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceManagerServer is the server API for ServiceManager service.
 // All implementations must embed UnimplementedServiceManagerServer
 // for forward compatibility
@@ -201,6 +251,11 @@ type ServiceManagerServer interface {
 	ListCustomerServices(context.Context, *ListCustomerServicesRequest) (*ListCustomerServicesResponse, error)
 	UpdateCustomerService(context.Context, *UpdateCustomerServiceRequest) (*CustomerServiceResponse, error)
 	RemoveServiceFromCustomer(context.Context, *RemoveServiceFromCustomerRequest) (*RemoveServiceFromCustomerResponse, error)
+	GetCart(context.Context, *GetCartRequest) (*CartResponse, error)
+	AddCartItem(context.Context, *AddCartItemRequest) (*CartResponse, error)
+	UpdateCartItem(context.Context, *UpdateCartItemRequest) (*CartResponse, error)
+	RemoveCartItem(context.Context, *RemoveCartItemRequest) (*CartResponse, error)
+	ClearCart(context.Context, *ClearCartRequest) (*CartResponse, error)
 	mustEmbedUnimplementedServiceManagerServer()
 }
 
@@ -252,6 +307,21 @@ func (UnimplementedServiceManagerServer) UpdateCustomerService(context.Context, 
 }
 func (UnimplementedServiceManagerServer) RemoveServiceFromCustomer(context.Context, *RemoveServiceFromCustomerRequest) (*RemoveServiceFromCustomerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveServiceFromCustomer not implemented")
+}
+func (UnimplementedServiceManagerServer) GetCart(context.Context, *GetCartRequest) (*CartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCart not implemented")
+}
+func (UnimplementedServiceManagerServer) AddCartItem(context.Context, *AddCartItemRequest) (*CartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCartItem not implemented")
+}
+func (UnimplementedServiceManagerServer) UpdateCartItem(context.Context, *UpdateCartItemRequest) (*CartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCartItem not implemented")
+}
+func (UnimplementedServiceManagerServer) RemoveCartItem(context.Context, *RemoveCartItemRequest) (*CartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveCartItem not implemented")
+}
+func (UnimplementedServiceManagerServer) ClearCart(context.Context, *ClearCartRequest) (*CartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearCart not implemented")
 }
 func (UnimplementedServiceManagerServer) mustEmbedUnimplementedServiceManagerServer() {}
 
@@ -536,6 +606,96 @@ func _ServiceManager_RemoveServiceFromCustomer_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceManager_GetCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).GetCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/GetCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).GetCart(ctx, req.(*GetCartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_AddCartItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCartItemRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).AddCartItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/AddCartItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).AddCartItem(ctx, req.(*AddCartItemRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_UpdateCartItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCartItemRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).UpdateCartItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/UpdateCartItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).UpdateCartItem(ctx, req.(*UpdateCartItemRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_RemoveCartItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveCartItemRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).RemoveCartItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/RemoveCartItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).RemoveCartItem(ctx, req.(*RemoveCartItemRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_ClearCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearCartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).ClearCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/ClearCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).ClearCart(ctx, req.(*ClearCartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceManager_ServiceDesc is the grpc.ServiceDesc for ServiceManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +762,26 @@ var ServiceManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveServiceFromCustomer",
 			Handler:    _ServiceManager_RemoveServiceFromCustomer_Handler,
+		},
+		{
+			MethodName: "GetCart",
+			Handler:    _ServiceManager_GetCart_Handler,
+		},
+		{
+			MethodName: "AddCartItem",
+			Handler:    _ServiceManager_AddCartItem_Handler,
+		},
+		{
+			MethodName: "UpdateCartItem",
+			Handler:    _ServiceManager_UpdateCartItem_Handler,
+		},
+		{
+			MethodName: "RemoveCartItem",
+			Handler:    _ServiceManager_RemoveCartItem_Handler,
+		},
+		{
+			MethodName: "ClearCart",
+			Handler:    _ServiceManager_ClearCart_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

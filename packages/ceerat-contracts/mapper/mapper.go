@@ -301,6 +301,96 @@ func CustomerServicesToProto(in []*domain.CustomerService) []*servicepb.Customer
 	return out
 }
 
+func CartFromProto(in *servicepb.Cart) *domain.Cart {
+	if in == nil {
+		return nil
+	}
+	return &domain.Cart{
+		ID:         in.Id,
+		CustomerID: in.CustomerId,
+		Customer:   CustomerFromProto(in.Customer),
+		Items:      CartItemsFromProto(in.Items),
+		Subtotal:   in.Subtotal,
+		Total:      in.Total,
+		CreatedAt:  in.CreatedAt,
+		UpdatedAt:  in.UpdatedAt,
+	}
+}
+
+func CartToProto(in *domain.Cart) *servicepb.Cart {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.Cart{
+		Id:         in.ID,
+		CustomerId: in.CustomerID,
+		Customer:   CustomerToProto(in.Customer),
+		Items:      CartItemsToProto(in.Items),
+		Subtotal:   in.Subtotal,
+		Total:      in.Total,
+		CreatedAt:  in.CreatedAt,
+		UpdatedAt:  in.UpdatedAt,
+	}
+}
+
+func CartItemFromProto(in *servicepb.CartItem) *domain.CartItem {
+	if in == nil {
+		return nil
+	}
+	return &domain.CartItem{
+		ID:         in.Id,
+		CartID:     in.CartId,
+		ItemType:   in.ItemType,
+		ServiceID:  in.ServiceId,
+		ProductID:  in.ProductId,
+		Service:    ServiceFromProto(in.Service),
+		Product:    ProductFromProto(in.Product),
+		Quantity:   in.Quantity,
+		UnitPrice:  in.UnitPrice,
+		TotalPrice: in.TotalPrice,
+		Notes:      in.Notes,
+		CreatedAt:  in.CreatedAt,
+		UpdatedAt:  in.UpdatedAt,
+	}
+}
+
+func CartItemToProto(in *domain.CartItem) *servicepb.CartItem {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.CartItem{
+		Id:         in.ID,
+		CartId:     in.CartID,
+		ItemType:   in.ItemType,
+		ServiceId:  in.ServiceID,
+		ProductId:  in.ProductID,
+		Service:    ServiceToProto(in.Service),
+		Product:    ProductToProto(in.Product),
+		Quantity:   in.Quantity,
+		UnitPrice:  in.UnitPrice,
+		TotalPrice: in.TotalPrice,
+		Notes:      in.Notes,
+		CreatedAt:  in.CreatedAt,
+		UpdatedAt:  in.UpdatedAt,
+	}
+}
+
+func CartItemsFromProto(in []*servicepb.CartItem) []*domain.CartItem {
+	out := make([]*domain.CartItem, 0, len(in))
+	for _, item := range in {
+		out = append(out, CartItemFromProto(item))
+	}
+	return out
+}
+
+func CartItemsToProto(in []*domain.CartItem) []*servicepb.CartItem {
+	out := make([]*servicepb.CartItem, 0, len(in))
+	for _, item := range in {
+		out = append(out, CartItemToProto(item))
+	}
+	return out
+}
+
 func OrderFromProto(in *orderpb.Order) *domain.Order {
 	if in == nil {
 		return nil
