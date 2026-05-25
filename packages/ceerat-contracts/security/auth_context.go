@@ -10,6 +10,7 @@ type AuthenticatedUser struct {
 	Email   string
 	Company string
 	Role    string
+	Status  string
 }
 
 type ValidatedUser = AuthenticatedUser

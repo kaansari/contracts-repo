@@ -21,6 +21,7 @@ func UserFromProto(in *authpb.User) *domain.User {
 		Password: in.Password,
 		Token:    in.Token,
 		Role:     in.Role,
+		Status:   in.Status,
 	}
 }
 
@@ -36,6 +37,7 @@ func UserToProto(in *domain.User) *authpb.User {
 		Password: in.Password,
 		Token:    in.Token,
 		Role:     in.Role,
+		Status:   in.Status,
 	}
 }
 

@@ -57,7 +57,7 @@
         ]
       },
       "messages": [
-        {"name": "User", "fields": ["id", "name", "company", "email", "password", "token", "role"]},
+        {"name": "User", "fields": ["id", "name", "company", "email", "password", "token", "role", "status"]},
         {"name": "Request", "fields": []},
         {"name": "RegisterCustomerRequest", "fields": ["first_name", "last_name", "company", "email", "password", "phone", "address_line1", "address_line2", "city", "state", "postal_code", "country"]},
         {"name": "PasswordUpdate", "fields": ["id", "current_password", "new_password"]},
@@ -270,7 +270,7 @@
     }
   ],
   "domain_models": [
-    {"name": "User", "fields": ["ID", "Name", "Company", "Email", "Password", "Token", "Role"]},
+    {"name": "User", "fields": ["ID", "Name", "Company", "Email", "Password", "Token", "Role", "Status"]},
     {"name": "Patient", "fields": ["ID", "FirstName", "LastName", "DOB", "DOS", "Location", "ICDCodes", "COVIDTest", "COVIDTestResult", "RSVTest", "RSVTestResult", "StrepTest", "StrepTestResult", "FluTest", "FluTestResult"]},
     {"name": "Address", "fields": ["Line1", "Line2", "City", "State", "Country", "PostalCode"]},
     {"name": "Customer", "fields": ["ID", "FirstName", "LastName", "Email", "Phone", "Address", "UserID", "User", "CreatedAt", "UpdatedAt"]},

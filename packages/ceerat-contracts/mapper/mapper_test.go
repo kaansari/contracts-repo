@@ -24,6 +24,8 @@ func TestUserProtoRoundTrip(t *testing.T) {
 		Email:    "khalid@example.com",
 		Password: "secret",
 		Token:    "token",
+		Role:     "agent",
+		Status:   "active",
 	}
 
 	model := UserFromProto(in)
@@ -36,7 +38,9 @@ func TestUserProtoRoundTrip(t *testing.T) {
 		model.Company != in.Company ||
 		model.Email != in.Email ||
 		model.Password != in.Password ||
-		model.Token != in.Token {
+		model.Token != in.Token ||
+		model.Role != in.Role ||
+		model.Status != in.Status {
 		t.Fatalf("user model did not match proto: %#v", model)
 	}
 
@@ -46,7 +50,9 @@ func TestUserProtoRoundTrip(t *testing.T) {
 		out.GetCompany() != in.GetCompany() ||
 		out.GetEmail() != in.GetEmail() ||
 		out.GetPassword() != in.GetPassword() ||
-		out.GetToken() != in.GetToken() {
+		out.GetToken() != in.GetToken() ||
+		out.GetRole() != in.GetRole() ||
+		out.GetStatus() != in.GetStatus() {
 		t.Fatalf("user proto did not round-trip: %#v", out)
 	}
 }

@@ -184,6 +184,7 @@ func userFromJWT(token string) (*ValidatedUser, error) {
 			Email   string `json:"email"`
 			Company string `json:"company"`
 			Role    string `json:"role"`
+			Status  string `json:"status"`
 		} `json:"user"`
 	}
 	if err := json.Unmarshal(payload, &claims); err != nil {
@@ -198,5 +199,6 @@ func userFromJWT(token string) (*ValidatedUser, error) {
 		Email:   claims.User.Email,
 		Company: claims.User.Company,
 		Role:    claims.User.Role,
+		Status:  claims.User.Status,
 	}, nil
 }
