@@ -6,6 +6,7 @@ Shared protobuf contracts, generated Go code, domain DTOs, and mappers for Ceera
 
 ```text
 proto/auth/       Auth service protobuf definitions and generated Go code
+proto/career/     Career company, job, profile, resume, cart, and application definitions
 proto/customer/   Customer protobuf definitions and generated Go code
 proto/order/      Order protobuf definitions and generated Go code
 proto/service/    Service protobuf definitions and generated Go code
@@ -17,8 +18,12 @@ mapper/           Conversion helpers between protobuf messages and domain object
 
 ```text
 auth.Auth
+career.CareerProfileService
+career.JobService
+career.JobCartService
+career.JobApplicationService
 customer.CustomerService
-order.OrderService
+order.OrderManager
 service.ServiceManager
 ```
 
@@ -45,6 +50,7 @@ The `go_package` options point to:
 
 ```text
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth
+github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/customer
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/order
 github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/service

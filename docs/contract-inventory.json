@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-05-20",
+  "generated_on": "2026-05-27",
   "purpose": "Inventory of Ceerat shared contracts: protobuf packages, gRPC services, RPC methods, messages, generated Go packages, shared domain models, mapper functions, and security hooks. Builder agents should check this before adding or changing contracts.",
   "inventory_rules": [
     "Check this inventory before creating a new proto package, message, RPC, generated client/server dependency, domain model, mapper, or security hook.",
@@ -1082,6 +1082,839 @@
           ]
         }
       ]
+    },
+    {
+      "package": "career",
+      "proto_path": "packages/ceerat-contracts/proto/career/career.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/career/career.pb.go",
+        "packages/ceerat-contracts/proto/career/career_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Company",
+          "fields": [
+            "id",
+            "name",
+            "website",
+            "description",
+            "industry",
+            "location",
+            "source",
+            "external_id",
+            "source_url",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Job",
+          "fields": [
+            "id",
+            "company_id",
+            "company",
+            "title",
+            "description",
+            "location",
+            "employment_type",
+            "status",
+            "salary_min",
+            "salary_max",
+            "category",
+            "remote_type",
+            "posted_date",
+            "closing_date",
+            "source",
+            "source_url",
+            "external_job_id",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Skill",
+          "fields": [
+            "id",
+            "name",
+            "category",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfile",
+          "fields": [
+            "id",
+            "customer_id",
+            "name",
+            "summary",
+            "skills",
+            "years_of_experience",
+            "target_role",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfileSkill",
+          "fields": [
+            "id",
+            "skill_profile_id",
+            "skill_id",
+            "skill",
+            "level",
+            "years_experience",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Resume",
+          "fields": [
+            "id",
+            "customer_id",
+            "skill_profile_id",
+            "title",
+            "content",
+            "file_url",
+            "name",
+            "content_text",
+            "version",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCart",
+          "fields": [
+            "id",
+            "customer_id",
+            "items",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCartItem",
+          "fields": [
+            "id",
+            "job_cart_id",
+            "job_id",
+            "job",
+            "notes",
+            "selected_skill_profile_id",
+            "selected_resume_id",
+            "selected_skill_profile",
+            "selected_resume",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobApplication",
+          "fields": [
+            "id",
+            "customer_id",
+            "job_id",
+            "job",
+            "skill_profile_id",
+            "skill_profile",
+            "resume_id",
+            "resume",
+            "status",
+            "cover_letter",
+            "resume_snapshot_text",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
+      "service_inventory_note": "career.proto declares multiple gRPC services; this inventory repeats the proto package once per service for builder drift compatibility.",
+      "service": {
+        "name": "CareerProfileService",
+        "full_service": "career.CareerProfileService",
+        "domain": "Career companies, jobs, skill profiles, resumes, job carts, and applications",
+        "rpcs": [
+          {
+            "name": "CreateSkillProfile",
+            "full_method": "/career.CareerProfileService/CreateSkillProfile",
+            "request": "CreateSkillProfileRequest",
+            "response": "SkillProfileResponse",
+            "public": false
+          },
+          {
+            "name": "ListMySkillProfiles",
+            "full_method": "/career.CareerProfileService/ListMySkillProfiles",
+            "request": "ListMySkillProfilesRequest",
+            "response": "ListSkillProfilesResponse",
+            "public": false
+          },
+          {
+            "name": "AddSkillToProfile",
+            "full_method": "/career.CareerProfileService/AddSkillToProfile",
+            "request": "AddSkillToProfileRequest",
+            "response": "SkillProfileResponse",
+            "public": false
+          },
+          {
+            "name": "CreateResume",
+            "full_method": "/career.CareerProfileService/CreateResume",
+            "request": "CreateResumeRequest",
+            "response": "ResumeResponse",
+            "public": false
+          },
+          {
+            "name": "ListMyResumes",
+            "full_method": "/career.CareerProfileService/ListMyResumes",
+            "request": "ListMyResumesRequest",
+            "response": "ListResumesResponse",
+            "public": false
+          }
+        ]
+      }
+    },
+    {
+      "package": "career",
+      "proto_path": "packages/ceerat-contracts/proto/career/career.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/career/career.pb.go",
+        "packages/ceerat-contracts/proto/career/career_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Company",
+          "fields": [
+            "id",
+            "name",
+            "website",
+            "description",
+            "industry",
+            "location",
+            "source",
+            "external_id",
+            "source_url",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Job",
+          "fields": [
+            "id",
+            "company_id",
+            "company",
+            "title",
+            "description",
+            "location",
+            "employment_type",
+            "status",
+            "salary_min",
+            "salary_max",
+            "category",
+            "remote_type",
+            "posted_date",
+            "closing_date",
+            "source",
+            "source_url",
+            "external_job_id",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Skill",
+          "fields": [
+            "id",
+            "name",
+            "category",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfile",
+          "fields": [
+            "id",
+            "customer_id",
+            "name",
+            "summary",
+            "skills",
+            "years_of_experience",
+            "target_role",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfileSkill",
+          "fields": [
+            "id",
+            "skill_profile_id",
+            "skill_id",
+            "skill",
+            "level",
+            "years_experience",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Resume",
+          "fields": [
+            "id",
+            "customer_id",
+            "skill_profile_id",
+            "title",
+            "content",
+            "file_url",
+            "name",
+            "content_text",
+            "version",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCart",
+          "fields": [
+            "id",
+            "customer_id",
+            "items",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCartItem",
+          "fields": [
+            "id",
+            "job_cart_id",
+            "job_id",
+            "job",
+            "notes",
+            "selected_skill_profile_id",
+            "selected_resume_id",
+            "selected_skill_profile",
+            "selected_resume",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobApplication",
+          "fields": [
+            "id",
+            "customer_id",
+            "job_id",
+            "job",
+            "skill_profile_id",
+            "skill_profile",
+            "resume_id",
+            "resume",
+            "status",
+            "cover_letter",
+            "resume_snapshot_text",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
+      "service_inventory_note": "career.proto declares multiple gRPC services; this inventory repeats the proto package once per service for builder drift compatibility.",
+      "service": {
+        "name": "JobService",
+        "full_service": "career.JobService",
+        "domain": "Career companies, jobs, skill profiles, resumes, job carts, and applications",
+        "rpcs": [
+          {
+            "name": "CreateCompany",
+            "full_method": "/career.JobService/CreateCompany",
+            "request": "CreateCompanyRequest",
+            "response": "CompanyResponse",
+            "public": false
+          },
+          {
+            "name": "ListCompanies",
+            "full_method": "/career.JobService/ListCompanies",
+            "request": "ListCompaniesRequest",
+            "response": "ListCompaniesResponse",
+            "public": false
+          },
+          {
+            "name": "GetCompany",
+            "full_method": "/career.JobService/GetCompany",
+            "request": "GetCompanyRequest",
+            "response": "CompanyResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCompany",
+            "full_method": "/career.JobService/UpdateCompany",
+            "request": "UpdateCompanyRequest",
+            "response": "CompanyResponse",
+            "public": false
+          },
+          {
+            "name": "CreateJob",
+            "full_method": "/career.JobService/CreateJob",
+            "request": "CreateJobRequest",
+            "response": "JobResponse",
+            "public": false
+          },
+          {
+            "name": "GetJob",
+            "full_method": "/career.JobService/GetJob",
+            "request": "GetJobRequest",
+            "response": "JobResponse",
+            "public": false
+          },
+          {
+            "name": "SearchJobs",
+            "full_method": "/career.JobService/SearchJobs",
+            "request": "SearchJobsRequest",
+            "response": "ListJobsResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateJob",
+            "full_method": "/career.JobService/UpdateJob",
+            "request": "UpdateJobRequest",
+            "response": "JobResponse",
+            "public": false
+          },
+          {
+            "name": "CloseJob",
+            "full_method": "/career.JobService/CloseJob",
+            "request": "CloseJobRequest",
+            "response": "JobResponse",
+            "public": false
+          },
+          {
+            "name": "ReopenJob",
+            "full_method": "/career.JobService/ReopenJob",
+            "request": "ReopenJobRequest",
+            "response": "JobResponse",
+            "public": false
+          }
+        ]
+      }
+    },
+    {
+      "package": "career",
+      "proto_path": "packages/ceerat-contracts/proto/career/career.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/career/career.pb.go",
+        "packages/ceerat-contracts/proto/career/career_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Company",
+          "fields": [
+            "id",
+            "name",
+            "website",
+            "description",
+            "industry",
+            "location",
+            "source",
+            "external_id",
+            "source_url",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Job",
+          "fields": [
+            "id",
+            "company_id",
+            "company",
+            "title",
+            "description",
+            "location",
+            "employment_type",
+            "status",
+            "salary_min",
+            "salary_max",
+            "category",
+            "remote_type",
+            "posted_date",
+            "closing_date",
+            "source",
+            "source_url",
+            "external_job_id",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Skill",
+          "fields": [
+            "id",
+            "name",
+            "category",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfile",
+          "fields": [
+            "id",
+            "customer_id",
+            "name",
+            "summary",
+            "skills",
+            "years_of_experience",
+            "target_role",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfileSkill",
+          "fields": [
+            "id",
+            "skill_profile_id",
+            "skill_id",
+            "skill",
+            "level",
+            "years_experience",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Resume",
+          "fields": [
+            "id",
+            "customer_id",
+            "skill_profile_id",
+            "title",
+            "content",
+            "file_url",
+            "name",
+            "content_text",
+            "version",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCart",
+          "fields": [
+            "id",
+            "customer_id",
+            "items",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCartItem",
+          "fields": [
+            "id",
+            "job_cart_id",
+            "job_id",
+            "job",
+            "notes",
+            "selected_skill_profile_id",
+            "selected_resume_id",
+            "selected_skill_profile",
+            "selected_resume",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobApplication",
+          "fields": [
+            "id",
+            "customer_id",
+            "job_id",
+            "job",
+            "skill_profile_id",
+            "skill_profile",
+            "resume_id",
+            "resume",
+            "status",
+            "cover_letter",
+            "resume_snapshot_text",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
+      "service_inventory_note": "career.proto declares multiple gRPC services; this inventory repeats the proto package once per service for builder drift compatibility.",
+      "service": {
+        "name": "JobCartService",
+        "full_service": "career.JobCartService",
+        "domain": "Career companies, jobs, skill profiles, resumes, job carts, and applications",
+        "rpcs": [
+          {
+            "name": "GetJobCart",
+            "full_method": "/career.JobCartService/GetJobCart",
+            "request": "GetJobCartRequest",
+            "response": "JobCartResponse",
+            "public": false
+          },
+          {
+            "name": "AddJobToCart",
+            "full_method": "/career.JobCartService/AddJobToCart",
+            "request": "AddJobToCartRequest",
+            "response": "JobCartResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCartItemProfile",
+            "full_method": "/career.JobCartService/UpdateCartItemProfile",
+            "request": "UpdateCartItemProfileRequest",
+            "response": "JobCartResponse",
+            "public": false
+          },
+          {
+            "name": "RemoveJobFromCart",
+            "full_method": "/career.JobCartService/RemoveJobFromCart",
+            "request": "RemoveJobFromCartRequest",
+            "response": "JobCartResponse",
+            "public": false
+          },
+          {
+            "name": "ClearJobCart",
+            "full_method": "/career.JobCartService/ClearJobCart",
+            "request": "ClearJobCartRequest",
+            "response": "JobCartResponse",
+            "public": false
+          }
+        ]
+      }
+    },
+    {
+      "package": "career",
+      "proto_path": "packages/ceerat-contracts/proto/career/career.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/career/career.pb.go",
+        "packages/ceerat-contracts/proto/career/career_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Company",
+          "fields": [
+            "id",
+            "name",
+            "website",
+            "description",
+            "industry",
+            "location",
+            "source",
+            "external_id",
+            "source_url",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Job",
+          "fields": [
+            "id",
+            "company_id",
+            "company",
+            "title",
+            "description",
+            "location",
+            "employment_type",
+            "status",
+            "salary_min",
+            "salary_max",
+            "category",
+            "remote_type",
+            "posted_date",
+            "closing_date",
+            "source",
+            "source_url",
+            "external_job_id",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Skill",
+          "fields": [
+            "id",
+            "name",
+            "category",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfile",
+          "fields": [
+            "id",
+            "customer_id",
+            "name",
+            "summary",
+            "skills",
+            "years_of_experience",
+            "target_role",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "SkillProfileSkill",
+          "fields": [
+            "id",
+            "skill_profile_id",
+            "skill_id",
+            "skill",
+            "level",
+            "years_experience",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Resume",
+          "fields": [
+            "id",
+            "customer_id",
+            "skill_profile_id",
+            "title",
+            "content",
+            "file_url",
+            "name",
+            "content_text",
+            "version",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCart",
+          "fields": [
+            "id",
+            "customer_id",
+            "items",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobCartItem",
+          "fields": [
+            "id",
+            "job_cart_id",
+            "job_id",
+            "job",
+            "notes",
+            "selected_skill_profile_id",
+            "selected_resume_id",
+            "selected_skill_profile",
+            "selected_resume",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "JobApplication",
+          "fields": [
+            "id",
+            "customer_id",
+            "job_id",
+            "job",
+            "skill_profile_id",
+            "skill_profile",
+            "resume_id",
+            "resume",
+            "status",
+            "cover_letter",
+            "resume_snapshot_text",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
+      "service_inventory_note": "career.proto declares multiple gRPC services; this inventory repeats the proto package once per service for builder drift compatibility.",
+      "service": {
+        "name": "JobApplicationService",
+        "full_service": "career.JobApplicationService",
+        "domain": "Career companies, jobs, skill profiles, resumes, job carts, and applications",
+        "rpcs": [
+          {
+            "name": "ApplyToJob",
+            "full_method": "/career.JobApplicationService/ApplyToJob",
+            "request": "ApplyToJobRequest",
+            "response": "JobApplicationResponse",
+            "public": false
+          },
+          {
+            "name": "ApplyToCartJobs",
+            "full_method": "/career.JobApplicationService/ApplyToCartJobs",
+            "request": "ApplyToCartJobsRequest",
+            "response": "ListJobApplicationsResponse",
+            "public": false
+          },
+          {
+            "name": "ListMyApplications",
+            "full_method": "/career.JobApplicationService/ListMyApplications",
+            "request": "ListMyApplicationsRequest",
+            "response": "ListJobApplicationsResponse",
+            "public": false
+          },
+          {
+            "name": "GetMyApplication",
+            "full_method": "/career.JobApplicationService/GetMyApplication",
+            "request": "GetMyApplicationRequest",
+            "response": "JobApplicationResponse",
+            "public": false
+          },
+          {
+            "name": "ListApplications",
+            "full_method": "/career.JobApplicationService/ListApplications",
+            "request": "ListApplicationsRequest",
+            "response": "ListJobApplicationsResponse",
+            "public": false
+          },
+          {
+            "name": "GetApplication",
+            "full_method": "/career.JobApplicationService/GetApplication",
+            "request": "GetApplicationRequest",
+            "response": "JobApplicationResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateApplicationStatus",
+            "full_method": "/career.JobApplicationService/UpdateApplicationStatus",
+            "request": "UpdateApplicationStatusRequest",
+            "response": "JobApplicationResponse",
+            "public": false
+          }
+        ]
+      }
     }
   ],
   "domain_models": [
@@ -1287,7 +2120,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 45,
+    "known_grpc_methods_count": 72,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -1333,7 +2166,34 @@
       "/order.OrderManager/ListMyOrders",
       "/order.OrderManager/UpdateOrderStatus",
       "/order.OrderManager/AddServiceToOrder",
-      "/order.OrderManager/RemoveServiceFromOrder"
+      "/order.OrderManager/RemoveServiceFromOrder",
+      "/career.CareerProfileService/CreateSkillProfile",
+      "/career.CareerProfileService/ListMySkillProfiles",
+      "/career.CareerProfileService/AddSkillToProfile",
+      "/career.CareerProfileService/CreateResume",
+      "/career.CareerProfileService/ListMyResumes",
+      "/career.JobService/CreateCompany",
+      "/career.JobService/ListCompanies",
+      "/career.JobService/GetCompany",
+      "/career.JobService/UpdateCompany",
+      "/career.JobService/CreateJob",
+      "/career.JobService/GetJob",
+      "/career.JobService/SearchJobs",
+      "/career.JobService/UpdateJob",
+      "/career.JobService/CloseJob",
+      "/career.JobService/ReopenJob",
+      "/career.JobCartService/GetJobCart",
+      "/career.JobCartService/AddJobToCart",
+      "/career.JobCartService/UpdateCartItemProfile",
+      "/career.JobCartService/RemoveJobFromCart",
+      "/career.JobCartService/ClearJobCart",
+      "/career.JobApplicationService/ApplyToJob",
+      "/career.JobApplicationService/ApplyToCartJobs",
+      "/career.JobApplicationService/ListMyApplications",
+      "/career.JobApplicationService/GetMyApplication",
+      "/career.JobApplicationService/ListApplications",
+      "/career.JobApplicationService/GetApplication",
+      "/career.JobApplicationService/UpdateApplicationStatus"
     ],
     "default_public_methods": [
       "/auth.Auth/Auth",
@@ -1370,7 +2230,20 @@
         "/order.OrderManager/GetOrder",
         "/order.OrderManager/ListOrders",
         "/order.OrderManager/AddServiceToOrder",
-        "/order.OrderManager/UpdateOrderStatus"
+        "/order.OrderManager/UpdateOrderStatus",
+        "/career.JobService/CreateCompany",
+        "/career.JobService/ListCompanies",
+        "/career.JobService/GetCompany",
+        "/career.JobService/UpdateCompany",
+        "/career.JobService/CreateJob",
+        "/career.JobService/GetJob",
+        "/career.JobService/SearchJobs",
+        "/career.JobService/UpdateJob",
+        "/career.JobService/CloseJob",
+        "/career.JobService/ReopenJob",
+        "/career.JobApplicationService/ListApplications",
+        "/career.JobApplicationService/GetApplication",
+        "/career.JobApplicationService/UpdateApplicationStatus"
       ],
       "customer": [
         "/auth.Auth/Get",
@@ -1395,7 +2268,23 @@
         "/order.OrderManager/GetMyOrder",
         "/order.OrderManager/ListOrders",
         "/order.OrderManager/ListMyOrders",
-        "/order.OrderManager/CreateMyOrder"
+        "/order.OrderManager/CreateMyOrder",
+        "/career.CareerProfileService/CreateSkillProfile",
+        "/career.CareerProfileService/ListMySkillProfiles",
+        "/career.CareerProfileService/AddSkillToProfile",
+        "/career.CareerProfileService/CreateResume",
+        "/career.CareerProfileService/ListMyResumes",
+        "/career.JobService/GetJob",
+        "/career.JobService/SearchJobs",
+        "/career.JobCartService/GetJobCart",
+        "/career.JobCartService/AddJobToCart",
+        "/career.JobCartService/UpdateCartItemProfile",
+        "/career.JobCartService/RemoveJobFromCart",
+        "/career.JobCartService/ClearJobCart",
+        "/career.JobApplicationService/ApplyToJob",
+        "/career.JobApplicationService/ApplyToCartJobs",
+        "/career.JobApplicationService/ListMyApplications",
+        "/career.JobApplicationService/GetMyApplication"
       ]
     },
     "shared_hooks": [
@@ -1431,6 +2320,10 @@
         "customer",
         "service"
       ]
+    },
+    {
+      "package": "career",
+      "imports": []
     }
   ],
   "builder_checklist_before_contract_change": [

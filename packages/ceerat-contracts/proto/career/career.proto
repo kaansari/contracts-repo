@@ -1,0 +1,392 @@
+syntax = "proto3";
+
+package career;
+
+option go_package = "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/career";
+
+service CareerProfileService {
+  rpc CreateSkillProfile(CreateSkillProfileRequest) returns (SkillProfileResponse) {}
+  rpc ListMySkillProfiles(ListMySkillProfilesRequest) returns (ListSkillProfilesResponse) {}
+  rpc AddSkillToProfile(AddSkillToProfileRequest) returns (SkillProfileResponse) {}
+  rpc CreateResume(CreateResumeRequest) returns (ResumeResponse) {}
+  rpc ListMyResumes(ListMyResumesRequest) returns (ListResumesResponse) {}
+}
+
+service JobService {
+  rpc CreateCompany(CreateCompanyRequest) returns (CompanyResponse) {}
+  rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {}
+  rpc GetCompany(GetCompanyRequest) returns (CompanyResponse) {}
+  rpc UpdateCompany(UpdateCompanyRequest) returns (CompanyResponse) {}
+  rpc CreateJob(CreateJobRequest) returns (JobResponse) {}
+  rpc GetJob(GetJobRequest) returns (JobResponse) {}
+  rpc SearchJobs(SearchJobsRequest) returns (ListJobsResponse) {}
+  rpc UpdateJob(UpdateJobRequest) returns (JobResponse) {}
+  rpc CloseJob(CloseJobRequest) returns (JobResponse) {}
+  rpc ReopenJob(ReopenJobRequest) returns (JobResponse) {}
+}
+
+service JobCartService {
+  rpc GetJobCart(GetJobCartRequest) returns (JobCartResponse) {}
+  rpc AddJobToCart(AddJobToCartRequest) returns (JobCartResponse) {}
+  rpc UpdateCartItemProfile(UpdateCartItemProfileRequest) returns (JobCartResponse) {}
+  rpc RemoveJobFromCart(RemoveJobFromCartRequest) returns (JobCartResponse) {}
+  rpc ClearJobCart(ClearJobCartRequest) returns (JobCartResponse) {}
+}
+
+service JobApplicationService {
+  rpc ApplyToJob(ApplyToJobRequest) returns (JobApplicationResponse) {}
+  rpc ApplyToCartJobs(ApplyToCartJobsRequest) returns (ListJobApplicationsResponse) {}
+  rpc ListMyApplications(ListMyApplicationsRequest) returns (ListJobApplicationsResponse) {}
+  rpc GetMyApplication(GetMyApplicationRequest) returns (JobApplicationResponse) {}
+  rpc ListApplications(ListApplicationsRequest) returns (ListJobApplicationsResponse) {}
+  rpc GetApplication(GetApplicationRequest) returns (JobApplicationResponse) {}
+  rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (JobApplicationResponse) {}
+}
+
+message Company {
+  string id = 1;
+  string name = 2;
+  string website = 3;
+  string description = 4;
+  string industry = 5;
+  string location = 6;
+  string source = 7;
+  string external_id = 8;
+  string source_url = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message Job {
+  string id = 1;
+  string company_id = 2;
+  Company company = 3;
+  string title = 4;
+  string description = 5;
+  string location = 6;
+  string employment_type = 7;
+  string status = 8;
+  double salary_min = 9;
+  double salary_max = 10;
+  string category = 11;
+  string remote_type = 12;
+  string posted_date = 13;
+  string closing_date = 14;
+  string source = 15;
+  string source_url = 16;
+  string external_job_id = 17;
+  string created_at = 18;
+  string updated_at = 19;
+}
+
+message Skill {
+  string id = 1;
+  string name = 2;
+  string category = 3;
+  string description = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message SkillProfile {
+  string id = 1;
+  string customer_id = 2;
+  string name = 3;
+  string summary = 4;
+  repeated SkillProfileSkill skills = 5;
+  int32 years_of_experience = 6;
+  string target_role = 7;
+  bool is_default = 8;
+  string created_at = 9;
+  string updated_at = 10;
+}
+
+message SkillProfileSkill {
+  string id = 1;
+  string skill_profile_id = 2;
+  string skill_id = 3;
+  Skill skill = 4;
+  string level = 5;
+  int32 years_experience = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message Resume {
+  string id = 1;
+  string customer_id = 2;
+  string skill_profile_id = 3;
+  string title = 4;
+  string content = 5;
+  string file_url = 6;
+  string name = 7;
+  string content_text = 8;
+  int32 version = 9;
+  bool is_active = 10;
+  string created_at = 11;
+  string updated_at = 12;
+}
+
+message JobCart {
+  string id = 1;
+  string customer_id = 2;
+  repeated JobCartItem items = 3;
+  string status = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message JobCartItem {
+  string id = 1;
+  string job_cart_id = 2;
+  string job_id = 3;
+  Job job = 4;
+  string notes = 5;
+  string selected_skill_profile_id = 6;
+  string selected_resume_id = 7;
+  SkillProfile selected_skill_profile = 8;
+  Resume selected_resume = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message JobApplication {
+  string id = 1;
+  string customer_id = 2;
+  string job_id = 3;
+  Job job = 4;
+  string skill_profile_id = 5;
+  SkillProfile skill_profile = 6;
+  string resume_id = 7;
+  Resume resume = 8;
+  string status = 9;
+  string cover_letter = 10;
+  string resume_snapshot_text = 11;
+  string created_at = 12;
+  string updated_at = 13;
+}
+
+message CreateSkillProfileRequest {
+  string name = 1;
+  string summary = 2;
+  int32 years_of_experience = 3;
+  string target_role = 4;
+  bool is_default = 5;
+}
+
+message ListMySkillProfilesRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message AddSkillToProfileRequest {
+  string skill_profile_id = 1;
+  string skill_name = 2;
+  string skill_category = 3;
+  string level = 4;
+  int32 years_experience = 5;
+  string skill_description = 6;
+}
+
+message CreateResumeRequest {
+  string skill_profile_id = 1;
+  string title = 2;
+  string content = 3;
+  string file_url = 4;
+  string name = 5;
+  string content_text = 6;
+  int32 version = 7;
+  bool is_active = 8;
+}
+
+message ListMyResumesRequest {
+  string skill_profile_id = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message CreateCompanyRequest {
+  Company company = 1;
+}
+
+message ListCompaniesRequest {
+  string query = 1;
+  string source = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+
+message GetCompanyRequest {
+  string id = 1;
+}
+
+message UpdateCompanyRequest {
+  Company company = 1;
+}
+
+message CreateJobRequest {
+  Job job = 1;
+}
+
+message GetJobRequest {
+  string id = 1;
+}
+
+message SearchJobsRequest {
+  string query = 1;
+  string location = 2;
+  string employment_type = 3;
+  bool active_only = 4;
+  int32 page_size = 5;
+  string page_token = 6;
+  string company_id = 7;
+  string remote_type = 8;
+  string status = 9;
+  string source = 10;
+}
+
+message UpdateJobRequest {
+  Job job = 1;
+}
+
+message CloseJobRequest {
+  string id = 1;
+}
+
+message ReopenJobRequest {
+  string id = 1;
+}
+
+message GetJobCartRequest {
+  string customer_id = 1;
+}
+
+message AddJobToCartRequest {
+  string customer_id = 1;
+  string job_id = 2;
+  string notes = 3;
+  string selected_skill_profile_id = 4;
+  string selected_resume_id = 5;
+}
+
+message UpdateCartItemProfileRequest {
+  string customer_id = 1;
+  string item_id = 2;
+  string selected_skill_profile_id = 3;
+  string selected_resume_id = 4;
+  string notes = 5;
+}
+
+message RemoveJobFromCartRequest {
+  string customer_id = 1;
+  string item_id = 2;
+}
+
+message ClearJobCartRequest {
+  string customer_id = 1;
+}
+
+message ApplyToJobRequest {
+  string job_id = 1;
+  string skill_profile_id = 2;
+  string resume_id = 3;
+  string cover_letter = 4;
+}
+
+message ApplyToCartJobsRequest {
+  string skill_profile_id = 1;
+  string resume_id = 2;
+  string cover_letter = 3;
+}
+
+message ListMyApplicationsRequest {
+  string status = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message GetMyApplicationRequest {
+  string id = 1;
+}
+
+message ListApplicationsRequest {
+  string customer_id = 1;
+  string job_id = 2;
+  string status = 3;
+  int32 page_size = 4;
+  string page_token = 5;
+}
+
+message GetApplicationRequest {
+  string id = 1;
+}
+
+message UpdateApplicationStatusRequest {
+  string id = 1;
+  string status = 2;
+}
+
+message CompanyResponse {
+  Company company = 1;
+  repeated Error errors = 2;
+}
+
+message ListCompaniesResponse {
+  repeated Company companies = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message JobResponse {
+  Job job = 1;
+  repeated Error errors = 2;
+}
+
+message ListJobsResponse {
+  repeated Job jobs = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message SkillProfileResponse {
+  SkillProfile skill_profile = 1;
+  repeated Error errors = 2;
+}
+
+message ListSkillProfilesResponse {
+  repeated SkillProfile skill_profiles = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message ResumeResponse {
+  Resume resume = 1;
+  repeated Error errors = 2;
+}
+
+message ListResumesResponse {
+  repeated Resume resumes = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message JobCartResponse {
+  JobCart cart = 1;
+  repeated Error errors = 2;
+}
+
+message JobApplicationResponse {
+  JobApplication application = 1;
+  repeated Error errors = 2;
+}
+
+message ListJobApplicationsResponse {
+  repeated JobApplication applications = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message Error {
+  int32 code = 1;
+  string description = 2;
+}
