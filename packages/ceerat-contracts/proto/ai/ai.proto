@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package ai;
+
+option go_package = "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/ai";
+
+service AIThreadService {
+  rpc GetOrCreateThread(GetOrCreateThreadRequest) returns (ThreadResponse) {}
+  rpc GetThread(GetThreadRequest) returns (ThreadResponse) {}
+  rpc ListThreads(ListThreadsRequest) returns (ListThreadsResponse) {}
+  rpc AppendMessage(AppendMessageRequest) returns (ThreadMessageResponse) {}
+  rpc ReplaceThreadMessages(ReplaceThreadMessagesRequest) returns (ThreadResponse) {}
+  rpc DeleteThread(DeleteThreadRequest) returns (DeleteThreadResponse) {}
+}
+
+enum ThreadProfile {
+  THREAD_PROFILE_UNSPECIFIED = 0;
+  THREAD_PROFILE_AGENT = 1;
+  THREAD_PROFILE_CUSTOMER = 2;
+}
+
+enum ThreadMessageRole {
+  THREAD_MESSAGE_ROLE_UNSPECIFIED = 0;
+  THREAD_MESSAGE_ROLE_USER = 1;
+  THREAD_MESSAGE_ROLE_ASSISTANT = 2;
+}
+
+message Thread {
+  string id = 1;
+  string user_id = 2;
+  ThreadProfile profile = 3;
+  string external_thread_id = 4;
+  string title = 5;
+  int32 message_count = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  repeated ThreadMessage messages = 9;
+}
+
+message ThreadMessage {
+  string id = 1;
+  string thread_id = 2;
+  string user_id = 3;
+  ThreadProfile profile = 4;
+  ThreadMessageRole role = 5;
+  string content = 6;
+  string metadata_json = 7;
+  string created_at = 8;
+}
+
+message GetOrCreateThreadRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  string external_thread_id = 3;
+  string title = 4;
+}
+
+message GetThreadRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  string external_thread_id = 3;
+  int32 message_limit = 4;
+}
+
+message ListThreadsRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+
+message AppendMessageRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  string external_thread_id = 3;
+  ThreadMessageRole role = 4;
+  string content = 5;
+  string metadata_json = 6;
+}
+
+message ReplaceThreadMessagesRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  string external_thread_id = 3;
+  repeated NewThreadMessage messages = 4;
+}
+
+message NewThreadMessage {
+  ThreadMessageRole role = 1;
+  string content = 2;
+  string metadata_json = 3;
+}
+
+message DeleteThreadRequest {
+  string user_id = 1;
+  ThreadProfile profile = 2;
+  string external_thread_id = 3;
+}
+
+message ThreadResponse {
+  Thread thread = 1;
+  repeated Error errors = 2;
+}
+
+message ListThreadsResponse {
+  repeated Thread threads = 1;
+  string next_page_token = 2;
+  repeated Error errors = 3;
+}
+
+message ThreadMessageResponse {
+  ThreadMessage message = 1;
+  repeated Error errors = 2;
+}
+
+message DeleteThreadResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
+}
+
+message Error {
+  string code = 1;
+  string description = 2;
+}

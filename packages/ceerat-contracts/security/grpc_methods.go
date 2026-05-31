@@ -73,6 +73,12 @@ var KnownGRPCMethods = []string{
 	"/career.JobApplicationService/ListApplications",
 	"/career.JobApplicationService/GetApplication",
 	"/career.JobApplicationService/UpdateApplicationStatus",
+	"/ai.AIThreadService/GetOrCreateThread",
+	"/ai.AIThreadService/GetThread",
+	"/ai.AIThreadService/ListThreads",
+	"/ai.AIThreadService/AppendMessage",
+	"/ai.AIThreadService/ReplaceThreadMessages",
+	"/ai.AIThreadService/DeleteThread",
 }
 
 var DefaultRolePermissions = map[string][]string{
@@ -112,6 +118,12 @@ var DefaultRolePermissions = map[string][]string{
 		"/career.JobApplicationService/ListApplications",
 		"/career.JobApplicationService/GetApplication",
 		"/career.JobApplicationService/UpdateApplicationStatus",
+		"/ai.AIThreadService/GetOrCreateThread",
+		"/ai.AIThreadService/GetThread",
+		"/ai.AIThreadService/ListThreads",
+		"/ai.AIThreadService/AppendMessage",
+		"/ai.AIThreadService/ReplaceThreadMessages",
+		"/ai.AIThreadService/DeleteThread",
 	},
 	"customer": {
 		"/auth.Auth/Get",
@@ -153,5 +165,11 @@ var DefaultRolePermissions = map[string][]string{
 		"/career.JobApplicationService/ApplyToCartJobs",
 		"/career.JobApplicationService/ListMyApplications",
 		"/career.JobApplicationService/GetMyApplication",
+		"/ai.AIThreadService/GetOrCreateThread",
+		"/ai.AIThreadService/GetThread",
+		"/ai.AIThreadService/ListThreads",
+		"/ai.AIThreadService/AppendMessage",
+		"/ai.AIThreadService/ReplaceThreadMessages",
+		"/ai.AIThreadService/DeleteThread",
 	},
 }

@@ -1915,6 +1915,149 @@
           }
         ]
       }
+    },
+    {
+      "package": "ai",
+      "proto_path": "packages/ceerat-contracts/proto/ai/ai.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/ai",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/ai/ai.pb.go",
+        "packages/ceerat-contracts/proto/ai/ai_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Thread",
+          "fields": [
+            "id",
+            "user_id",
+            "profile",
+            "external_thread_id",
+            "title",
+            "message_count",
+            "created_at",
+            "updated_at",
+            "messages"
+          ]
+        },
+        {
+          "name": "ThreadMessage",
+          "fields": [
+            "id",
+            "thread_id",
+            "user_id",
+            "profile",
+            "role",
+            "content",
+            "metadata_json",
+            "created_at"
+          ]
+        },
+        {
+          "name": "GetOrCreateThreadRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "external_thread_id",
+            "title"
+          ]
+        },
+        {
+          "name": "GetThreadRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "external_thread_id",
+            "message_limit"
+          ]
+        },
+        {
+          "name": "ListThreadsRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "page_size",
+            "page_token"
+          ]
+        },
+        {
+          "name": "AppendMessageRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "external_thread_id",
+            "role",
+            "content",
+            "metadata_json"
+          ]
+        },
+        {
+          "name": "ReplaceThreadMessagesRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "external_thread_id",
+            "messages"
+          ]
+        },
+        {
+          "name": "DeleteThreadRequest",
+          "fields": [
+            "user_id",
+            "profile",
+            "external_thread_id"
+          ]
+        }
+      ],
+      "service": {
+        "name": "AIThreadService",
+        "full_service": "ai.AIThreadService",
+        "domain": "AI chat thread history for agent and customer profiles",
+        "rpcs": [
+          {
+            "name": "GetOrCreateThread",
+            "full_method": "/ai.AIThreadService/GetOrCreateThread",
+            "request": "GetOrCreateThreadRequest",
+            "response": "ThreadResponse",
+            "public": false
+          },
+          {
+            "name": "GetThread",
+            "full_method": "/ai.AIThreadService/GetThread",
+            "request": "GetThreadRequest",
+            "response": "ThreadResponse",
+            "public": false
+          },
+          {
+            "name": "ListThreads",
+            "full_method": "/ai.AIThreadService/ListThreads",
+            "request": "ListThreadsRequest",
+            "response": "ListThreadsResponse",
+            "public": false
+          },
+          {
+            "name": "AppendMessage",
+            "full_method": "/ai.AIThreadService/AppendMessage",
+            "request": "AppendMessageRequest",
+            "response": "ThreadMessageResponse",
+            "public": false
+          },
+          {
+            "name": "ReplaceThreadMessages",
+            "full_method": "/ai.AIThreadService/ReplaceThreadMessages",
+            "request": "ReplaceThreadMessagesRequest",
+            "response": "ThreadResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteThread",
+            "full_method": "/ai.AIThreadService/DeleteThread",
+            "request": "DeleteThreadRequest",
+            "response": "DeleteThreadResponse",
+            "public": false
+          }
+        ]
+      }
     }
   ],
   "domain_models": [
@@ -2120,7 +2263,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 72,
+    "known_grpc_methods_count": 78,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -2193,7 +2336,13 @@
       "/career.JobApplicationService/GetMyApplication",
       "/career.JobApplicationService/ListApplications",
       "/career.JobApplicationService/GetApplication",
-      "/career.JobApplicationService/UpdateApplicationStatus"
+      "/career.JobApplicationService/UpdateApplicationStatus",
+      "/ai.AIThreadService/GetOrCreateThread",
+      "/ai.AIThreadService/GetThread",
+      "/ai.AIThreadService/ListThreads",
+      "/ai.AIThreadService/AppendMessage",
+      "/ai.AIThreadService/ReplaceThreadMessages",
+      "/ai.AIThreadService/DeleteThread"
     ],
     "default_public_methods": [
       "/auth.Auth/Auth",
@@ -2243,7 +2392,13 @@
         "/career.JobService/ReopenJob",
         "/career.JobApplicationService/ListApplications",
         "/career.JobApplicationService/GetApplication",
-        "/career.JobApplicationService/UpdateApplicationStatus"
+        "/career.JobApplicationService/UpdateApplicationStatus",
+        "/ai.AIThreadService/GetOrCreateThread",
+        "/ai.AIThreadService/GetThread",
+        "/ai.AIThreadService/ListThreads",
+        "/ai.AIThreadService/AppendMessage",
+        "/ai.AIThreadService/ReplaceThreadMessages",
+        "/ai.AIThreadService/DeleteThread"
       ],
       "customer": [
         "/auth.Auth/Get",
@@ -2284,7 +2439,13 @@
         "/career.JobApplicationService/ApplyToJob",
         "/career.JobApplicationService/ApplyToCartJobs",
         "/career.JobApplicationService/ListMyApplications",
-        "/career.JobApplicationService/GetMyApplication"
+        "/career.JobApplicationService/GetMyApplication",
+        "/ai.AIThreadService/GetOrCreateThread",
+        "/ai.AIThreadService/GetThread",
+        "/ai.AIThreadService/ListThreads",
+        "/ai.AIThreadService/AppendMessage",
+        "/ai.AIThreadService/ReplaceThreadMessages",
+        "/ai.AIThreadService/DeleteThread"
       ]
     },
     "shared_hooks": [
@@ -2323,6 +2484,10 @@
     },
     {
       "package": "career",
+      "imports": []
+    },
+    {
+      "package": "ai",
       "imports": []
     }
   ],
