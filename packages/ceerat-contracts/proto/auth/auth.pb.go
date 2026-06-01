@@ -438,6 +438,7 @@ type Token struct {
 	Token  string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	Valid  bool     `protobuf:"varint,2,opt,name=valid,proto3" json:"valid,omitempty"`
 	Errors []*Error `protobuf:"bytes,3,rep,name=errors,proto3" json:"errors,omitempty"`
+	User   *User    `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
 }
 
 func (x *Token) Reset() {
@@ -489,6 +490,13 @@ func (x *Token) GetValid() bool {
 func (x *Token) GetErrors() []*Error {
 	if x != nil {
 		return x.Errors
+	}
+	return nil
+}
+
+func (x *Token) GetUser() *User {
+	if x != nil {
+		return x.User
 	}
 	return nil
 }
@@ -604,12 +612,14 @@ var file_proto_auth_auth_proto_rawDesc = []byte{
 	0x74, 0x68, 0x2e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x52, 0x06, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x73,
 	0x12, 0x21, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x0b, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x05, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x22, 0x58, 0x0a, 0x05, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x14, 0x0a, 0x05,
+	0x6b, 0x65, 0x6e, 0x22, 0x78, 0x0a, 0x05, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x14, 0x0a, 0x05,
 	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b,
 	0x65, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
 	0x08, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x12, 0x23, 0x0a, 0x06, 0x65, 0x72, 0x72, 0x6f,
 	0x72, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e,
-	0x45, 0x72, 0x72, 0x6f, 0x72, 0x52, 0x06, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x73, 0x22, 0x3d, 0x0a,
+	0x45, 0x72, 0x72, 0x6f, 0x72, 0x52, 0x06, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x73, 0x12, 0x1e, 0x0a,
+	0x04, 0x75, 0x73, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x61, 0x75,
+	0x74, 0x68, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x22, 0x3d, 0x0a,
 	0x05, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65,
 	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
@@ -673,27 +683,28 @@ var file_proto_auth_auth_proto_depIdxs = []int32{
 	6,  // 2: auth.Response.errors:type_name -> auth.Error
 	5,  // 3: auth.Response.token:type_name -> auth.Token
 	6,  // 4: auth.Token.errors:type_name -> auth.Error
-	0,  // 5: auth.Auth.Create:input_type -> auth.User
-	2,  // 6: auth.Auth.RegisterCustomer:input_type -> auth.RegisterCustomerRequest
-	0,  // 7: auth.Auth.Get:input_type -> auth.User
-	1,  // 8: auth.Auth.GetAll:input_type -> auth.Request
-	0,  // 9: auth.Auth.Auth:input_type -> auth.User
-	5,  // 10: auth.Auth.ValidateToken:input_type -> auth.Token
-	0,  // 11: auth.Auth.UpdateProfile:input_type -> auth.User
-	3,  // 12: auth.Auth.UpdatePassword:input_type -> auth.PasswordUpdate
-	4,  // 13: auth.Auth.Create:output_type -> auth.Response
-	4,  // 14: auth.Auth.RegisterCustomer:output_type -> auth.Response
-	4,  // 15: auth.Auth.Get:output_type -> auth.Response
-	4,  // 16: auth.Auth.GetAll:output_type -> auth.Response
-	5,  // 17: auth.Auth.Auth:output_type -> auth.Token
-	5,  // 18: auth.Auth.ValidateToken:output_type -> auth.Token
-	4,  // 19: auth.Auth.UpdateProfile:output_type -> auth.Response
-	4,  // 20: auth.Auth.UpdatePassword:output_type -> auth.Response
-	13, // [13:21] is the sub-list for method output_type
-	5,  // [5:13] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	0,  // 5: auth.Token.user:type_name -> auth.User
+	0,  // 6: auth.Auth.Create:input_type -> auth.User
+	2,  // 7: auth.Auth.RegisterCustomer:input_type -> auth.RegisterCustomerRequest
+	0,  // 8: auth.Auth.Get:input_type -> auth.User
+	1,  // 9: auth.Auth.GetAll:input_type -> auth.Request
+	0,  // 10: auth.Auth.Auth:input_type -> auth.User
+	5,  // 11: auth.Auth.ValidateToken:input_type -> auth.Token
+	0,  // 12: auth.Auth.UpdateProfile:input_type -> auth.User
+	3,  // 13: auth.Auth.UpdatePassword:input_type -> auth.PasswordUpdate
+	4,  // 14: auth.Auth.Create:output_type -> auth.Response
+	4,  // 15: auth.Auth.RegisterCustomer:output_type -> auth.Response
+	4,  // 16: auth.Auth.Get:output_type -> auth.Response
+	4,  // 17: auth.Auth.GetAll:output_type -> auth.Response
+	5,  // 18: auth.Auth.Auth:output_type -> auth.Token
+	5,  // 19: auth.Auth.ValidateToken:output_type -> auth.Token
+	4,  // 20: auth.Auth.UpdateProfile:output_type -> auth.Response
+	4,  // 21: auth.Auth.UpdatePassword:output_type -> auth.Response
+	14, // [14:22] is the sub-list for method output_type
+	6,  // [6:14] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_proto_auth_auth_proto_init() }

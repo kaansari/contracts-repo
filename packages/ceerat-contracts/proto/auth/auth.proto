@@ -59,6 +59,7 @@ message Token {
     string token = 1;
     bool valid = 2;
     repeated Error errors = 3;
+    User user = 4;
 }
 
 message Error {

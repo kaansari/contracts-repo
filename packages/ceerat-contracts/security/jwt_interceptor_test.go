@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"testing"
 
+	authpb "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/auth"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -26,6 +27,46 @@ func (v fakeValidator) ValidateToken(ctx context.Context, token string) (*Valida
 		return nil, v.err
 	}
 	return v.user, nil
+}
+
+type fakeAuthClient struct {
+	resp *authpb.Token
+	err  error
+}
+
+func (c fakeAuthClient) Create(ctx context.Context, in *authpb.User, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) RegisterCustomer(ctx context.Context, in *authpb.RegisterCustomerRequest, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) Get(ctx context.Context, in *authpb.User, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) GetAll(ctx context.Context, in *authpb.Request, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) Auth(ctx context.Context, in *authpb.User, opts ...grpc.CallOption) (*authpb.Token, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) ValidateToken(ctx context.Context, in *authpb.Token, opts ...grpc.CallOption) (*authpb.Token, error) {
+	if c.err != nil {
+		return nil, c.err
+	}
+	return c.resp, nil
+}
+
+func (c fakeAuthClient) UpdateProfile(ctx context.Context, in *authpb.User, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (c fakeAuthClient) UpdatePassword(ctx context.Context, in *authpb.PasswordUpdate, opts ...grpc.CallOption) (*authpb.Response, error) {
+	return nil, errors.New("not implemented")
 }
 
 func TestPublicMethodBypassesJWTValidation(t *testing.T) {
@@ -91,5 +132,36 @@ func TestXAuthTokenFallback(t *testing.T) {
 	})
 	if err != nil {
 		t.Fatalf("expected x-auth-token fallback to pass, got %v", err)
+	}
+}
+
+func TestUserServiceTokenValidatorUsesReturnedUser(t *testing.T) {
+	validator := NewUserServiceTokenValidator(fakeAuthClient{resp: &authpb.Token{
+		Valid: true,
+		User: &authpb.User{
+			Id:      "user-1",
+			Name:    "Current User",
+			Email:   "current@example.com",
+			Company: "Ceerat",
+			Role:    "agent",
+			Status:  "active",
+		},
+	}})
+
+	user, err := validator.ValidateToken(context.Background(), "not-a-jwt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if user.ID != "user-1" || user.Email != "current@example.com" || user.Role != "agent" {
+		t.Fatalf("expected validated user from auth response, got %#v", user)
+	}
+}
+
+func TestUserServiceTokenValidatorRejectsMissingReturnedUser(t *testing.T) {
+	validator := NewUserServiceTokenValidator(fakeAuthClient{resp: &authpb.Token{Valid: true}})
+
+	_, err := validator.ValidateToken(context.Background(), "valid-token")
+	if err == nil {
+		t.Fatal("expected missing user id error")
 	}
 }

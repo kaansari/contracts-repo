@@ -161,7 +161,8 @@
           "fields": [
             "token",
             "valid",
-            "errors"
+            "errors",
+            "user"
           ]
         },
         {

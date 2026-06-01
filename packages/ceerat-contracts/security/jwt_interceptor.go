@@ -2,8 +2,6 @@ package security
 
 import (
 	"context"
-	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"log/slog"
 	"strings"
@@ -165,40 +163,16 @@ func (v *UserServiceTokenValidator) ValidateToken(ctx context.Context, token str
 	if !resp.GetValid() {
 		return nil, errors.New("invalid token")
 	}
-	return userFromJWT(token)
-}
-
-func userFromJWT(token string) (*ValidatedUser, error) {
-	parts := strings.Split(token, ".")
-	if len(parts) < 2 {
-		return nil, errors.New("invalid jwt format")
-	}
-	payload, err := base64.RawURLEncoding.DecodeString(parts[1])
-	if err != nil {
-		return nil, err
-	}
-	var claims struct {
-		User struct {
-			ID      string `json:"id"`
-			Name    string `json:"name"`
-			Email   string `json:"email"`
-			Company string `json:"company"`
-			Role    string `json:"role"`
-			Status  string `json:"status"`
-		} `json:"user"`
-	}
-	if err := json.Unmarshal(payload, &claims); err != nil {
-		return nil, err
-	}
-	if claims.User.ID == "" {
-		return nil, errors.New("jwt does not contain user.id")
+	user := resp.GetUser()
+	if user.GetId() == "" {
+		return nil, errors.New("validated token response does not contain user.id")
 	}
 	return &ValidatedUser{
-		ID:      claims.User.ID,
-		Name:    claims.User.Name,
-		Email:   claims.User.Email,
-		Company: claims.User.Company,
-		Role:    claims.User.Role,
-		Status:  claims.User.Status,
+		ID:      user.GetId(),
+		Name:    user.GetName(),
+		Email:   user.GetEmail(),
+		Company: user.GetCompany(),
+		Role:    user.GetRole(),
+		Status:  user.GetStatus(),
 	}, nil
 }
