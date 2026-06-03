@@ -27,6 +27,7 @@ type CareerProfileServiceClient interface {
 	AddSkillToProfile(ctx context.Context, in *AddSkillToProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
 	CreateResume(ctx context.Context, in *CreateResumeRequest, opts ...grpc.CallOption) (*ResumeResponse, error)
 	ListMyResumes(ctx context.Context, in *ListMyResumesRequest, opts ...grpc.CallOption) (*ListResumesResponse, error)
+	DownloadResume(ctx context.Context, in *DownloadResumeRequest, opts ...grpc.CallOption) (*DownloadResumeResponse, error)
 }
 
 type careerProfileServiceClient struct {
@@ -82,6 +83,15 @@ func (c *careerProfileServiceClient) ListMyResumes(ctx context.Context, in *List
 	return out, nil
 }
 
+func (c *careerProfileServiceClient) DownloadResume(ctx context.Context, in *DownloadResumeRequest, opts ...grpc.CallOption) (*DownloadResumeResponse, error) {
+	out := new(DownloadResumeResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/DownloadResume", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CareerProfileServiceServer is the server API for CareerProfileService service.
 // All implementations must embed UnimplementedCareerProfileServiceServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type CareerProfileServiceServer interface {
 	AddSkillToProfile(context.Context, *AddSkillToProfileRequest) (*SkillProfileResponse, error)
 	CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error)
 	ListMyResumes(context.Context, *ListMyResumesRequest) (*ListResumesResponse, error)
+	DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error)
 	mustEmbedUnimplementedCareerProfileServiceServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedCareerProfileServiceServer) CreateResume(context.Context, *Cr
 }
 func (UnimplementedCareerProfileServiceServer) ListMyResumes(context.Context, *ListMyResumesRequest) (*ListResumesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMyResumes not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DownloadResume not implemented")
 }
 func (UnimplementedCareerProfileServiceServer) mustEmbedUnimplementedCareerProfileServiceServer() {}
 
@@ -216,6 +230,24 @@ func _CareerProfileService_ListMyResumes_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CareerProfileService_DownloadResume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadResumeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).DownloadResume(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/DownloadResume",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).DownloadResume(ctx, req.(*DownloadResumeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CareerProfileService_ServiceDesc is the grpc.ServiceDesc for CareerProfileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListMyResumes",
 			Handler:    _CareerProfileService_ListMyResumes_Handler,
+		},
+		{
+			MethodName: "DownloadResume",
+			Handler:    _CareerProfileService_DownloadResume_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

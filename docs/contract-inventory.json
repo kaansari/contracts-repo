@@ -1276,6 +1276,13 @@
             "request": "ListMyResumesRequest",
             "response": "ListResumesResponse",
             "public": false
+          },
+          {
+            "name": "DownloadResume",
+            "full_method": "/career.CareerProfileService/DownloadResume",
+            "request": "DownloadResumeRequest",
+            "response": "DownloadResumeResponse",
+            "public": false
           }
         ]
       }
@@ -2264,7 +2271,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 78,
+    "known_grpc_methods_count": 79,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -2316,6 +2323,7 @@
       "/career.CareerProfileService/AddSkillToProfile",
       "/career.CareerProfileService/CreateResume",
       "/career.CareerProfileService/ListMyResumes",
+      "/career.CareerProfileService/DownloadResume",
       "/career.JobService/CreateCompany",
       "/career.JobService/ListCompanies",
       "/career.JobService/GetCompany",
@@ -2430,6 +2438,7 @@
         "/career.CareerProfileService/AddSkillToProfile",
         "/career.CareerProfileService/CreateResume",
         "/career.CareerProfileService/ListMyResumes",
+        "/career.CareerProfileService/DownloadResume",
         "/career.JobService/GetJob",
         "/career.JobService/SearchJobs",
         "/career.JobCartService/GetJobCart",
