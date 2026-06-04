@@ -1514,6 +1514,13 @@
             "request": "ReopenJobRequest",
             "response": "JobResponse",
             "public": false
+          },
+          {
+            "name": "ImportATSJobs",
+            "full_method": "/career.JobService/ImportATSJobs",
+            "request": "ImportATSJobsRequest",
+            "response": "ImportATSJobsResponse",
+            "public": false
           }
         ]
       }
@@ -2271,7 +2278,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 79,
+    "known_grpc_methods_count": 80,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -2334,6 +2341,7 @@
       "/career.JobService/UpdateJob",
       "/career.JobService/CloseJob",
       "/career.JobService/ReopenJob",
+      "/career.JobService/ImportATSJobs",
       "/career.JobCartService/GetJobCart",
       "/career.JobCartService/AddJobToCart",
       "/career.JobCartService/UpdateCartItemProfile",
@@ -2399,6 +2407,7 @@
         "/career.JobService/UpdateJob",
         "/career.JobService/CloseJob",
         "/career.JobService/ReopenJob",
+        "/career.JobService/ImportATSJobs",
         "/career.JobApplicationService/ListApplications",
         "/career.JobApplicationService/GetApplication",
         "/career.JobApplicationService/UpdateApplicationStatus",

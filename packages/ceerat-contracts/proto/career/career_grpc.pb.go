@@ -298,6 +298,7 @@ type JobServiceClient interface {
 	UpdateJob(ctx context.Context, in *UpdateJobRequest, opts ...grpc.CallOption) (*JobResponse, error)
 	CloseJob(ctx context.Context, in *CloseJobRequest, opts ...grpc.CallOption) (*JobResponse, error)
 	ReopenJob(ctx context.Context, in *ReopenJobRequest, opts ...grpc.CallOption) (*JobResponse, error)
+	ImportATSJobs(ctx context.Context, in *ImportATSJobsRequest, opts ...grpc.CallOption) (*ImportATSJobsResponse, error)
 }
 
 type jobServiceClient struct {
@@ -398,6 +399,15 @@ func (c *jobServiceClient) ReopenJob(ctx context.Context, in *ReopenJobRequest, 
 	return out, nil
 }
 
+func (c *jobServiceClient) ImportATSJobs(ctx context.Context, in *ImportATSJobsRequest, opts ...grpc.CallOption) (*ImportATSJobsResponse, error) {
+	out := new(ImportATSJobsResponse)
+	err := c.cc.Invoke(ctx, "/career.JobService/ImportATSJobs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility
@@ -412,6 +422,7 @@ type JobServiceServer interface {
 	UpdateJob(context.Context, *UpdateJobRequest) (*JobResponse, error)
 	CloseJob(context.Context, *CloseJobRequest) (*JobResponse, error)
 	ReopenJob(context.Context, *ReopenJobRequest) (*JobResponse, error)
+	ImportATSJobs(context.Context, *ImportATSJobsRequest) (*ImportATSJobsResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -448,6 +459,9 @@ func (UnimplementedJobServiceServer) CloseJob(context.Context, *CloseJobRequest)
 }
 func (UnimplementedJobServiceServer) ReopenJob(context.Context, *ReopenJobRequest) (*JobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReopenJob not implemented")
+}
+func (UnimplementedJobServiceServer) ImportATSJobs(context.Context, *ImportATSJobsRequest) (*ImportATSJobsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportATSJobs not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 
@@ -642,6 +656,24 @@ func _JobService_ReopenJob_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_ImportATSJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportATSJobsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).ImportATSJobs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.JobService/ImportATSJobs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).ImportATSJobs(ctx, req.(*ImportATSJobsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JobService_ServiceDesc is the grpc.ServiceDesc for JobService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -688,6 +720,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReopenJob",
 			Handler:    _JobService_ReopenJob_Handler,
+		},
+		{
+			MethodName: "ImportATSJobs",
+			Handler:    _JobService_ImportATSJobs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

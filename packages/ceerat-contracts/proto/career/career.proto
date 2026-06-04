@@ -24,6 +24,7 @@ service JobService {
   rpc UpdateJob(UpdateJobRequest) returns (JobResponse) {}
   rpc CloseJob(CloseJobRequest) returns (JobResponse) {}
   rpc ReopenJob(ReopenJobRequest) returns (JobResponse) {}
+  rpc ImportATSJobs(ImportATSJobsRequest) returns (ImportATSJobsResponse) {}
 }
 
 service JobCartService {
@@ -258,6 +259,45 @@ message SearchJobsRequest {
 
 message UpdateJobRequest {
   Job job = 1;
+}
+
+message ATSJob {
+  string title = 1;
+  string description = 2;
+  string location = 3;
+  string employment_type = 4;
+  string status = 5;
+  double salary_min = 6;
+  double salary_max = 7;
+  string category = 8;
+  string remote_type = 9;
+  string posted_date = 10;
+  string closing_date = 11;
+  string source_url = 12;
+  string external_job_id = 13;
+}
+
+message ImportATSJobsRequest {
+  string provider = 1;
+  string company_name = 2;
+  string external_company_id = 3;
+  repeated ATSJob jobs = 4;
+}
+
+message ImportATSJobResult {
+  string external_job_id = 1;
+  string job_id = 2;
+  string action = 3;
+  repeated string errors = 4;
+}
+
+message ImportATSJobsResponse {
+  Company company = 1;
+  int32 jobs_received = 2;
+  int32 jobs_created = 3;
+  int32 jobs_updated = 4;
+  int32 jobs_skipped = 5;
+  repeated ImportATSJobResult results = 6;
 }
 
 message CloseJobRequest {
