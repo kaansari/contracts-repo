@@ -1283,6 +1283,13 @@
             "request": "DownloadResumeRequest",
             "response": "DownloadResumeResponse",
             "public": false
+          },
+          {
+            "name": "GetMyCareerMetrics",
+            "full_method": "/career.CareerProfileService/GetMyCareerMetrics",
+            "request": "GetMyCareerMetricsRequest",
+            "response": "CustomerCareerMetricsResponse",
+            "public": false
           }
         ]
       }
@@ -1520,6 +1527,13 @@
             "full_method": "/career.JobService/ImportATSJobs",
             "request": "ImportATSJobsRequest",
             "response": "ImportATSJobsResponse",
+            "public": false
+          },
+          {
+            "name": "GetCareerMarketMetrics",
+            "full_method": "/career.JobService/GetCareerMarketMetrics",
+            "request": "GetCareerMarketMetricsRequest",
+            "response": "CareerMarketMetricsResponse",
             "public": false
           }
         ]
@@ -1883,6 +1897,20 @@
             "name": "ApplyToJob",
             "full_method": "/career.JobApplicationService/ApplyToJob",
             "request": "ApplyToJobRequest",
+            "response": "JobApplicationResponse",
+            "public": false
+          },
+          {
+            "name": "DiscoverJobApplication",
+            "full_method": "/career.JobApplicationService/DiscoverJobApplication",
+            "request": "DiscoverJobApplicationRequest",
+            "response": "DiscoverJobApplicationResponse",
+            "public": false
+          },
+          {
+            "name": "SubmitJobApplication",
+            "full_method": "/career.JobApplicationService/SubmitJobApplication",
+            "request": "SubmitJobApplicationRequest",
             "response": "JobApplicationResponse",
             "public": false
           },
@@ -2278,7 +2306,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 80,
+    "known_grpc_methods_count": 82,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -2331,6 +2359,7 @@
       "/career.CareerProfileService/CreateResume",
       "/career.CareerProfileService/ListMyResumes",
       "/career.CareerProfileService/DownloadResume",
+      "/career.CareerProfileService/GetMyCareerMetrics",
       "/career.JobService/CreateCompany",
       "/career.JobService/ListCompanies",
       "/career.JobService/GetCompany",
@@ -2342,12 +2371,15 @@
       "/career.JobService/CloseJob",
       "/career.JobService/ReopenJob",
       "/career.JobService/ImportATSJobs",
+      "/career.JobService/GetCareerMarketMetrics",
       "/career.JobCartService/GetJobCart",
       "/career.JobCartService/AddJobToCart",
       "/career.JobCartService/UpdateCartItemProfile",
       "/career.JobCartService/RemoveJobFromCart",
       "/career.JobCartService/ClearJobCart",
       "/career.JobApplicationService/ApplyToJob",
+      "/career.JobApplicationService/DiscoverJobApplication",
+      "/career.JobApplicationService/SubmitJobApplication",
       "/career.JobApplicationService/ApplyToCartJobs",
       "/career.JobApplicationService/ListMyApplications",
       "/career.JobApplicationService/GetMyApplication",
@@ -2408,6 +2440,7 @@
         "/career.JobService/CloseJob",
         "/career.JobService/ReopenJob",
         "/career.JobService/ImportATSJobs",
+        "/career.JobService/GetCareerMarketMetrics",
         "/career.JobApplicationService/ListApplications",
         "/career.JobApplicationService/GetApplication",
         "/career.JobApplicationService/UpdateApplicationStatus",
@@ -2448,14 +2481,18 @@
         "/career.CareerProfileService/CreateResume",
         "/career.CareerProfileService/ListMyResumes",
         "/career.CareerProfileService/DownloadResume",
+        "/career.CareerProfileService/GetMyCareerMetrics",
         "/career.JobService/GetJob",
         "/career.JobService/SearchJobs",
+        "/career.JobService/GetCareerMarketMetrics",
         "/career.JobCartService/GetJobCart",
         "/career.JobCartService/AddJobToCart",
         "/career.JobCartService/UpdateCartItemProfile",
         "/career.JobCartService/RemoveJobFromCart",
         "/career.JobCartService/ClearJobCart",
         "/career.JobApplicationService/ApplyToJob",
+        "/career.JobApplicationService/DiscoverJobApplication",
+        "/career.JobApplicationService/SubmitJobApplication",
         "/career.JobApplicationService/ApplyToCartJobs",
         "/career.JobApplicationService/ListMyApplications",
         "/career.JobApplicationService/GetMyApplication",

@@ -11,6 +11,7 @@ service CareerProfileService {
   rpc CreateResume(CreateResumeRequest) returns (ResumeResponse) {}
   rpc ListMyResumes(ListMyResumesRequest) returns (ListResumesResponse) {}
   rpc DownloadResume(DownloadResumeRequest) returns (DownloadResumeResponse) {}
+  rpc GetMyCareerMetrics(GetMyCareerMetricsRequest) returns (CustomerCareerMetricsResponse) {}
 }
 
 service JobService {
@@ -25,6 +26,7 @@ service JobService {
   rpc CloseJob(CloseJobRequest) returns (JobResponse) {}
   rpc ReopenJob(ReopenJobRequest) returns (JobResponse) {}
   rpc ImportATSJobs(ImportATSJobsRequest) returns (ImportATSJobsResponse) {}
+  rpc GetCareerMarketMetrics(GetCareerMarketMetricsRequest) returns (CareerMarketMetricsResponse) {}
 }
 
 service JobCartService {
@@ -38,6 +40,8 @@ service JobCartService {
 service JobApplicationService {
   rpc ApplyToJob(ApplyToJobRequest) returns (JobApplicationResponse) {}
   rpc ApplyToCartJobs(ApplyToCartJobsRequest) returns (ListJobApplicationsResponse) {}
+  rpc DiscoverJobApplication(DiscoverJobApplicationRequest) returns (DiscoverJobApplicationResponse) {}
+  rpc SubmitJobApplication(SubmitJobApplicationRequest) returns (JobApplicationResponse) {}
   rpc ListMyApplications(ListMyApplicationsRequest) returns (ListJobApplicationsResponse) {}
   rpc GetMyApplication(GetMyApplicationRequest) returns (JobApplicationResponse) {}
   rpc ListApplications(ListApplicationsRequest) returns (ListJobApplicationsResponse) {}
@@ -171,6 +175,10 @@ message JobApplication {
   string resume_snapshot_text = 11;
   string created_at = 12;
   string updated_at = 13;
+  string provider = 14;
+  string provider_submission_id = 15;
+  string provider_status = 16;
+  string application_url = 17;
 }
 
 message CreateSkillProfileRequest {
@@ -300,6 +308,40 @@ message ImportATSJobsResponse {
   repeated ImportATSJobResult results = 6;
 }
 
+message MetricBucket {
+  string key = 1;
+  string label = 2;
+  int64 count = 3;
+}
+
+message GetCareerMarketMetricsRequest {
+}
+
+message CareerMarketMetricsResponse {
+  int64 available_jobs = 1;
+  int64 company_count = 2;
+  int64 job_type_count = 3;
+  int64 remote_job_count = 4;
+  repeated MetricBucket jobs_by_month = 5;
+  repeated MetricBucket jobs_by_type = 6;
+  repeated MetricBucket jobs_by_location = 7;
+  repeated MetricBucket jobs_by_company = 8;
+  repeated MetricBucket jobs_by_source = 9;
+  string refreshed_at = 10;
+}
+
+message GetMyCareerMetricsRequest {
+}
+
+message CustomerCareerMetricsResponse {
+  int64 saved_jobs = 1;
+  int64 active_resumes = 2;
+  int64 skill_profiles = 3;
+  int64 applications = 4;
+  repeated MetricBucket applications_by_status = 5;
+  string refreshed_at = 6;
+}
+
 message CloseJobRequest {
   string id = 1;
 }
@@ -348,6 +390,44 @@ message ApplyToCartJobsRequest {
   string skill_profile_id = 1;
   string resume_id = 2;
   string cover_letter = 3;
+}
+
+message DiscoverJobApplicationRequest {
+  string job_id = 1;
+}
+
+message ApplicationQuestion {
+  string key = 1;
+  string label = 2;
+  string type = 3;
+  bool required = 4;
+  repeated string options = 5;
+  string provider_field_id = 6;
+}
+
+message DiscoverJobApplicationResponse {
+  string job_id = 1;
+  string provider = 2;
+  string provider_job_id = 3;
+  string application_url = 4;
+  repeated ApplicationQuestion questions = 5;
+  repeated string required_fields = 6;
+  string status = 7;
+  repeated Error errors = 8;
+}
+
+message ApplicationAnswer {
+  string key = 1;
+  string value = 2;
+}
+
+message SubmitJobApplicationRequest {
+  string job_id = 1;
+  string skill_profile_id = 2;
+  string resume_id = 3;
+  string cover_letter = 4;
+  repeated ApplicationAnswer answers = 5;
+  bool confirmed = 6;
 }
 
 message ListMyApplicationsRequest {

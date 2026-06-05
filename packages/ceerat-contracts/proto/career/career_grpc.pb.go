@@ -28,6 +28,7 @@ type CareerProfileServiceClient interface {
 	CreateResume(ctx context.Context, in *CreateResumeRequest, opts ...grpc.CallOption) (*ResumeResponse, error)
 	ListMyResumes(ctx context.Context, in *ListMyResumesRequest, opts ...grpc.CallOption) (*ListResumesResponse, error)
 	DownloadResume(ctx context.Context, in *DownloadResumeRequest, opts ...grpc.CallOption) (*DownloadResumeResponse, error)
+	GetMyCareerMetrics(ctx context.Context, in *GetMyCareerMetricsRequest, opts ...grpc.CallOption) (*CustomerCareerMetricsResponse, error)
 }
 
 type careerProfileServiceClient struct {
@@ -92,6 +93,15 @@ func (c *careerProfileServiceClient) DownloadResume(ctx context.Context, in *Dow
 	return out, nil
 }
 
+func (c *careerProfileServiceClient) GetMyCareerMetrics(ctx context.Context, in *GetMyCareerMetricsRequest, opts ...grpc.CallOption) (*CustomerCareerMetricsResponse, error) {
+	out := new(CustomerCareerMetricsResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/GetMyCareerMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CareerProfileServiceServer is the server API for CareerProfileService service.
 // All implementations must embed UnimplementedCareerProfileServiceServer
 // for forward compatibility
@@ -102,6 +112,7 @@ type CareerProfileServiceServer interface {
 	CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error)
 	ListMyResumes(context.Context, *ListMyResumesRequest) (*ListResumesResponse, error)
 	DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error)
+	GetMyCareerMetrics(context.Context, *GetMyCareerMetricsRequest) (*CustomerCareerMetricsResponse, error)
 	mustEmbedUnimplementedCareerProfileServiceServer()
 }
 
@@ -126,6 +137,9 @@ func (UnimplementedCareerProfileServiceServer) ListMyResumes(context.Context, *L
 }
 func (UnimplementedCareerProfileServiceServer) DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloadResume not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) GetMyCareerMetrics(context.Context, *GetMyCareerMetricsRequest) (*CustomerCareerMetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyCareerMetrics not implemented")
 }
 func (UnimplementedCareerProfileServiceServer) mustEmbedUnimplementedCareerProfileServiceServer() {}
 
@@ -248,6 +262,24 @@ func _CareerProfileService_DownloadResume_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CareerProfileService_GetMyCareerMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyCareerMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).GetMyCareerMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/GetMyCareerMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).GetMyCareerMetrics(ctx, req.(*GetMyCareerMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CareerProfileService_ServiceDesc is the grpc.ServiceDesc for CareerProfileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -279,6 +311,10 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DownloadResume",
 			Handler:    _CareerProfileService_DownloadResume_Handler,
 		},
+		{
+			MethodName: "GetMyCareerMetrics",
+			Handler:    _CareerProfileService_GetMyCareerMetrics_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/career/career.proto",
@@ -299,6 +335,7 @@ type JobServiceClient interface {
 	CloseJob(ctx context.Context, in *CloseJobRequest, opts ...grpc.CallOption) (*JobResponse, error)
 	ReopenJob(ctx context.Context, in *ReopenJobRequest, opts ...grpc.CallOption) (*JobResponse, error)
 	ImportATSJobs(ctx context.Context, in *ImportATSJobsRequest, opts ...grpc.CallOption) (*ImportATSJobsResponse, error)
+	GetCareerMarketMetrics(ctx context.Context, in *GetCareerMarketMetricsRequest, opts ...grpc.CallOption) (*CareerMarketMetricsResponse, error)
 }
 
 type jobServiceClient struct {
@@ -408,6 +445,15 @@ func (c *jobServiceClient) ImportATSJobs(ctx context.Context, in *ImportATSJobsR
 	return out, nil
 }
 
+func (c *jobServiceClient) GetCareerMarketMetrics(ctx context.Context, in *GetCareerMarketMetricsRequest, opts ...grpc.CallOption) (*CareerMarketMetricsResponse, error) {
+	out := new(CareerMarketMetricsResponse)
+	err := c.cc.Invoke(ctx, "/career.JobService/GetCareerMarketMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility
@@ -423,6 +469,7 @@ type JobServiceServer interface {
 	CloseJob(context.Context, *CloseJobRequest) (*JobResponse, error)
 	ReopenJob(context.Context, *ReopenJobRequest) (*JobResponse, error)
 	ImportATSJobs(context.Context, *ImportATSJobsRequest) (*ImportATSJobsResponse, error)
+	GetCareerMarketMetrics(context.Context, *GetCareerMarketMetricsRequest) (*CareerMarketMetricsResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -462,6 +509,9 @@ func (UnimplementedJobServiceServer) ReopenJob(context.Context, *ReopenJobReques
 }
 func (UnimplementedJobServiceServer) ImportATSJobs(context.Context, *ImportATSJobsRequest) (*ImportATSJobsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImportATSJobs not implemented")
+}
+func (UnimplementedJobServiceServer) GetCareerMarketMetrics(context.Context, *GetCareerMarketMetricsRequest) (*CareerMarketMetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCareerMarketMetrics not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 
@@ -674,6 +724,24 @@ func _JobService_ImportATSJobs_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_GetCareerMarketMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCareerMarketMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetCareerMarketMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.JobService/GetCareerMarketMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetCareerMarketMetrics(ctx, req.(*GetCareerMarketMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JobService_ServiceDesc is the grpc.ServiceDesc for JobService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -724,6 +792,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ImportATSJobs",
 			Handler:    _JobService_ImportATSJobs_Handler,
+		},
+		{
+			MethodName: "GetCareerMarketMetrics",
+			Handler:    _JobService_GetCareerMarketMetrics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -966,6 +1038,8 @@ var JobCartService_ServiceDesc = grpc.ServiceDesc{
 type JobApplicationServiceClient interface {
 	ApplyToJob(ctx context.Context, in *ApplyToJobRequest, opts ...grpc.CallOption) (*JobApplicationResponse, error)
 	ApplyToCartJobs(ctx context.Context, in *ApplyToCartJobsRequest, opts ...grpc.CallOption) (*ListJobApplicationsResponse, error)
+	DiscoverJobApplication(ctx context.Context, in *DiscoverJobApplicationRequest, opts ...grpc.CallOption) (*DiscoverJobApplicationResponse, error)
+	SubmitJobApplication(ctx context.Context, in *SubmitJobApplicationRequest, opts ...grpc.CallOption) (*JobApplicationResponse, error)
 	ListMyApplications(ctx context.Context, in *ListMyApplicationsRequest, opts ...grpc.CallOption) (*ListJobApplicationsResponse, error)
 	GetMyApplication(ctx context.Context, in *GetMyApplicationRequest, opts ...grpc.CallOption) (*JobApplicationResponse, error)
 	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListJobApplicationsResponse, error)
@@ -993,6 +1067,24 @@ func (c *jobApplicationServiceClient) ApplyToJob(ctx context.Context, in *ApplyT
 func (c *jobApplicationServiceClient) ApplyToCartJobs(ctx context.Context, in *ApplyToCartJobsRequest, opts ...grpc.CallOption) (*ListJobApplicationsResponse, error) {
 	out := new(ListJobApplicationsResponse)
 	err := c.cc.Invoke(ctx, "/career.JobApplicationService/ApplyToCartJobs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobApplicationServiceClient) DiscoverJobApplication(ctx context.Context, in *DiscoverJobApplicationRequest, opts ...grpc.CallOption) (*DiscoverJobApplicationResponse, error) {
+	out := new(DiscoverJobApplicationResponse)
+	err := c.cc.Invoke(ctx, "/career.JobApplicationService/DiscoverJobApplication", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobApplicationServiceClient) SubmitJobApplication(ctx context.Context, in *SubmitJobApplicationRequest, opts ...grpc.CallOption) (*JobApplicationResponse, error) {
+	out := new(JobApplicationResponse)
+	err := c.cc.Invoke(ctx, "/career.JobApplicationService/SubmitJobApplication", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1050,6 +1142,8 @@ func (c *jobApplicationServiceClient) UpdateApplicationStatus(ctx context.Contex
 type JobApplicationServiceServer interface {
 	ApplyToJob(context.Context, *ApplyToJobRequest) (*JobApplicationResponse, error)
 	ApplyToCartJobs(context.Context, *ApplyToCartJobsRequest) (*ListJobApplicationsResponse, error)
+	DiscoverJobApplication(context.Context, *DiscoverJobApplicationRequest) (*DiscoverJobApplicationResponse, error)
+	SubmitJobApplication(context.Context, *SubmitJobApplicationRequest) (*JobApplicationResponse, error)
 	ListMyApplications(context.Context, *ListMyApplicationsRequest) (*ListJobApplicationsResponse, error)
 	GetMyApplication(context.Context, *GetMyApplicationRequest) (*JobApplicationResponse, error)
 	ListApplications(context.Context, *ListApplicationsRequest) (*ListJobApplicationsResponse, error)
@@ -1067,6 +1161,12 @@ func (UnimplementedJobApplicationServiceServer) ApplyToJob(context.Context, *App
 }
 func (UnimplementedJobApplicationServiceServer) ApplyToCartJobs(context.Context, *ApplyToCartJobsRequest) (*ListJobApplicationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyToCartJobs not implemented")
+}
+func (UnimplementedJobApplicationServiceServer) DiscoverJobApplication(context.Context, *DiscoverJobApplicationRequest) (*DiscoverJobApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DiscoverJobApplication not implemented")
+}
+func (UnimplementedJobApplicationServiceServer) SubmitJobApplication(context.Context, *SubmitJobApplicationRequest) (*JobApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitJobApplication not implemented")
 }
 func (UnimplementedJobApplicationServiceServer) ListMyApplications(context.Context, *ListMyApplicationsRequest) (*ListJobApplicationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMyApplications not implemented")
@@ -1128,6 +1228,42 @@ func _JobApplicationService_ApplyToCartJobs_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobApplicationServiceServer).ApplyToCartJobs(ctx, req.(*ApplyToCartJobsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobApplicationService_DiscoverJobApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DiscoverJobApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobApplicationServiceServer).DiscoverJobApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.JobApplicationService/DiscoverJobApplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobApplicationServiceServer).DiscoverJobApplication(ctx, req.(*DiscoverJobApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobApplicationService_SubmitJobApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitJobApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobApplicationServiceServer).SubmitJobApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.JobApplicationService/SubmitJobApplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobApplicationServiceServer).SubmitJobApplication(ctx, req.(*SubmitJobApplicationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1236,6 +1372,14 @@ var JobApplicationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApplyToCartJobs",
 			Handler:    _JobApplicationService_ApplyToCartJobs_Handler,
+		},
+		{
+			MethodName: "DiscoverJobApplication",
+			Handler:    _JobApplicationService_DiscoverJobApplication_Handler,
+		},
+		{
+			MethodName: "SubmitJobApplication",
+			Handler:    _JobApplicationService_SubmitJobApplication_Handler,
 		},
 		{
 			MethodName: "ListMyApplications",
