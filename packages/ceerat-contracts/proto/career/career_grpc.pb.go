@@ -25,6 +25,7 @@ type CareerProfileServiceClient interface {
 	CreateSkillProfile(ctx context.Context, in *CreateSkillProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
 	ListMySkillProfiles(ctx context.Context, in *ListMySkillProfilesRequest, opts ...grpc.CallOption) (*ListSkillProfilesResponse, error)
 	AddSkillToProfile(ctx context.Context, in *AddSkillToProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
+	UpdateSkillInProfile(ctx context.Context, in *UpdateSkillInProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
 	CreateResume(ctx context.Context, in *CreateResumeRequest, opts ...grpc.CallOption) (*ResumeResponse, error)
 	ListMyResumes(ctx context.Context, in *ListMyResumesRequest, opts ...grpc.CallOption) (*ListResumesResponse, error)
 	DownloadResume(ctx context.Context, in *DownloadResumeRequest, opts ...grpc.CallOption) (*DownloadResumeResponse, error)
@@ -60,6 +61,15 @@ func (c *careerProfileServiceClient) ListMySkillProfiles(ctx context.Context, in
 func (c *careerProfileServiceClient) AddSkillToProfile(ctx context.Context, in *AddSkillToProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error) {
 	out := new(SkillProfileResponse)
 	err := c.cc.Invoke(ctx, "/career.CareerProfileService/AddSkillToProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *careerProfileServiceClient) UpdateSkillInProfile(ctx context.Context, in *UpdateSkillInProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error) {
+	out := new(SkillProfileResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/UpdateSkillInProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,6 +119,7 @@ type CareerProfileServiceServer interface {
 	CreateSkillProfile(context.Context, *CreateSkillProfileRequest) (*SkillProfileResponse, error)
 	ListMySkillProfiles(context.Context, *ListMySkillProfilesRequest) (*ListSkillProfilesResponse, error)
 	AddSkillToProfile(context.Context, *AddSkillToProfileRequest) (*SkillProfileResponse, error)
+	UpdateSkillInProfile(context.Context, *UpdateSkillInProfileRequest) (*SkillProfileResponse, error)
 	CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error)
 	ListMyResumes(context.Context, *ListMyResumesRequest) (*ListResumesResponse, error)
 	DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error)
@@ -128,6 +139,9 @@ func (UnimplementedCareerProfileServiceServer) ListMySkillProfiles(context.Conte
 }
 func (UnimplementedCareerProfileServiceServer) AddSkillToProfile(context.Context, *AddSkillToProfileRequest) (*SkillProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSkillToProfile not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) UpdateSkillInProfile(context.Context, *UpdateSkillInProfileRequest) (*SkillProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillInProfile not implemented")
 }
 func (UnimplementedCareerProfileServiceServer) CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateResume not implemented")
@@ -204,6 +218,24 @@ func _CareerProfileService_AddSkillToProfile_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CareerProfileServiceServer).AddSkillToProfile(ctx, req.(*AddSkillToProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CareerProfileService_UpdateSkillInProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillInProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).UpdateSkillInProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/UpdateSkillInProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).UpdateSkillInProfile(ctx, req.(*UpdateSkillInProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -298,6 +330,10 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSkillToProfile",
 			Handler:    _CareerProfileService_AddSkillToProfile_Handler,
+		},
+		{
+			MethodName: "UpdateSkillInProfile",
+			Handler:    _CareerProfileService_UpdateSkillInProfile_Handler,
 		},
 		{
 			MethodName: "CreateResume",

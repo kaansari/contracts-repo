@@ -8,6 +8,7 @@ service CareerProfileService {
   rpc CreateSkillProfile(CreateSkillProfileRequest) returns (SkillProfileResponse) {}
   rpc ListMySkillProfiles(ListMySkillProfilesRequest) returns (ListSkillProfilesResponse) {}
   rpc AddSkillToProfile(AddSkillToProfileRequest) returns (SkillProfileResponse) {}
+  rpc UpdateSkillInProfile(UpdateSkillInProfileRequest) returns (SkillProfileResponse) {}
   rpc CreateResume(CreateResumeRequest) returns (ResumeResponse) {}
   rpc ListMyResumes(ListMyResumesRequest) returns (ListResumesResponse) {}
   rpc DownloadResume(DownloadResumeRequest) returns (DownloadResumeResponse) {}
@@ -201,6 +202,16 @@ message AddSkillToProfileRequest {
   string level = 4;
   int32 years_experience = 5;
   string skill_description = 6;
+}
+
+message UpdateSkillInProfileRequest {
+  string skill_profile_id = 1;
+  string profile_skill_id = 2;
+  string skill_name = 3;
+  string skill_category = 4;
+  string level = 5;
+  int32 years_experience = 6;
+  string skill_description = 7;
 }
 
 message CreateResumeRequest {
