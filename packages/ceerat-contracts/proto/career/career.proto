@@ -394,6 +394,25 @@ message SearchJobsRequest {
   string remote_type = 8;
   string status = 9;
   string source = 10;
+  string department = 11;
+  string seniority = 12;
+  repeated string skills = 13;
+  string country = 14;
+  string sort = 15;
+  bool include_facets = 16;
+  string company = 17;
+}
+
+message JobSearchFacetValue {
+  string value = 1;
+  string label = 2;
+  int32 count = 3;
+}
+
+message JobSearchFacet {
+  string field = 1;
+  string label = 2;
+  repeated JobSearchFacetValue values = 3;
 }
 
 message UpdateJobRequest {
@@ -608,6 +627,10 @@ message ListJobsResponse {
   repeated Job jobs = 1;
   string next_page_token = 2;
   repeated Error errors = 3;
+  int32 total = 4;
+  int32 page = 5;
+  int32 page_size = 6;
+  repeated JobSearchFacet facets = 7;
 }
 
 message SkillProfileResponse {
