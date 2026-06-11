@@ -26,17 +26,22 @@ type CareerProfileServiceClient interface {
 	ListMySkillProfiles(ctx context.Context, in *ListMySkillProfilesRequest, opts ...grpc.CallOption) (*ListSkillProfilesResponse, error)
 	AddSkillToProfile(ctx context.Context, in *AddSkillToProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
 	UpdateSkillInProfile(ctx context.Context, in *UpdateSkillInProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error)
+	BatchAddSkillsToProfile(ctx context.Context, in *BatchAddSkillsToProfileRequest, opts ...grpc.CallOption) (*BatchAddSkillsToProfileResponse, error)
 	CreateResume(ctx context.Context, in *CreateResumeRequest, opts ...grpc.CallOption) (*ResumeResponse, error)
 	ListMyResumes(ctx context.Context, in *ListMyResumesRequest, opts ...grpc.CallOption) (*ListResumesResponse, error)
 	UpdateResume(ctx context.Context, in *UpdateResumeRequest, opts ...grpc.CallOption) (*ResumeResponse, error)
 	DeleteResume(ctx context.Context, in *DeleteResumeRequest, opts ...grpc.CallOption) (*DeleteResumeResponse, error)
 	DownloadResume(ctx context.Context, in *DownloadResumeRequest, opts ...grpc.CallOption) (*DownloadResumeResponse, error)
+	ParseResumeText(ctx context.Context, in *ParseResumeTextRequest, opts ...grpc.CallOption) (*ParseResumeTextResponse, error)
+	ImportResumeDraft(ctx context.Context, in *ImportResumeDraftRequest, opts ...grpc.CallOption) (*ImportResumeDraftResponse, error)
 	CreateEmploymentRecord(ctx context.Context, in *CreateEmploymentRecordRequest, opts ...grpc.CallOption) (*EmploymentRecordResponse, error)
+	BatchCreateEmploymentRecords(ctx context.Context, in *BatchCreateEmploymentRecordsRequest, opts ...grpc.CallOption) (*BatchCreateEmploymentRecordsResponse, error)
 	ListMyEmploymentRecords(ctx context.Context, in *ListMyEmploymentRecordsRequest, opts ...grpc.CallOption) (*ListEmploymentRecordsResponse, error)
 	GetEmploymentRecord(ctx context.Context, in *GetEmploymentRecordRequest, opts ...grpc.CallOption) (*EmploymentRecordResponse, error)
 	UpdateEmploymentRecord(ctx context.Context, in *UpdateEmploymentRecordRequest, opts ...grpc.CallOption) (*EmploymentRecordResponse, error)
 	ArchiveEmploymentRecord(ctx context.Context, in *ArchiveEmploymentRecordRequest, opts ...grpc.CallOption) (*EmploymentRecordResponse, error)
 	AttachEmploymentRecordToResume(ctx context.Context, in *AttachEmploymentRecordToResumeRequest, opts ...grpc.CallOption) (*ResumeEmploymentRecordResponse, error)
+	BatchAttachEmploymentRecordsToResume(ctx context.Context, in *BatchAttachEmploymentRecordsToResumeRequest, opts ...grpc.CallOption) (*BatchAttachEmploymentRecordsToResumeResponse, error)
 	DetachEmploymentRecordFromResume(ctx context.Context, in *DetachEmploymentRecordFromResumeRequest, opts ...grpc.CallOption) (*ResumeEmploymentRecordResponse, error)
 	UpdateResumeEmploymentRecord(ctx context.Context, in *UpdateResumeEmploymentRecordRequest, opts ...grpc.CallOption) (*ResumeEmploymentRecordResponse, error)
 	ListResumeEmploymentRecords(ctx context.Context, in *ListResumeEmploymentRecordsRequest, opts ...grpc.CallOption) (*ListResumeEmploymentRecordsResponse, error)
@@ -81,6 +86,15 @@ func (c *careerProfileServiceClient) AddSkillToProfile(ctx context.Context, in *
 func (c *careerProfileServiceClient) UpdateSkillInProfile(ctx context.Context, in *UpdateSkillInProfileRequest, opts ...grpc.CallOption) (*SkillProfileResponse, error) {
 	out := new(SkillProfileResponse)
 	err := c.cc.Invoke(ctx, "/career.CareerProfileService/UpdateSkillInProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *careerProfileServiceClient) BatchAddSkillsToProfile(ctx context.Context, in *BatchAddSkillsToProfileRequest, opts ...grpc.CallOption) (*BatchAddSkillsToProfileResponse, error) {
+	out := new(BatchAddSkillsToProfileResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/BatchAddSkillsToProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,9 +146,36 @@ func (c *careerProfileServiceClient) DownloadResume(ctx context.Context, in *Dow
 	return out, nil
 }
 
+func (c *careerProfileServiceClient) ParseResumeText(ctx context.Context, in *ParseResumeTextRequest, opts ...grpc.CallOption) (*ParseResumeTextResponse, error) {
+	out := new(ParseResumeTextResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/ParseResumeText", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *careerProfileServiceClient) ImportResumeDraft(ctx context.Context, in *ImportResumeDraftRequest, opts ...grpc.CallOption) (*ImportResumeDraftResponse, error) {
+	out := new(ImportResumeDraftResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/ImportResumeDraft", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *careerProfileServiceClient) CreateEmploymentRecord(ctx context.Context, in *CreateEmploymentRecordRequest, opts ...grpc.CallOption) (*EmploymentRecordResponse, error) {
 	out := new(EmploymentRecordResponse)
 	err := c.cc.Invoke(ctx, "/career.CareerProfileService/CreateEmploymentRecord", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *careerProfileServiceClient) BatchCreateEmploymentRecords(ctx context.Context, in *BatchCreateEmploymentRecordsRequest, opts ...grpc.CallOption) (*BatchCreateEmploymentRecordsResponse, error) {
+	out := new(BatchCreateEmploymentRecordsResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/BatchCreateEmploymentRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -186,6 +227,15 @@ func (c *careerProfileServiceClient) AttachEmploymentRecordToResume(ctx context.
 	return out, nil
 }
 
+func (c *careerProfileServiceClient) BatchAttachEmploymentRecordsToResume(ctx context.Context, in *BatchAttachEmploymentRecordsToResumeRequest, opts ...grpc.CallOption) (*BatchAttachEmploymentRecordsToResumeResponse, error) {
+	out := new(BatchAttachEmploymentRecordsToResumeResponse)
+	err := c.cc.Invoke(ctx, "/career.CareerProfileService/BatchAttachEmploymentRecordsToResume", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *careerProfileServiceClient) DetachEmploymentRecordFromResume(ctx context.Context, in *DetachEmploymentRecordFromResumeRequest, opts ...grpc.CallOption) (*ResumeEmploymentRecordResponse, error) {
 	out := new(ResumeEmploymentRecordResponse)
 	err := c.cc.Invoke(ctx, "/career.CareerProfileService/DetachEmploymentRecordFromResume", in, out, opts...)
@@ -230,17 +280,22 @@ type CareerProfileServiceServer interface {
 	ListMySkillProfiles(context.Context, *ListMySkillProfilesRequest) (*ListSkillProfilesResponse, error)
 	AddSkillToProfile(context.Context, *AddSkillToProfileRequest) (*SkillProfileResponse, error)
 	UpdateSkillInProfile(context.Context, *UpdateSkillInProfileRequest) (*SkillProfileResponse, error)
+	BatchAddSkillsToProfile(context.Context, *BatchAddSkillsToProfileRequest) (*BatchAddSkillsToProfileResponse, error)
 	CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error)
 	ListMyResumes(context.Context, *ListMyResumesRequest) (*ListResumesResponse, error)
 	UpdateResume(context.Context, *UpdateResumeRequest) (*ResumeResponse, error)
 	DeleteResume(context.Context, *DeleteResumeRequest) (*DeleteResumeResponse, error)
 	DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error)
+	ParseResumeText(context.Context, *ParseResumeTextRequest) (*ParseResumeTextResponse, error)
+	ImportResumeDraft(context.Context, *ImportResumeDraftRequest) (*ImportResumeDraftResponse, error)
 	CreateEmploymentRecord(context.Context, *CreateEmploymentRecordRequest) (*EmploymentRecordResponse, error)
+	BatchCreateEmploymentRecords(context.Context, *BatchCreateEmploymentRecordsRequest) (*BatchCreateEmploymentRecordsResponse, error)
 	ListMyEmploymentRecords(context.Context, *ListMyEmploymentRecordsRequest) (*ListEmploymentRecordsResponse, error)
 	GetEmploymentRecord(context.Context, *GetEmploymentRecordRequest) (*EmploymentRecordResponse, error)
 	UpdateEmploymentRecord(context.Context, *UpdateEmploymentRecordRequest) (*EmploymentRecordResponse, error)
 	ArchiveEmploymentRecord(context.Context, *ArchiveEmploymentRecordRequest) (*EmploymentRecordResponse, error)
 	AttachEmploymentRecordToResume(context.Context, *AttachEmploymentRecordToResumeRequest) (*ResumeEmploymentRecordResponse, error)
+	BatchAttachEmploymentRecordsToResume(context.Context, *BatchAttachEmploymentRecordsToResumeRequest) (*BatchAttachEmploymentRecordsToResumeResponse, error)
 	DetachEmploymentRecordFromResume(context.Context, *DetachEmploymentRecordFromResumeRequest) (*ResumeEmploymentRecordResponse, error)
 	UpdateResumeEmploymentRecord(context.Context, *UpdateResumeEmploymentRecordRequest) (*ResumeEmploymentRecordResponse, error)
 	ListResumeEmploymentRecords(context.Context, *ListResumeEmploymentRecordsRequest) (*ListResumeEmploymentRecordsResponse, error)
@@ -264,6 +319,9 @@ func (UnimplementedCareerProfileServiceServer) AddSkillToProfile(context.Context
 func (UnimplementedCareerProfileServiceServer) UpdateSkillInProfile(context.Context, *UpdateSkillInProfileRequest) (*SkillProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillInProfile not implemented")
 }
+func (UnimplementedCareerProfileServiceServer) BatchAddSkillsToProfile(context.Context, *BatchAddSkillsToProfileRequest) (*BatchAddSkillsToProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchAddSkillsToProfile not implemented")
+}
 func (UnimplementedCareerProfileServiceServer) CreateResume(context.Context, *CreateResumeRequest) (*ResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateResume not implemented")
 }
@@ -279,8 +337,17 @@ func (UnimplementedCareerProfileServiceServer) DeleteResume(context.Context, *De
 func (UnimplementedCareerProfileServiceServer) DownloadResume(context.Context, *DownloadResumeRequest) (*DownloadResumeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloadResume not implemented")
 }
+func (UnimplementedCareerProfileServiceServer) ParseResumeText(context.Context, *ParseResumeTextRequest) (*ParseResumeTextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ParseResumeText not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) ImportResumeDraft(context.Context, *ImportResumeDraftRequest) (*ImportResumeDraftResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportResumeDraft not implemented")
+}
 func (UnimplementedCareerProfileServiceServer) CreateEmploymentRecord(context.Context, *CreateEmploymentRecordRequest) (*EmploymentRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEmploymentRecord not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) BatchCreateEmploymentRecords(context.Context, *BatchCreateEmploymentRecordsRequest) (*BatchCreateEmploymentRecordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchCreateEmploymentRecords not implemented")
 }
 func (UnimplementedCareerProfileServiceServer) ListMyEmploymentRecords(context.Context, *ListMyEmploymentRecordsRequest) (*ListEmploymentRecordsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMyEmploymentRecords not implemented")
@@ -296,6 +363,9 @@ func (UnimplementedCareerProfileServiceServer) ArchiveEmploymentRecord(context.C
 }
 func (UnimplementedCareerProfileServiceServer) AttachEmploymentRecordToResume(context.Context, *AttachEmploymentRecordToResumeRequest) (*ResumeEmploymentRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AttachEmploymentRecordToResume not implemented")
+}
+func (UnimplementedCareerProfileServiceServer) BatchAttachEmploymentRecordsToResume(context.Context, *BatchAttachEmploymentRecordsToResumeRequest) (*BatchAttachEmploymentRecordsToResumeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchAttachEmploymentRecordsToResume not implemented")
 }
 func (UnimplementedCareerProfileServiceServer) DetachEmploymentRecordFromResume(context.Context, *DetachEmploymentRecordFromResumeRequest) (*ResumeEmploymentRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DetachEmploymentRecordFromResume not implemented")
@@ -394,6 +464,24 @@ func _CareerProfileService_UpdateSkillInProfile_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CareerProfileService_BatchAddSkillsToProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchAddSkillsToProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).BatchAddSkillsToProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/BatchAddSkillsToProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).BatchAddSkillsToProfile(ctx, req.(*BatchAddSkillsToProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CareerProfileService_CreateResume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateResumeRequest)
 	if err := dec(in); err != nil {
@@ -484,6 +572,42 @@ func _CareerProfileService_DownloadResume_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CareerProfileService_ParseResumeText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParseResumeTextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).ParseResumeText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/ParseResumeText",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).ParseResumeText(ctx, req.(*ParseResumeTextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CareerProfileService_ImportResumeDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportResumeDraftRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).ImportResumeDraft(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/ImportResumeDraft",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).ImportResumeDraft(ctx, req.(*ImportResumeDraftRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CareerProfileService_CreateEmploymentRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateEmploymentRecordRequest)
 	if err := dec(in); err != nil {
@@ -498,6 +622,24 @@ func _CareerProfileService_CreateEmploymentRecord_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CareerProfileServiceServer).CreateEmploymentRecord(ctx, req.(*CreateEmploymentRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CareerProfileService_BatchCreateEmploymentRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchCreateEmploymentRecordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).BatchCreateEmploymentRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/BatchCreateEmploymentRecords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).BatchCreateEmploymentRecords(ctx, req.(*BatchCreateEmploymentRecordsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -588,6 +730,24 @@ func _CareerProfileService_AttachEmploymentRecordToResume_Handler(srv interface{
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CareerProfileServiceServer).AttachEmploymentRecordToResume(ctx, req.(*AttachEmploymentRecordToResumeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CareerProfileService_BatchAttachEmploymentRecordsToResume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchAttachEmploymentRecordsToResumeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CareerProfileServiceServer).BatchAttachEmploymentRecordsToResume(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/career.CareerProfileService/BatchAttachEmploymentRecordsToResume",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CareerProfileServiceServer).BatchAttachEmploymentRecordsToResume(ctx, req.(*BatchAttachEmploymentRecordsToResumeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -688,6 +848,10 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CareerProfileService_UpdateSkillInProfile_Handler,
 		},
 		{
+			MethodName: "BatchAddSkillsToProfile",
+			Handler:    _CareerProfileService_BatchAddSkillsToProfile_Handler,
+		},
+		{
 			MethodName: "CreateResume",
 			Handler:    _CareerProfileService_CreateResume_Handler,
 		},
@@ -708,8 +872,20 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CareerProfileService_DownloadResume_Handler,
 		},
 		{
+			MethodName: "ParseResumeText",
+			Handler:    _CareerProfileService_ParseResumeText_Handler,
+		},
+		{
+			MethodName: "ImportResumeDraft",
+			Handler:    _CareerProfileService_ImportResumeDraft_Handler,
+		},
+		{
 			MethodName: "CreateEmploymentRecord",
 			Handler:    _CareerProfileService_CreateEmploymentRecord_Handler,
+		},
+		{
+			MethodName: "BatchCreateEmploymentRecords",
+			Handler:    _CareerProfileService_BatchCreateEmploymentRecords_Handler,
 		},
 		{
 			MethodName: "ListMyEmploymentRecords",
@@ -730,6 +906,10 @@ var CareerProfileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AttachEmploymentRecordToResume",
 			Handler:    _CareerProfileService_AttachEmploymentRecordToResume_Handler,
+		},
+		{
+			MethodName: "BatchAttachEmploymentRecordsToResume",
+			Handler:    _CareerProfileService_BatchAttachEmploymentRecordsToResume_Handler,
 		},
 		{
 			MethodName: "DetachEmploymentRecordFromResume",

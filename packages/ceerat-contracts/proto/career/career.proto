@@ -9,17 +9,22 @@ service CareerProfileService {
   rpc ListMySkillProfiles(ListMySkillProfilesRequest) returns (ListSkillProfilesResponse) {}
   rpc AddSkillToProfile(AddSkillToProfileRequest) returns (SkillProfileResponse) {}
   rpc UpdateSkillInProfile(UpdateSkillInProfileRequest) returns (SkillProfileResponse) {}
+  rpc BatchAddSkillsToProfile(BatchAddSkillsToProfileRequest) returns (BatchAddSkillsToProfileResponse) {}
   rpc CreateResume(CreateResumeRequest) returns (ResumeResponse) {}
   rpc ListMyResumes(ListMyResumesRequest) returns (ListResumesResponse) {}
   rpc UpdateResume(UpdateResumeRequest) returns (ResumeResponse) {}
   rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse) {}
   rpc DownloadResume(DownloadResumeRequest) returns (DownloadResumeResponse) {}
+  rpc ParseResumeText(ParseResumeTextRequest) returns (ParseResumeTextResponse) {}
+  rpc ImportResumeDraft(ImportResumeDraftRequest) returns (ImportResumeDraftResponse) {}
   rpc CreateEmploymentRecord(CreateEmploymentRecordRequest) returns (EmploymentRecordResponse) {}
+  rpc BatchCreateEmploymentRecords(BatchCreateEmploymentRecordsRequest) returns (BatchCreateEmploymentRecordsResponse) {}
   rpc ListMyEmploymentRecords(ListMyEmploymentRecordsRequest) returns (ListEmploymentRecordsResponse) {}
   rpc GetEmploymentRecord(GetEmploymentRecordRequest) returns (EmploymentRecordResponse) {}
   rpc UpdateEmploymentRecord(UpdateEmploymentRecordRequest) returns (EmploymentRecordResponse) {}
   rpc ArchiveEmploymentRecord(ArchiveEmploymentRecordRequest) returns (EmploymentRecordResponse) {}
   rpc AttachEmploymentRecordToResume(AttachEmploymentRecordToResumeRequest) returns (ResumeEmploymentRecordResponse) {}
+  rpc BatchAttachEmploymentRecordsToResume(BatchAttachEmploymentRecordsToResumeRequest) returns (BatchAttachEmploymentRecordsToResumeResponse) {}
   rpc DetachEmploymentRecordFromResume(DetachEmploymentRecordFromResumeRequest) returns (ResumeEmploymentRecordResponse) {}
   rpc UpdateResumeEmploymentRecord(UpdateResumeEmploymentRecordRequest) returns (ResumeEmploymentRecordResponse) {}
   rpc ListResumeEmploymentRecords(ListResumeEmploymentRecordsRequest) returns (ListResumeEmploymentRecordsResponse) {}
@@ -254,6 +259,25 @@ message UpdateSkillInProfileRequest {
   string skill_description = 7;
 }
 
+message ResumeDraftSkill {
+  string name = 1;
+  string category = 2;
+  string level = 3;
+  int32 years_experience = 4;
+  string description = 5;
+}
+
+message BatchAddSkillsToProfileRequest {
+  string skill_profile_id = 1;
+  repeated ResumeDraftSkill skills = 2;
+}
+
+message BatchAddSkillsToProfileResponse {
+  SkillProfile skill_profile = 1;
+  repeated SkillProfileSkill skills = 2;
+  repeated Error errors = 3;
+}
+
 message CreateResumeRequest {
   string skill_profile_id = 1;
   string title = 2;
@@ -292,6 +316,70 @@ message DownloadResumeRequest {
   ResumeDownloadFormat format = 2;
 }
 
+message ParsedResumeEmploymentRecord {
+  string company_name = 1;
+  string title = 2;
+  string location = 3;
+  string start_date = 4;
+  string end_date = 5;
+  bool is_current = 6;
+  string summary = 7;
+  string employment_type = 8;
+  int32 sort_order = 9;
+}
+
+message ParsedResume {
+  string title = 1;
+  string name = 2;
+  string content = 3;
+  string content_text = 4;
+  bool is_active = 5;
+}
+
+message ParsedResumeDraft {
+  string profile_name = 1;
+  string target_role = 2;
+  string summary = 3;
+  int32 years_of_experience = 4;
+  repeated ResumeDraftSkill skills = 5;
+  repeated ParsedResumeEmploymentRecord employment_records = 6;
+  ParsedResume resume = 7;
+}
+
+message ParseResumeTextRequest {
+  string file_name = 1;
+  string content_type = 2;
+  string text = 3;
+}
+
+message ParseResumeTextResponse {
+  ParsedResumeDraft draft = 1;
+  repeated string warnings = 2;
+  repeated Error errors = 3;
+}
+
+message ResumeImportOptions {
+  bool create_skill_profile = 1;
+  bool create_resume = 2;
+  bool create_employment_records = 3;
+  bool attach_employment_records = 4;
+}
+
+message ImportResumeDraftRequest {
+  ParsedResumeDraft draft = 1;
+  ResumeImportOptions options = 2;
+}
+
+message ImportResumeDraftResponse {
+  SkillProfile skill_profile = 1;
+  repeated SkillProfileSkill skills = 2;
+  repeated EmploymentRecord employment_records = 3;
+  Resume resume = 4;
+  repeated ResumeEmploymentRecord resume_employment_records = 5;
+  repeated string warnings = 6;
+  repeated Error errors = 7;
+}
+
 message CreateEmploymentRecordRequest {
   string company_name = 1;
   string title = 2;
@@ -301,6 +389,15 @@ message CreateEmploymentRecordRequest {
   bool is_current = 6;
   string summary = 7;
   string employment_type = 8;
+}
+
+message BatchCreateEmploymentRecordsRequest {
+  repeated ParsedResumeEmploymentRecord employment_records = 1;
+}
+
+message BatchCreateEmploymentRecordsResponse {
+  repeated EmploymentRecord employment_records = 1;
+  repeated Error errors = 2;
 }
 
 message ListMyEmploymentRecordsRequest {
@@ -337,6 +434,24 @@ message AttachEmploymentRecordToResumeRequest {
   bool include = 4;
   string tailored_title = 5;
   string tailored_summary = 6;
+}
+
+message ResumeEmploymentRecordInput {
+  string employment_record_id = 1;
+  int32 sort_order = 2;
+  bool include = 3;
+  string tailored_title = 4;
+  string tailored_summary = 5;
+}
+
+message BatchAttachEmploymentRecordsToResumeRequest {
+  string resume_id = 1;
+  repeated ResumeEmploymentRecordInput attachments = 2;
+}
+
+message BatchAttachEmploymentRecordsToResumeResponse {
+  repeated ResumeEmploymentRecord resume_employment_records = 1;
+  repeated Error errors = 2;
 }
 
 message DetachEmploymentRecordFromResumeRequest {

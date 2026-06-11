@@ -1264,6 +1264,20 @@
             "public": false
           },
           {
+            "name": "UpdateSkillInProfile",
+            "full_method": "/career.CareerProfileService/UpdateSkillInProfile",
+            "request": "UpdateSkillInProfileRequest",
+            "response": "SkillProfileResponse",
+            "public": false
+          },
+          {
+            "name": "BatchAddSkillsToProfile",
+            "full_method": "/career.CareerProfileService/BatchAddSkillsToProfile",
+            "request": "BatchAddSkillsToProfileRequest",
+            "response": "BatchAddSkillsToProfileResponse",
+            "public": false
+          },
+          {
             "name": "CreateResume",
             "full_method": "/career.CareerProfileService/CreateResume",
             "request": "CreateResumeRequest",
@@ -1278,10 +1292,115 @@
             "public": false
           },
           {
+            "name": "UpdateResume",
+            "full_method": "/career.CareerProfileService/UpdateResume",
+            "request": "UpdateResumeRequest",
+            "response": "ResumeResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteResume",
+            "full_method": "/career.CareerProfileService/DeleteResume",
+            "request": "DeleteResumeRequest",
+            "response": "DeleteResumeResponse",
+            "public": false
+          },
+          {
             "name": "DownloadResume",
             "full_method": "/career.CareerProfileService/DownloadResume",
             "request": "DownloadResumeRequest",
             "response": "DownloadResumeResponse",
+            "public": false
+          },
+          {
+            "name": "ParseResumeText",
+            "full_method": "/career.CareerProfileService/ParseResumeText",
+            "request": "ParseResumeTextRequest",
+            "response": "ParseResumeTextResponse",
+            "public": false
+          },
+          {
+            "name": "ImportResumeDraft",
+            "full_method": "/career.CareerProfileService/ImportResumeDraft",
+            "request": "ImportResumeDraftRequest",
+            "response": "ImportResumeDraftResponse",
+            "public": false
+          },
+          {
+            "name": "CreateEmploymentRecord",
+            "full_method": "/career.CareerProfileService/CreateEmploymentRecord",
+            "request": "CreateEmploymentRecordRequest",
+            "response": "EmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "BatchCreateEmploymentRecords",
+            "full_method": "/career.CareerProfileService/BatchCreateEmploymentRecords",
+            "request": "BatchCreateEmploymentRecordsRequest",
+            "response": "BatchCreateEmploymentRecordsResponse",
+            "public": false
+          },
+          {
+            "name": "ListMyEmploymentRecords",
+            "full_method": "/career.CareerProfileService/ListMyEmploymentRecords",
+            "request": "ListMyEmploymentRecordsRequest",
+            "response": "ListEmploymentRecordsResponse",
+            "public": false
+          },
+          {
+            "name": "GetEmploymentRecord",
+            "full_method": "/career.CareerProfileService/GetEmploymentRecord",
+            "request": "GetEmploymentRecordRequest",
+            "response": "EmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateEmploymentRecord",
+            "full_method": "/career.CareerProfileService/UpdateEmploymentRecord",
+            "request": "UpdateEmploymentRecordRequest",
+            "response": "EmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "ArchiveEmploymentRecord",
+            "full_method": "/career.CareerProfileService/ArchiveEmploymentRecord",
+            "request": "ArchiveEmploymentRecordRequest",
+            "response": "EmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "AttachEmploymentRecordToResume",
+            "full_method": "/career.CareerProfileService/AttachEmploymentRecordToResume",
+            "request": "AttachEmploymentRecordToResumeRequest",
+            "response": "ResumeEmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "BatchAttachEmploymentRecordsToResume",
+            "full_method": "/career.CareerProfileService/BatchAttachEmploymentRecordsToResume",
+            "request": "BatchAttachEmploymentRecordsToResumeRequest",
+            "response": "BatchAttachEmploymentRecordsToResumeResponse",
+            "public": false
+          },
+          {
+            "name": "DetachEmploymentRecordFromResume",
+            "full_method": "/career.CareerProfileService/DetachEmploymentRecordFromResume",
+            "request": "DetachEmploymentRecordFromResumeRequest",
+            "response": "ResumeEmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateResumeEmploymentRecord",
+            "full_method": "/career.CareerProfileService/UpdateResumeEmploymentRecord",
+            "request": "UpdateResumeEmploymentRecordRequest",
+            "response": "ResumeEmploymentRecordResponse",
+            "public": false
+          },
+          {
+            "name": "ListResumeEmploymentRecords",
+            "full_method": "/career.CareerProfileService/ListResumeEmploymentRecords",
+            "request": "ListResumeEmploymentRecordsRequest",
+            "response": "ListResumeEmploymentRecordsResponse",
             "public": false
           },
           {
@@ -2356,9 +2475,26 @@
       "/career.CareerProfileService/CreateSkillProfile",
       "/career.CareerProfileService/ListMySkillProfiles",
       "/career.CareerProfileService/AddSkillToProfile",
+      "/career.CareerProfileService/UpdateSkillInProfile",
+      "/career.CareerProfileService/BatchAddSkillsToProfile",
       "/career.CareerProfileService/CreateResume",
       "/career.CareerProfileService/ListMyResumes",
+      "/career.CareerProfileService/UpdateResume",
+      "/career.CareerProfileService/DeleteResume",
       "/career.CareerProfileService/DownloadResume",
+      "/career.CareerProfileService/ParseResumeText",
+      "/career.CareerProfileService/ImportResumeDraft",
+      "/career.CareerProfileService/CreateEmploymentRecord",
+      "/career.CareerProfileService/BatchCreateEmploymentRecords",
+      "/career.CareerProfileService/ListMyEmploymentRecords",
+      "/career.CareerProfileService/GetEmploymentRecord",
+      "/career.CareerProfileService/UpdateEmploymentRecord",
+      "/career.CareerProfileService/ArchiveEmploymentRecord",
+      "/career.CareerProfileService/AttachEmploymentRecordToResume",
+      "/career.CareerProfileService/BatchAttachEmploymentRecordsToResume",
+      "/career.CareerProfileService/DetachEmploymentRecordFromResume",
+      "/career.CareerProfileService/UpdateResumeEmploymentRecord",
+      "/career.CareerProfileService/ListResumeEmploymentRecords",
       "/career.CareerProfileService/GetMyCareerMetrics",
       "/career.JobService/CreateCompany",
       "/career.JobService/ListCompanies",
@@ -2478,9 +2614,26 @@
         "/career.CareerProfileService/CreateSkillProfile",
         "/career.CareerProfileService/ListMySkillProfiles",
         "/career.CareerProfileService/AddSkillToProfile",
+        "/career.CareerProfileService/UpdateSkillInProfile",
+        "/career.CareerProfileService/BatchAddSkillsToProfile",
         "/career.CareerProfileService/CreateResume",
         "/career.CareerProfileService/ListMyResumes",
+        "/career.CareerProfileService/UpdateResume",
+        "/career.CareerProfileService/DeleteResume",
         "/career.CareerProfileService/DownloadResume",
+        "/career.CareerProfileService/ParseResumeText",
+        "/career.CareerProfileService/ImportResumeDraft",
+        "/career.CareerProfileService/CreateEmploymentRecord",
+        "/career.CareerProfileService/BatchCreateEmploymentRecords",
+        "/career.CareerProfileService/ListMyEmploymentRecords",
+        "/career.CareerProfileService/GetEmploymentRecord",
+        "/career.CareerProfileService/UpdateEmploymentRecord",
+        "/career.CareerProfileService/ArchiveEmploymentRecord",
+        "/career.CareerProfileService/AttachEmploymentRecordToResume",
+        "/career.CareerProfileService/BatchAttachEmploymentRecordsToResume",
+        "/career.CareerProfileService/DetachEmploymentRecordFromResume",
+        "/career.CareerProfileService/UpdateResumeEmploymentRecord",
+        "/career.CareerProfileService/ListResumeEmploymentRecords",
         "/career.CareerProfileService/GetMyCareerMetrics",
         "/career.JobService/GetJob",
         "/career.JobService/SearchJobs",
