@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package calendar;
+
+option go_package = "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/calendar;calendarpb";
+
+import "google/protobuf/timestamp.proto";
+
+service CalendarService {
+  rpc ListMyCalendarEvents(ListMyCalendarEventsRequest) returns (ListCalendarEventsResponse);
+  rpc GetMyCalendarEvent(GetCalendarEventRequest) returns (CalendarEventResponse);
+  rpc CreateCalendarEvent(CreateCalendarEventRequest) returns (CalendarEventResponse);
+  rpc UpdateCalendarEvent(UpdateCalendarEventRequest) returns (CalendarEventResponse);
+  rpc DeleteCalendarEvent(DeleteCalendarEventRequest) returns (DeleteCalendarEventResponse);
+}
+
+message CalendarEvent {
+  string id = 1;
+  string customer_id = 2;
+  string title = 3;
+  string description = 4;
+  string event_type = 5;
+
+  google.protobuf.Timestamp starts_at = 6;
+  google.protobuf.Timestamp ends_at = 7;
+
+  string timezone = 8;
+  string location = 9;
+  string meeting_url = 10;
+
+  string related_entity_type = 11;
+  string related_entity_id = 12;
+
+  string job_id = 13;
+  string job_title = 14;
+  string company = 15;
+
+  int32 reminder_minutes_before = 16;
+  string status = 17;
+
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+}
+
+message ListMyCalendarEventsRequest {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+  string event_type = 3;
+}
+
+message ListCalendarEventsResponse {
+  repeated CalendarEvent events = 1;
+}
+
+message GetCalendarEventRequest {
+  string id = 1;
+}
+
+message CalendarEventResponse {
+  CalendarEvent event = 1;
+}
+
+message CreateCalendarEventRequest {
+  string title = 1;
+  string description = 2;
+  string event_type = 3;
+
+  google.protobuf.Timestamp starts_at = 4;
+  google.protobuf.Timestamp ends_at = 5;
+
+  string timezone = 6;
+  string location = 7;
+  string meeting_url = 8;
+
+  string related_entity_type = 9;
+  string related_entity_id = 10;
+
+  string job_id = 11;
+  string job_title = 12;
+  string company = 13;
+
+  int32 reminder_minutes_before = 14;
+}
+
+message UpdateCalendarEventRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string event_type = 4;
+
+  google.protobuf.Timestamp starts_at = 5;
+  google.protobuf.Timestamp ends_at = 6;
+
+  string timezone = 7;
+  string location = 8;
+  string meeting_url = 9;
+
+  int32 reminder_minutes_before = 10;
+  string status = 11;
+}
+
+message DeleteCalendarEventRequest {
+  string id = 1;
+}
+
+message DeleteCalendarEventResponse {
+  bool success = 1;
+}

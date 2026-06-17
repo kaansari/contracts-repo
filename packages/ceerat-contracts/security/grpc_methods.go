@@ -102,6 +102,11 @@ var KnownGRPCMethods = []string{
 	"/ai.AIThreadService/AppendMessage",
 	"/ai.AIThreadService/ReplaceThreadMessages",
 	"/ai.AIThreadService/DeleteThread",
+	"/calendar.CalendarService/ListMyCalendarEvents",
+	"/calendar.CalendarService/GetMyCalendarEvent",
+	"/calendar.CalendarService/CreateCalendarEvent",
+	"/calendar.CalendarService/UpdateCalendarEvent",
+	"/calendar.CalendarService/DeleteCalendarEvent",
 }
 
 var DefaultRolePermissions = map[string][]string{
@@ -218,5 +223,10 @@ var DefaultRolePermissions = map[string][]string{
 		"/ai.AIThreadService/AppendMessage",
 		"/ai.AIThreadService/ReplaceThreadMessages",
 		"/ai.AIThreadService/DeleteThread",
+		"/calendar.CalendarService/ListMyCalendarEvents",
+		"/calendar.CalendarService/GetMyCalendarEvent",
+		"/calendar.CalendarService/CreateCalendarEvent",
+		"/calendar.CalendarService/UpdateCalendarEvent",
+		"/calendar.CalendarService/DeleteCalendarEvent",
 	},
 }
