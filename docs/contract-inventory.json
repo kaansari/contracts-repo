@@ -2079,6 +2079,159 @@
       }
     },
     {
+      "package": "calendar",
+      "proto_path": "packages/ceerat-contracts/proto/calendar/calendar.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/calendar",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/calendar/calendar.pb.go",
+        "packages/ceerat-contracts/proto/calendar/calendar_grpc.pb.go"
+      ],
+      "imports": [
+        "google/protobuf/timestamp.proto"
+      ],
+      "messages": [
+        {
+          "name": "CalendarEvent",
+          "fields": [
+            "id",
+            "customer_id",
+            "title",
+            "description",
+            "event_type",
+            "starts_at",
+            "ends_at",
+            "timezone",
+            "location",
+            "meeting_url",
+            "related_entity_type",
+            "related_entity_id",
+            "job_id",
+            "job_title",
+            "company",
+            "reminder_minutes_before",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "ListMyCalendarEventsRequest",
+          "fields": [
+            "start",
+            "end",
+            "event_type"
+          ]
+        },
+        {
+          "name": "ListCalendarEventsResponse",
+          "fields": [
+            "events"
+          ]
+        },
+        {
+          "name": "GetCalendarEventRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "CalendarEventResponse",
+          "fields": [
+            "event"
+          ]
+        },
+        {
+          "name": "CreateCalendarEventRequest",
+          "fields": [
+            "title",
+            "description",
+            "event_type",
+            "starts_at",
+            "ends_at",
+            "timezone",
+            "location",
+            "meeting_url",
+            "related_entity_type",
+            "related_entity_id",
+            "job_id",
+            "job_title",
+            "company",
+            "reminder_minutes_before"
+          ]
+        },
+        {
+          "name": "UpdateCalendarEventRequest",
+          "fields": [
+            "id",
+            "title",
+            "description",
+            "event_type",
+            "starts_at",
+            "ends_at",
+            "timezone",
+            "location",
+            "meeting_url",
+            "reminder_minutes_before",
+            "status"
+          ]
+        },
+        {
+          "name": "DeleteCalendarEventRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "DeleteCalendarEventResponse",
+          "fields": [
+            "success"
+          ]
+        }
+      ],
+      "service": {
+        "name": "CalendarService",
+        "full_service": "calendar.CalendarService",
+        "domain": "Customer-owned career calendar events, reminders, and job/application follow-ups",
+        "rpcs": [
+          {
+            "name": "ListMyCalendarEvents",
+            "full_method": "/calendar.CalendarService/ListMyCalendarEvents",
+            "request": "ListMyCalendarEventsRequest",
+            "response": "ListCalendarEventsResponse",
+            "public": false
+          },
+          {
+            "name": "GetMyCalendarEvent",
+            "full_method": "/calendar.CalendarService/GetMyCalendarEvent",
+            "request": "GetCalendarEventRequest",
+            "response": "CalendarEventResponse",
+            "public": false
+          },
+          {
+            "name": "CreateCalendarEvent",
+            "full_method": "/calendar.CalendarService/CreateCalendarEvent",
+            "request": "CreateCalendarEventRequest",
+            "response": "CalendarEventResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateCalendarEvent",
+            "full_method": "/calendar.CalendarService/UpdateCalendarEvent",
+            "request": "UpdateCalendarEventRequest",
+            "response": "CalendarEventResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteCalendarEvent",
+            "full_method": "/calendar.CalendarService/DeleteCalendarEvent",
+            "request": "DeleteCalendarEventRequest",
+            "response": "DeleteCalendarEventResponse",
+            "public": false
+          }
+        ]
+      }
+    },
+    {
       "package": "ai",
       "proto_path": "packages/ceerat-contracts/proto/ai/ai.proto",
       "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/ai",
@@ -2425,7 +2578,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 82,
+    "known_grpc_methods_count": 87,
     "known_grpc_methods": [
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
@@ -2522,6 +2675,11 @@
       "/career.JobApplicationService/ListApplications",
       "/career.JobApplicationService/GetApplication",
       "/career.JobApplicationService/UpdateApplicationStatus",
+      "/calendar.CalendarService/ListMyCalendarEvents",
+      "/calendar.CalendarService/GetMyCalendarEvent",
+      "/calendar.CalendarService/CreateCalendarEvent",
+      "/calendar.CalendarService/UpdateCalendarEvent",
+      "/calendar.CalendarService/DeleteCalendarEvent",
       "/ai.AIThreadService/GetOrCreateThread",
       "/ai.AIThreadService/GetThread",
       "/ai.AIThreadService/ListThreads",
@@ -2649,6 +2807,11 @@
         "/career.JobApplicationService/ApplyToCartJobs",
         "/career.JobApplicationService/ListMyApplications",
         "/career.JobApplicationService/GetMyApplication",
+        "/calendar.CalendarService/ListMyCalendarEvents",
+        "/calendar.CalendarService/GetMyCalendarEvent",
+        "/calendar.CalendarService/CreateCalendarEvent",
+        "/calendar.CalendarService/UpdateCalendarEvent",
+        "/calendar.CalendarService/DeleteCalendarEvent",
         "/ai.AIThreadService/GetOrCreateThread",
         "/ai.AIThreadService/GetThread",
         "/ai.AIThreadService/ListThreads",
