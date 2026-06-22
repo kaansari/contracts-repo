@@ -19,4 +19,4 @@ build:
 	go build ./...
 
 proto:
-	protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/auth/auth.proto proto/customer/customer.proto proto/service/service.proto proto/order/order.proto proto/career/career.proto proto/ai/ai.proto proto/calendar/calendar.proto
+	protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/auth/auth.proto proto/customer/customer.proto proto/service/service.proto proto/order/order.proto proto/career/career.proto proto/ai/ai.proto proto/calendar/calendar.proto proto/admin/admin.proto

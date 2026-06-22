@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+option go_package = "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/admin";
+
+package admin;
+
+// AdminService is intentionally separate from Auth. All methods require an
+// authenticated, active user with the admin role. The server also relies on
+// the normal gRPC JWT/RBAC interceptors.
+service AdminService {
+  rpc GetCurrentAdmin(Empty) returns (GetCurrentAdminResponse) {}
+
+  rpc ListUsers(Empty) returns (ListUsersResponse) {}
+  rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse) {}
+  rpc ResetUserPassword(ResetUserPasswordRequest) returns (UserResponse) {}
+  rpc ChangeUserRole(ChangeUserRoleRequest) returns (UserResponse) {}
+  rpc ChangeUserStatus(ChangeUserStatusRequest) returns (UserResponse) {}
+
+  rpc ListRoles(Empty) returns (ListRolesResponse) {}
+  rpc CreateRole(CreateRoleRequest) returns (RoleResponse) {}
+  rpc UpdateRole(UpdateRoleRequest) returns (RoleResponse) {}
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteResponse) {}
+
+  rpc ListRolePermissions(ListRolePermissionsRequest) returns (ListRolePermissionsResponse) {}
+  rpc CreateRolePermission(CreateRolePermissionRequest) returns (RolePermissionResponse) {}
+  rpc DeleteRolePermission(DeleteRolePermissionRequest) returns (DeleteResponse) {}
+
+  rpc ListKnownGRPCMethods(Empty) returns (ListKnownGRPCMethodsResponse) {}
+  rpc RefreshRBACCache(Empty) returns (RefreshRBACCacheResponse) {}
+  rpc RebuildJobSearchIndex(RebuildJobSearchIndexRequest) returns (RebuildJobSearchIndexResponse) {}
+}
+
+message Empty {}
+
+message AdminUser {
+  string id = 1;
+  string name = 2;
+  string company = 3;
+  string email = 4;
+  string role = 5;
+  string status = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message Role {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
+
+message RolePermission {
+  string id = 1;
+  string role_id = 2;
+  string role_name = 3;
+  string grpc_method = 4;
+  string description = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message GetCurrentAdminResponse { AdminUser user = 1; }
+message ListUsersResponse { repeated AdminUser users = 1; }
+message ListRolesResponse { repeated Role roles = 1; }
+message ListRolePermissionsResponse { repeated RolePermission permissions = 1; }
+message ListKnownGRPCMethodsResponse { repeated string methods = 1; }
+message UserResponse { AdminUser user = 1; }
+message RoleResponse { Role role = 1; }
+message RolePermissionResponse { RolePermission permission = 1; }
+message DeleteResponse { bool deleted = 1; }
+message RefreshRBACCacheResponse { bool refreshed = 1; }
+
+message CreateUserRequest {
+  string name = 1;
+  string company = 2;
+  string email = 3;
+  string password = 4;
+  string role = 5;
+  string status = 6;
+}
+
+// UpdateUser deliberately only changes profile fields. Role and status have
+// dedicated methods so their security rules are impossible to bypass by a
+// generic update request.
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+  string company = 3;
+  string email = 4;
+}
+message ResetUserPasswordRequest { string id = 1; string password = 2; }
+message ChangeUserRoleRequest { string id = 1; string role = 2; }
+message ChangeUserStatusRequest { string id = 1; string status = 2; }
+
+message CreateRoleRequest { string name = 1; string description = 2; }
+message UpdateRoleRequest { string id = 1; string name = 2; string description = 3; }
+message DeleteRoleRequest { string id = 1; }
+
+message ListRolePermissionsRequest { string role_id = 1; }
+message CreateRolePermissionRequest {
+  string role_id = 1;
+  string grpc_method = 2;
+  string description = 3;
+}
+message DeleteRolePermissionRequest { string id = 1; }
+
+message RebuildJobSearchIndexRequest { bool recreate = 1; }
+message RebuildJobSearchIndexResponse {
+  int32 processed = 1;
+  int32 succeeded = 2;
+  int32 failed = 3;
+}
