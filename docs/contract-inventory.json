@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-05-27",
+  "generated_on": "2026-06-23",
   "purpose": "Inventory of Ceerat shared contracts: protobuf packages, gRPC services, RPC methods, messages, generated Go packages, shared domain models, mapper functions, and security hooks. Builder agents should check this before adding or changing contracts.",
   "inventory_rules": [
     "Check this inventory before creating a new proto package, message, RPC, generated client/server dependency, domain model, mapper, or security hook.",
@@ -2373,6 +2373,339 @@
           }
         ]
       }
+    },
+    {
+      "package": "admin",
+      "proto_path": "packages/ceerat-contracts/proto/admin/admin.proto",
+      "go_package": "github.com/kaansari/ceerat-platform/packages/ceerat-contracts/proto/admin",
+      "generated_files": [
+        "packages/ceerat-contracts/proto/admin/admin.pb.go",
+        "packages/ceerat-contracts/proto/admin/admin_grpc.pb.go"
+      ],
+      "imports": [],
+      "messages": [
+        {
+          "name": "Empty",
+          "fields": []
+        },
+        {
+          "name": "AdminUser",
+          "fields": [
+            "id",
+            "name",
+            "company",
+            "email",
+            "role",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "Role",
+          "fields": [
+            "id",
+            "name",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "RolePermission",
+          "fields": [
+            "id",
+            "role_id",
+            "role_name",
+            "grpc_method",
+            "description",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "GetCurrentAdminResponse",
+          "fields": [
+            "user"
+          ]
+        },
+        {
+          "name": "ListUsersResponse",
+          "fields": [
+            "users"
+          ]
+        },
+        {
+          "name": "ListRolesResponse",
+          "fields": [
+            "roles"
+          ]
+        },
+        {
+          "name": "ListRolePermissionsResponse",
+          "fields": [
+            "permissions"
+          ]
+        },
+        {
+          "name": "ListKnownGRPCMethodsResponse",
+          "fields": [
+            "methods"
+          ]
+        },
+        {
+          "name": "UserResponse",
+          "fields": [
+            "user"
+          ]
+        },
+        {
+          "name": "RoleResponse",
+          "fields": [
+            "role"
+          ]
+        },
+        {
+          "name": "RolePermissionResponse",
+          "fields": [
+            "permission"
+          ]
+        },
+        {
+          "name": "DeleteResponse",
+          "fields": [
+            "deleted"
+          ]
+        },
+        {
+          "name": "RefreshRBACCacheResponse",
+          "fields": [
+            "refreshed"
+          ]
+        },
+        {
+          "name": "CreateUserRequest",
+          "fields": [
+            "name",
+            "company",
+            "email",
+            "password",
+            "role",
+            "status"
+          ]
+        },
+        {
+          "name": "UpdateUserRequest",
+          "fields": [
+            "id",
+            "name",
+            "company",
+            "email"
+          ]
+        },
+        {
+          "name": "ResetUserPasswordRequest",
+          "fields": [
+            "id",
+            "password"
+          ]
+        },
+        {
+          "name": "ChangeUserRoleRequest",
+          "fields": [
+            "id",
+            "role"
+          ]
+        },
+        {
+          "name": "ChangeUserStatusRequest",
+          "fields": [
+            "id",
+            "status"
+          ]
+        },
+        {
+          "name": "CreateRoleRequest",
+          "fields": [
+            "name",
+            "description"
+          ]
+        },
+        {
+          "name": "UpdateRoleRequest",
+          "fields": [
+            "id",
+            "name",
+            "description"
+          ]
+        },
+        {
+          "name": "DeleteRoleRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListRolePermissionsRequest",
+          "fields": [
+            "role_id"
+          ]
+        },
+        {
+          "name": "CreateRolePermissionRequest",
+          "fields": [
+            "role_id",
+            "grpc_method",
+            "description"
+          ]
+        },
+        {
+          "name": "DeleteRolePermissionRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "RebuildJobSearchIndexRequest",
+          "fields": [
+            "recreate"
+          ]
+        },
+        {
+          "name": "RebuildJobSearchIndexResponse",
+          "fields": [
+            "processed",
+            "succeeded",
+            "failed"
+          ]
+        }
+      ],
+      "service": {
+        "name": "AdminService",
+        "full_service": "admin.AdminService",
+        "domain": "Admin users, roles, RBAC permissions, cache refresh, and bounded operational rebuilds",
+        "rpcs": [
+          {
+            "name": "GetCurrentAdmin",
+            "full_method": "/admin.AdminService/GetCurrentAdmin",
+            "request": "Empty",
+            "response": "GetCurrentAdminResponse",
+            "public": false
+          },
+          {
+            "name": "ListUsers",
+            "full_method": "/admin.AdminService/ListUsers",
+            "request": "Empty",
+            "response": "ListUsersResponse",
+            "public": false
+          },
+          {
+            "name": "CreateUser",
+            "full_method": "/admin.AdminService/CreateUser",
+            "request": "CreateUserRequest",
+            "response": "UserResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateUser",
+            "full_method": "/admin.AdminService/UpdateUser",
+            "request": "UpdateUserRequest",
+            "response": "UserResponse",
+            "public": false
+          },
+          {
+            "name": "ResetUserPassword",
+            "full_method": "/admin.AdminService/ResetUserPassword",
+            "request": "ResetUserPasswordRequest",
+            "response": "UserResponse",
+            "public": false
+          },
+          {
+            "name": "ChangeUserRole",
+            "full_method": "/admin.AdminService/ChangeUserRole",
+            "request": "ChangeUserRoleRequest",
+            "response": "UserResponse",
+            "public": false
+          },
+          {
+            "name": "ChangeUserStatus",
+            "full_method": "/admin.AdminService/ChangeUserStatus",
+            "request": "ChangeUserStatusRequest",
+            "response": "UserResponse",
+            "public": false
+          },
+          {
+            "name": "ListRoles",
+            "full_method": "/admin.AdminService/ListRoles",
+            "request": "Empty",
+            "response": "ListRolesResponse",
+            "public": false
+          },
+          {
+            "name": "CreateRole",
+            "full_method": "/admin.AdminService/CreateRole",
+            "request": "CreateRoleRequest",
+            "response": "RoleResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateRole",
+            "full_method": "/admin.AdminService/UpdateRole",
+            "request": "UpdateRoleRequest",
+            "response": "RoleResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteRole",
+            "full_method": "/admin.AdminService/DeleteRole",
+            "request": "DeleteRoleRequest",
+            "response": "DeleteResponse",
+            "public": false
+          },
+          {
+            "name": "ListRolePermissions",
+            "full_method": "/admin.AdminService/ListRolePermissions",
+            "request": "ListRolePermissionsRequest",
+            "response": "ListRolePermissionsResponse",
+            "public": false
+          },
+          {
+            "name": "CreateRolePermission",
+            "full_method": "/admin.AdminService/CreateRolePermission",
+            "request": "CreateRolePermissionRequest",
+            "response": "RolePermissionResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteRolePermission",
+            "full_method": "/admin.AdminService/DeleteRolePermission",
+            "request": "DeleteRolePermissionRequest",
+            "response": "DeleteResponse",
+            "public": false
+          },
+          {
+            "name": "ListKnownGRPCMethods",
+            "full_method": "/admin.AdminService/ListKnownGRPCMethods",
+            "request": "Empty",
+            "response": "ListKnownGRPCMethodsResponse",
+            "public": false
+          },
+          {
+            "name": "RefreshRBACCache",
+            "full_method": "/admin.AdminService/RefreshRBACCache",
+            "request": "Empty",
+            "response": "RefreshRBACCacheResponse",
+            "public": false
+          },
+          {
+            "name": "RebuildJobSearchIndex",
+            "full_method": "/admin.AdminService/RebuildJobSearchIndex",
+            "request": "RebuildJobSearchIndexRequest",
+            "response": "RebuildJobSearchIndexResponse",
+            "public": false
+          }
+        ]
+      }
     }
   ],
   "domain_models": [
@@ -2578,8 +2911,25 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 87,
+    "known_grpc_methods_count": 123,
     "known_grpc_methods": [
+      "/admin.AdminService/GetCurrentAdmin",
+      "/admin.AdminService/ListUsers",
+      "/admin.AdminService/CreateUser",
+      "/admin.AdminService/UpdateUser",
+      "/admin.AdminService/ResetUserPassword",
+      "/admin.AdminService/ChangeUserRole",
+      "/admin.AdminService/ChangeUserStatus",
+      "/admin.AdminService/ListRoles",
+      "/admin.AdminService/CreateRole",
+      "/admin.AdminService/UpdateRole",
+      "/admin.AdminService/DeleteRole",
+      "/admin.AdminService/ListRolePermissions",
+      "/admin.AdminService/CreateRolePermission",
+      "/admin.AdminService/DeleteRolePermission",
+      "/admin.AdminService/ListKnownGRPCMethods",
+      "/admin.AdminService/RefreshRBACCache",
+      "/admin.AdminService/RebuildJobSearchIndex",
       "/auth.Auth/Create",
       "/auth.Auth/RegisterCustomer",
       "/auth.Auth/Get",
