@@ -56,14 +56,34 @@ type Service struct {
 
 // Product is a service-catalog product exposed through the catalog service boundary.
 type Product struct {
-	ID          string
-	Name        string
-	Description string
-	SKU         string
-	Price       float64
-	Active      bool
-	CreatedAt   string
-	UpdatedAt   string
+	ID             string
+	Name           string
+	Description    string
+	SKU            string
+	Price          float64
+	Active         bool
+	CreatedAt      string
+	UpdatedAt      string
+	Category       string
+	Model          string
+	Currency       string
+	InventoryCount int32
+	Variants       []*ProductVariant
+}
+
+type ProductVariant struct {
+	ID             string
+	ProductID      string
+	Name           string
+	Model          string
+	Size           string
+	Color          string
+	SKU            string
+	Price          float64
+	Active         bool
+	InventoryCount int32
+	CreatedAt      string
+	UpdatedAt      string
 }
 
 // CustomerService links a customer to an ordered service.
@@ -87,43 +107,80 @@ type Cart struct {
 	Total      float64
 	CreatedAt  string
 	UpdatedAt  string
+	Version    int64
 }
 
 // CartItem stores one selected service or product in a cart.
 type CartItem struct {
-	ID         string
-	CartID     string
-	ItemType   string
-	ServiceID  string
-	ProductID  string
-	Service    *Service
-	Product    *Product
-	Quantity   int32
-	UnitPrice  float64
-	TotalPrice float64
-	Notes      string
-	CreatedAt  string
-	UpdatedAt  string
+	ID               string
+	CartID           string
+	ItemType         string
+	ServiceID        string
+	ProductID        string
+	Service          *Service
+	Product          *Product
+	Quantity         int32
+	UnitPrice        float64
+	TotalPrice       float64
+	Notes            string
+	CreatedAt        string
+	UpdatedAt        string
+	ProductVariantID string
+	ProductVariant   *ProductVariant
 }
 
 // Order groups one or more services for a customer.
 type Order struct {
-	ID           string
-	CustomerID   string
-	UserID       string
-	OrderNumber  string
-	Status       string
-	ScheduleDate string
-	StartDate    string
-	DueDate      string
-	Subtotal     float64
-	Tax          float64
-	Total        float64
-	Notes        string
-	Customer     *Customer
-	Services     []*OrderService
-	CreatedAt    string
-	UpdatedAt    string
+	ID            string
+	CustomerID    string
+	UserID        string
+	OrderNumber   string
+	Status        string
+	ScheduleDate  string
+	StartDate     string
+	DueDate       string
+	Subtotal      float64
+	Tax           float64
+	Total         float64
+	Notes         string
+	Customer      *Customer
+	Services      []*OrderService
+	Products      []*OrderProduct
+	PaymentStatus string
+	CreatedAt     string
+	UpdatedAt     string
+}
+
+type OrderProduct struct {
+	ID               string
+	OrderID          string
+	ProductID        string
+	ProductVariantID string
+	ProductName      string
+	VariantName      string
+	SKU              string
+	Model            string
+	Size             string
+	Color            string
+	UnitPrice        float64
+	Quantity         int32
+	TotalPrice       float64
+	Product          *Product
+	ProductVariant   *ProductVariant
+	CreatedAt        string
+	UpdatedAt        string
+}
+
+type PaymentSession struct {
+	ID                string
+	OrderID           string
+	AmountCurrency    string
+	Amount            float64
+	Provider          string
+	ProviderSessionID string
+	Status            string
+	CreatedAt         string
+	UpdatedAt         string
 }
 
 // OrderService stores the service snapshot captured when an order is created.

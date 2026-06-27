@@ -447,6 +447,13 @@
             "public": false
           },
           {
+            "name": "BatchUpsertProducts",
+            "full_method": "/service.ServiceManager/BatchUpsertProducts",
+            "request": "BatchUpsertProductsRequest",
+            "response": "BatchUpsertProductsResponse",
+            "public": false
+          },
+          {
             "name": "GetCart",
             "full_method": "/service.ServiceManager/GetCart",
             "request": "GetCartRequest",
@@ -547,6 +554,28 @@
             "price",
             "active",
             "created_at",
+            "updated_at",
+            "category",
+            "model",
+            "currency",
+            "inventory_count",
+            "variants"
+          ]
+        },
+        {
+          "name": "ProductVariant",
+          "fields": [
+            "id",
+            "product_id",
+            "name",
+            "model",
+            "size",
+            "color",
+            "sku",
+            "price",
+            "active",
+            "inventory_count",
+            "created_at",
             "updated_at"
           ]
         },
@@ -572,7 +601,8 @@
             "subtotal",
             "total",
             "created_at",
-            "updated_at"
+            "updated_at",
+            "version"
           ]
         },
         {
@@ -590,7 +620,9 @@
             "total_price",
             "notes",
             "created_at",
-            "updated_at"
+            "updated_at",
+            "product_variant_id",
+            "product_variant"
           ]
         },
         {
@@ -643,7 +675,10 @@
           "fields": [
             "active_only",
             "page_size",
-            "page_token"
+            "page_token",
+            "query",
+            "category",
+            "sort"
           ]
         },
         {
@@ -656,6 +691,12 @@
           "name": "DeleteProductRequest",
           "fields": [
             "id"
+          ]
+        },
+        {
+          "name": "BatchUpsertProductsRequest",
+          "fields": [
+            "products"
           ]
         },
         {
@@ -672,7 +713,8 @@
             "service_id",
             "product_id",
             "quantity",
-            "notes"
+            "notes",
+            "product_variant_id"
           ]
         },
         {
@@ -768,13 +810,24 @@
           "fields": [
             "products",
             "next_page_token",
-            "errors"
+            "errors",
+            "total"
           ]
         },
         {
           "name": "DeleteProductResponse",
           "fields": [
             "deleted",
+            "errors"
+          ]
+        },
+        {
+          "name": "BatchUpsertProductsResponse",
+          "fields": [
+            "products",
+            "processed",
+            "succeeded",
+            "failed",
             "errors"
           ]
         },
@@ -895,6 +948,27 @@
             "request": "RemoveServiceFromOrderRequest",
             "response": "RemoveServiceFromOrderResponse",
             "public": false
+          },
+          {
+            "name": "CheckoutMyCart",
+            "full_method": "/order.OrderManager/CheckoutMyCart",
+            "request": "CheckoutMyCartRequest",
+            "response": "CreateOrderResponse",
+            "public": false
+          },
+          {
+            "name": "CreatePaymentSession",
+            "full_method": "/order.OrderManager/CreatePaymentSession",
+            "request": "CreatePaymentSessionRequest",
+            "response": "PaymentSessionResponse",
+            "public": false
+          },
+          {
+            "name": "GetMyPaymentSession",
+            "full_method": "/order.OrderManager/GetMyPaymentSession",
+            "request": "GetPaymentSessionRequest",
+            "response": "PaymentSessionResponse",
+            "public": false
           }
         ]
       },
@@ -916,6 +990,30 @@
             "notes",
             "customer",
             "services",
+            "created_at",
+            "updated_at",
+            "products",
+            "payment_status"
+          ]
+        },
+        {
+          "name": "OrderProduct",
+          "fields": [
+            "id",
+            "order_id",
+            "product_id",
+            "product_variant_id",
+            "product_name",
+            "variant_name",
+            "sku",
+            "model",
+            "size",
+            "color",
+            "unit_price",
+            "quantity",
+            "total_price",
+            "product",
+            "product_variant",
             "created_at",
             "updated_at"
           ]
@@ -1072,6 +1170,47 @@
           "name": "RemoveServiceFromOrderResponse",
           "fields": [
             "order",
+            "errors"
+          ]
+        },
+        {
+          "name": "CheckoutMyCartRequest",
+          "fields": [
+            "idempotency_key",
+            "notes"
+          ]
+        },
+        {
+          "name": "PaymentSession",
+          "fields": [
+            "id",
+            "order_id",
+            "amount_currency",
+            "amount",
+            "provider",
+            "provider_session_id",
+            "status",
+            "created_at",
+            "updated_at"
+          ]
+        },
+        {
+          "name": "CreatePaymentSessionRequest",
+          "fields": [
+            "order_id",
+            "idempotency_key"
+          ]
+        },
+        {
+          "name": "GetPaymentSessionRequest",
+          "fields": [
+            "id"
+          ]
+        },
+        {
+          "name": "PaymentSessionResponse",
+          "fields": [
+            "payment_session",
             "errors"
           ]
         },
@@ -2776,6 +2915,28 @@
         "Price",
         "Active",
         "CreatedAt",
+        "UpdatedAt",
+        "Category",
+        "Model",
+        "Currency",
+        "InventoryCount",
+        "Variants"
+      ]
+    },
+    {
+      "name": "ProductVariant",
+      "fields": [
+        "ID",
+        "ProductID",
+        "Name",
+        "Model",
+        "Size",
+        "Color",
+        "SKU",
+        "Price",
+        "Active",
+        "InventoryCount",
+        "CreatedAt",
         "UpdatedAt"
       ]
     },
@@ -2801,7 +2962,8 @@
         "Subtotal",
         "Total",
         "CreatedAt",
-        "UpdatedAt"
+        "UpdatedAt",
+        "Version"
       ]
     },
     {
@@ -2819,7 +2981,9 @@
         "TotalPrice",
         "Notes",
         "CreatedAt",
-        "UpdatedAt"
+        "UpdatedAt",
+        "ProductVariantID",
+        "ProductVariant"
       ]
     },
     {
@@ -2839,6 +3003,8 @@
         "Notes",
         "Customer",
         "Services",
+        "Products",
+        "PaymentStatus",
         "CreatedAt",
         "UpdatedAt"
       ]
@@ -2860,6 +3026,42 @@
         "StartDate",
         "DueDate",
         "Service",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "OrderProduct",
+      "fields": [
+        "ID",
+        "OrderID",
+        "ProductID",
+        "ProductVariantID",
+        "ProductName",
+        "VariantName",
+        "SKU",
+        "Model",
+        "Size",
+        "Color",
+        "UnitPrice",
+        "Quantity",
+        "TotalPrice",
+        "Product",
+        "ProductVariant",
+        "CreatedAt",
+        "UpdatedAt"
+      ]
+    },
+    {
+      "name": "PaymentSession",
+      "fields": [
+        "ID",
+        "OrderID",
+        "AmountCurrency",
+        "Amount",
+        "Provider",
+        "ProviderSessionID",
+        "Status",
         "CreatedAt",
         "UpdatedAt"
       ]
@@ -2890,6 +3092,10 @@
     "ServicesToProto",
     "ProductFromProto",
     "ProductToProto",
+    "ProductVariantFromProto",
+    "ProductVariantToProto",
+    "ProductVariantsFromProto",
+    "ProductVariantsToProto",
     "ProductsToProto",
     "CustomerServiceFromProto",
     "CustomerServiceToProto",
@@ -2907,11 +3113,17 @@
     "OrderServiceToProto",
     "OrderServicesFromProto",
     "OrderServicesToProto",
+    "OrderProductFromProto",
+    "OrderProductToProto",
+    "OrderProductsFromProto",
+    "OrderProductsToProto",
+    "PaymentSessionFromProto",
+    "PaymentSessionToProto",
     "CreateOrderServiceInputFromProto",
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 123,
+    "known_grpc_methods_count": 127,
     "known_grpc_methods": [
       "/admin.AdminService/GetCurrentAdmin",
       "/admin.AdminService/ListUsers",
@@ -2956,6 +3168,7 @@
       "/service.ServiceManager/ListProducts",
       "/service.ServiceManager/UpdateProduct",
       "/service.ServiceManager/DeleteProduct",
+      "/service.ServiceManager/BatchUpsertProducts",
       "/service.ServiceManager/GetCart",
       "/service.ServiceManager/AddCartItem",
       "/service.ServiceManager/UpdateCartItem",
@@ -2975,6 +3188,9 @@
       "/order.OrderManager/UpdateOrderStatus",
       "/order.OrderManager/AddServiceToOrder",
       "/order.OrderManager/RemoveServiceFromOrder",
+      "/order.OrderManager/CheckoutMyCart",
+      "/order.OrderManager/CreatePaymentSession",
+      "/order.OrderManager/GetMyPaymentSession",
       "/career.CareerProfileService/CreateSkillProfile",
       "/career.CareerProfileService/ListMySkillProfiles",
       "/career.CareerProfileService/AddSkillToProfile",
@@ -3062,6 +3278,7 @@
         "/service.ServiceManager/ListProducts",
         "/service.ServiceManager/UpdateProduct",
         "/service.ServiceManager/DeleteProduct",
+        "/service.ServiceManager/BatchUpsertProducts",
         "/service.ServiceManager/GetCart",
         "/service.ServiceManager/AddCartItem",
         "/service.ServiceManager/UpdateCartItem",
@@ -3119,6 +3336,9 @@
         "/order.OrderManager/ListOrders",
         "/order.OrderManager/ListMyOrders",
         "/order.OrderManager/CreateMyOrder",
+        "/order.OrderManager/CheckoutMyCart",
+        "/order.OrderManager/CreatePaymentSession",
+        "/order.OrderManager/GetMyPaymentSession",
         "/career.CareerProfileService/CreateSkillProfile",
         "/career.CareerProfileService/ListMySkillProfiles",
         "/career.CareerProfileService/AddSkillToProfile",

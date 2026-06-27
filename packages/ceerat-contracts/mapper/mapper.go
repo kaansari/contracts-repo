@@ -175,14 +175,19 @@ func ProductFromProto(in *servicepb.Product) *domain.Product {
 		return nil
 	}
 	return &domain.Product{
-		ID:          in.Id,
-		Name:        in.Name,
-		Description: in.Description,
-		SKU:         in.Sku,
-		Price:       in.Price,
-		Active:      in.Active,
-		CreatedAt:   in.CreatedAt,
-		UpdatedAt:   in.UpdatedAt,
+		ID:             in.Id,
+		Name:           in.Name,
+		Description:    in.Description,
+		SKU:            in.Sku,
+		Price:          in.Price,
+		Active:         in.Active,
+		CreatedAt:      in.CreatedAt,
+		UpdatedAt:      in.UpdatedAt,
+		Category:       in.Category,
+		Model:          in.Model,
+		Currency:       in.Currency,
+		InventoryCount: in.InventoryCount,
+		Variants:       ProductVariantsFromProto(in.Variants),
 	}
 }
 
@@ -191,15 +196,60 @@ func ProductToProto(in *domain.Product) *servicepb.Product {
 		return nil
 	}
 	return &servicepb.Product{
-		Id:          in.ID,
-		Name:        in.Name,
-		Description: in.Description,
-		Sku:         in.SKU,
-		Price:       in.Price,
-		Active:      in.Active,
-		CreatedAt:   in.CreatedAt,
-		UpdatedAt:   in.UpdatedAt,
+		Id:             in.ID,
+		Name:           in.Name,
+		Description:    in.Description,
+		Sku:            in.SKU,
+		Price:          in.Price,
+		Active:         in.Active,
+		CreatedAt:      in.CreatedAt,
+		UpdatedAt:      in.UpdatedAt,
+		Category:       in.Category,
+		Model:          in.Model,
+		Currency:       in.Currency,
+		InventoryCount: in.InventoryCount,
+		Variants:       ProductVariantsToProto(in.Variants),
 	}
+}
+
+func ProductVariantFromProto(in *servicepb.ProductVariant) *domain.ProductVariant {
+	if in == nil {
+		return nil
+	}
+	return &domain.ProductVariant{
+		ID: in.Id, ProductID: in.ProductId, Name: in.Name, Model: in.Model,
+		Size: in.Size, Color: in.Color, SKU: in.Sku, Price: in.Price,
+		Active: in.Active, InventoryCount: in.InventoryCount,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func ProductVariantToProto(in *domain.ProductVariant) *servicepb.ProductVariant {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.ProductVariant{
+		Id: in.ID, ProductId: in.ProductID, Name: in.Name, Model: in.Model,
+		Size: in.Size, Color: in.Color, Sku: in.SKU, Price: in.Price,
+		Active: in.Active, InventoryCount: in.InventoryCount,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func ProductVariantsFromProto(in []*servicepb.ProductVariant) []*domain.ProductVariant {
+	out := make([]*domain.ProductVariant, 0, len(in))
+	for _, variant := range in {
+		out = append(out, ProductVariantFromProto(variant))
+	}
+	return out
+}
+
+func ProductVariantsToProto(in []*domain.ProductVariant) []*servicepb.ProductVariant {
+	out := make([]*servicepb.ProductVariant, 0, len(in))
+	for _, variant := range in {
+		out = append(out, ProductVariantToProto(variant))
+	}
+	return out
 }
 
 func ProductsToProto(in []*domain.Product) []*servicepb.Product {
@@ -261,6 +311,7 @@ func CartFromProto(in *servicepb.Cart) *domain.Cart {
 		Total:      in.Total,
 		CreatedAt:  in.CreatedAt,
 		UpdatedAt:  in.UpdatedAt,
+		Version:    in.Version,
 	}
 }
 
@@ -277,6 +328,7 @@ func CartToProto(in *domain.Cart) *servicepb.Cart {
 		Total:      in.Total,
 		CreatedAt:  in.CreatedAt,
 		UpdatedAt:  in.UpdatedAt,
+		Version:    in.Version,
 	}
 }
 
@@ -285,19 +337,21 @@ func CartItemFromProto(in *servicepb.CartItem) *domain.CartItem {
 		return nil
 	}
 	return &domain.CartItem{
-		ID:         in.Id,
-		CartID:     in.CartId,
-		ItemType:   in.ItemType,
-		ServiceID:  in.ServiceId,
-		ProductID:  in.ProductId,
-		Service:    ServiceFromProto(in.Service),
-		Product:    ProductFromProto(in.Product),
-		Quantity:   in.Quantity,
-		UnitPrice:  in.UnitPrice,
-		TotalPrice: in.TotalPrice,
-		Notes:      in.Notes,
-		CreatedAt:  in.CreatedAt,
-		UpdatedAt:  in.UpdatedAt,
+		ID:               in.Id,
+		CartID:           in.CartId,
+		ItemType:         in.ItemType,
+		ServiceID:        in.ServiceId,
+		ProductID:        in.ProductId,
+		Service:          ServiceFromProto(in.Service),
+		Product:          ProductFromProto(in.Product),
+		Quantity:         in.Quantity,
+		UnitPrice:        in.UnitPrice,
+		TotalPrice:       in.TotalPrice,
+		Notes:            in.Notes,
+		CreatedAt:        in.CreatedAt,
+		UpdatedAt:        in.UpdatedAt,
+		ProductVariantID: in.ProductVariantId,
+		ProductVariant:   ProductVariantFromProto(in.ProductVariant),
 	}
 }
 
@@ -306,19 +360,21 @@ func CartItemToProto(in *domain.CartItem) *servicepb.CartItem {
 		return nil
 	}
 	return &servicepb.CartItem{
-		Id:         in.ID,
-		CartId:     in.CartID,
-		ItemType:   in.ItemType,
-		ServiceId:  in.ServiceID,
-		ProductId:  in.ProductID,
-		Service:    ServiceToProto(in.Service),
-		Product:    ProductToProto(in.Product),
-		Quantity:   in.Quantity,
-		UnitPrice:  in.UnitPrice,
-		TotalPrice: in.TotalPrice,
-		Notes:      in.Notes,
-		CreatedAt:  in.CreatedAt,
-		UpdatedAt:  in.UpdatedAt,
+		Id:               in.ID,
+		CartId:           in.CartID,
+		ItemType:         in.ItemType,
+		ServiceId:        in.ServiceID,
+		ProductId:        in.ProductID,
+		Service:          ServiceToProto(in.Service),
+		Product:          ProductToProto(in.Product),
+		Quantity:         in.Quantity,
+		UnitPrice:        in.UnitPrice,
+		TotalPrice:       in.TotalPrice,
+		Notes:            in.Notes,
+		CreatedAt:        in.CreatedAt,
+		UpdatedAt:        in.UpdatedAt,
+		ProductVariantId: in.ProductVariantID,
+		ProductVariant:   ProductVariantToProto(in.ProductVariant),
 	}
 }
 
@@ -343,22 +399,24 @@ func OrderFromProto(in *orderpb.Order) *domain.Order {
 		return nil
 	}
 	return &domain.Order{
-		ID:           in.Id,
-		CustomerID:   in.CustomerId,
-		UserID:       in.UserId,
-		OrderNumber:  in.OrderNumber,
-		Status:       in.Status,
-		ScheduleDate: in.ScheduleDate,
-		StartDate:    in.StartDate,
-		DueDate:      in.DueDate,
-		Subtotal:     in.Subtotal,
-		Tax:          in.Tax,
-		Total:        in.Total,
-		Notes:        in.Notes,
-		Customer:     CustomerFromProto(in.Customer),
-		Services:     OrderServicesFromProto(in.Services),
-		CreatedAt:    in.CreatedAt,
-		UpdatedAt:    in.UpdatedAt,
+		ID:            in.Id,
+		CustomerID:    in.CustomerId,
+		UserID:        in.UserId,
+		OrderNumber:   in.OrderNumber,
+		Status:        in.Status,
+		ScheduleDate:  in.ScheduleDate,
+		StartDate:     in.StartDate,
+		DueDate:       in.DueDate,
+		Subtotal:      in.Subtotal,
+		Tax:           in.Tax,
+		Total:         in.Total,
+		Notes:         in.Notes,
+		Customer:      CustomerFromProto(in.Customer),
+		Services:      OrderServicesFromProto(in.Services),
+		Products:      OrderProductsFromProto(in.Products),
+		PaymentStatus: in.PaymentStatus,
+		CreatedAt:     in.CreatedAt,
+		UpdatedAt:     in.UpdatedAt,
 	}
 }
 
@@ -367,22 +425,96 @@ func OrderToProto(in *domain.Order) *orderpb.Order {
 		return nil
 	}
 	return &orderpb.Order{
-		Id:           in.ID,
-		CustomerId:   in.CustomerID,
-		UserId:       in.UserID,
-		OrderNumber:  in.OrderNumber,
-		Status:       in.Status,
-		ScheduleDate: in.ScheduleDate,
-		StartDate:    in.StartDate,
-		DueDate:      in.DueDate,
-		Subtotal:     in.Subtotal,
-		Tax:          in.Tax,
-		Total:        in.Total,
-		Notes:        in.Notes,
-		Customer:     CustomerToProto(in.Customer),
-		Services:     OrderServicesToProto(in.Services),
-		CreatedAt:    in.CreatedAt,
-		UpdatedAt:    in.UpdatedAt,
+		Id:            in.ID,
+		CustomerId:    in.CustomerID,
+		UserId:        in.UserID,
+		OrderNumber:   in.OrderNumber,
+		Status:        in.Status,
+		ScheduleDate:  in.ScheduleDate,
+		StartDate:     in.StartDate,
+		DueDate:       in.DueDate,
+		Subtotal:      in.Subtotal,
+		Tax:           in.Tax,
+		Total:         in.Total,
+		Notes:         in.Notes,
+		Customer:      CustomerToProto(in.Customer),
+		Services:      OrderServicesToProto(in.Services),
+		Products:      OrderProductsToProto(in.Products),
+		PaymentStatus: in.PaymentStatus,
+		CreatedAt:     in.CreatedAt,
+		UpdatedAt:     in.UpdatedAt,
+	}
+}
+
+func OrderProductFromProto(in *orderpb.OrderProduct) *domain.OrderProduct {
+	if in == nil {
+		return nil
+	}
+	return &domain.OrderProduct{
+		ID: in.Id, OrderID: in.OrderId, ProductID: in.ProductId,
+		ProductVariantID: in.ProductVariantId, ProductName: in.ProductName,
+		VariantName: in.VariantName, SKU: in.Sku, Model: in.Model,
+		Size: in.Size, Color: in.Color, UnitPrice: in.UnitPrice,
+		Quantity: in.Quantity, TotalPrice: in.TotalPrice,
+		Product:        ProductFromProto(in.Product),
+		ProductVariant: ProductVariantFromProto(in.ProductVariant),
+		CreatedAt:      in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func OrderProductToProto(in *domain.OrderProduct) *orderpb.OrderProduct {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.OrderProduct{
+		Id: in.ID, OrderId: in.OrderID, ProductId: in.ProductID,
+		ProductVariantId: in.ProductVariantID, ProductName: in.ProductName,
+		VariantName: in.VariantName, Sku: in.SKU, Model: in.Model,
+		Size: in.Size, Color: in.Color, UnitPrice: in.UnitPrice,
+		Quantity: in.Quantity, TotalPrice: in.TotalPrice,
+		Product:        ProductToProto(in.Product),
+		ProductVariant: ProductVariantToProto(in.ProductVariant),
+		CreatedAt:      in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func OrderProductsFromProto(in []*orderpb.OrderProduct) []*domain.OrderProduct {
+	out := make([]*domain.OrderProduct, 0, len(in))
+	for _, product := range in {
+		out = append(out, OrderProductFromProto(product))
+	}
+	return out
+}
+
+func OrderProductsToProto(in []*domain.OrderProduct) []*orderpb.OrderProduct {
+	out := make([]*orderpb.OrderProduct, 0, len(in))
+	for _, product := range in {
+		out = append(out, OrderProductToProto(product))
+	}
+	return out
+}
+
+func PaymentSessionFromProto(in *orderpb.PaymentSession) *domain.PaymentSession {
+	if in == nil {
+		return nil
+	}
+	return &domain.PaymentSession{
+		ID: in.Id, OrderID: in.OrderId, AmountCurrency: in.AmountCurrency,
+		Amount: in.Amount, Provider: in.Provider,
+		ProviderSessionID: in.ProviderSessionId, Status: in.Status,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func PaymentSessionToProto(in *domain.PaymentSession) *orderpb.PaymentSession {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.PaymentSession{
+		Id: in.ID, OrderId: in.OrderID, AmountCurrency: in.AmountCurrency,
+		Amount: in.Amount, Provider: in.Provider,
+		ProviderSessionId: in.ProviderSessionID, Status: in.Status,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
 	}
 }
 

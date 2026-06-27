@@ -17,6 +17,9 @@ service OrderManager {
   rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse) {}
   rpc AddServiceToOrder(AddServiceToOrderRequest) returns (AddServiceToOrderResponse) {}
   rpc RemoveServiceFromOrder(RemoveServiceFromOrderRequest) returns (RemoveServiceFromOrderResponse) {}
+  rpc CheckoutMyCart(CheckoutMyCartRequest) returns (CreateOrderResponse) {}
+  rpc CreatePaymentSession(CreatePaymentSessionRequest) returns (PaymentSessionResponse) {}
+  rpc GetMyPaymentSession(GetPaymentSessionRequest) returns (PaymentSessionResponse) {}
 }
 
 message Order {
@@ -36,6 +39,28 @@ message Order {
   repeated OrderService services = 14;
   string created_at = 15;
   string updated_at = 16;
+  repeated OrderProduct products = 17;
+  string payment_status = 18;
+}
+
+message OrderProduct {
+  string id = 1;
+  string order_id = 2;
+  string product_id = 3;
+  string product_variant_id = 4;
+  string product_name = 5;
+  string variant_name = 6;
+  string sku = 7;
+  string model = 8;
+  string size = 9;
+  string color = 10;
+  double unit_price = 11;
+  int32 quantity = 12;
+  double total_price = 13;
+  service.Product product = 14;
+  service.ProductVariant product_variant = 15;
+  string created_at = 16;
+  string updated_at = 17;
 }
 
 message OrderService {
@@ -155,6 +180,37 @@ message RemoveServiceFromOrderRequest {
 
 message RemoveServiceFromOrderResponse {
   Order order = 1;
+  repeated Error errors = 2;
+}
+
+message CheckoutMyCartRequest {
+  string idempotency_key = 1;
+  string notes = 2;
+}
+
+message PaymentSession {
+  string id = 1;
+  string order_id = 2;
+  string amount_currency = 3;
+  double amount = 4;
+  string provider = 5;
+  string provider_session_id = 6;
+  string status = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+message CreatePaymentSessionRequest {
+  string order_id = 1;
+  string idempotency_key = 2;
+}
+
+message GetPaymentSessionRequest {
+  string id = 1;
+}
+
+message PaymentSessionResponse {
+  PaymentSession payment_session = 1;
   repeated Error errors = 2;
 }
 

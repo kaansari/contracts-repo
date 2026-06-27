@@ -17,6 +17,7 @@ service ServiceManager {
   rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
   rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse) {}
   rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+  rpc BatchUpsertProducts(BatchUpsertProductsRequest) returns (BatchUpsertProductsResponse) {}
   rpc AssignServiceToCustomer(AssignServiceToCustomerRequest) returns (CustomerServiceResponse) {}
   rpc GetCustomerService(GetCustomerServiceRequest) returns (CustomerServiceResponse) {}
   rpc ListCustomerServices(ListCustomerServicesRequest) returns (ListCustomerServicesResponse) {}
@@ -59,6 +60,26 @@ message Product {
   bool active = 6;
   string created_at = 7;
   string updated_at = 8;
+  string category = 9;
+  string model = 10;
+  string currency = 11;
+  int32 inventory_count = 12;
+  repeated ProductVariant variants = 13;
+}
+
+message ProductVariant {
+  string id = 1;
+  string product_id = 2;
+  string name = 3;
+  string model = 4;
+  string size = 5;
+  string color = 6;
+  string sku = 7;
+  double price = 8;
+  bool active = 9;
+  int32 inventory_count = 10;
+  string created_at = 11;
+  string updated_at = 12;
 }
 
 message CustomerService {
@@ -84,6 +105,7 @@ message Cart {
   double total = 6;
   string created_at = 7;
   string updated_at = 8;
+  int64 version = 9;
 }
 
 message CartItem {
@@ -100,6 +122,8 @@ message CartItem {
   string notes = 11;
   string created_at = 12;
   string updated_at = 13;
+  string product_variant_id = 14;
+  ProductVariant product_variant = 15;
 }
 
 message CreateServiceRequest {
@@ -137,6 +161,9 @@ message ListProductsRequest {
   bool active_only = 1;
   int32 page_size = 2;
   string page_token = 3;
+  string query = 4;
+  string category = 5;
+  string sort = 6;
 }
 
 message UpdateProductRequest {
@@ -145,6 +172,10 @@ message UpdateProductRequest {
 
 message DeleteProductRequest {
   string id = 1;
+}
+
+message BatchUpsertProductsRequest {
+  repeated Product products = 1;
 }
 
 message AssignServiceToCustomerRequest {
@@ -185,6 +216,7 @@ message AddCartItemRequest {
   string product_id = 4;
   int32 quantity = 5;
   string notes = 6;
+  string product_variant_id = 7;
 }
 
 message UpdateCartItemRequest {
@@ -228,11 +260,20 @@ message ListProductsResponse {
   repeated Product products = 1;
   string next_page_token = 2;
   repeated Error errors = 3;
+  int32 total = 4;
 }
 
 message DeleteProductResponse {
   bool deleted = 1;
   repeated Error errors = 2;
+}
+
+message BatchUpsertProductsResponse {
+  repeated Product products = 1;
+  int32 processed = 2;
+  int32 succeeded = 3;
+  int32 failed = 4;
+  repeated Error errors = 5;
 }
 
 message CustomerServiceResponse {

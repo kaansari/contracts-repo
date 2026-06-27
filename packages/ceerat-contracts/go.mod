@@ -3,6 +3,7 @@ module github.com/kaansari/ceerat-contracts
 go 1.26.2
 
 require (
+	github.com/golang/protobuf v1.5.4
 	github.com/kaansari/ceerat-platform/packages/ceerat-contracts v0.0.0-20260505173609-f431fbad606b
 	google.golang.org/protobuf v1.36.6
 )
