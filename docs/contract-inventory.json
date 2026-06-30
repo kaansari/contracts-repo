@@ -454,6 +454,42 @@
             "public": false
           },
           {
+            "name": "CreateProductCategory",
+            "full_method": "/service.ServiceManager/CreateProductCategory",
+            "request": "CreateProductCategoryRequest",
+            "response": "ProductCategoryResponse",
+            "public": false
+          },
+          {
+            "name": "ListProductCategories",
+            "full_method": "/service.ServiceManager/ListProductCategories",
+            "request": "ListProductCategoriesRequest",
+            "response": "ListProductCategoriesResponse",
+            "public": false
+          },
+          {
+            "name": "UpdateProductCategory",
+            "full_method": "/service.ServiceManager/UpdateProductCategory",
+            "request": "UpdateProductCategoryRequest",
+            "response": "ProductCategoryResponse",
+            "public": false
+          },
+          {
+            "name": "DeleteProductCategory",
+            "full_method": "/service.ServiceManager/DeleteProductCategory",
+            "request": "DeleteProductCategoryRequest",
+            "response": "DeleteProductCategoryResponse",
+            "public": false
+          },
+          {"name": "UploadCatalogImages", "full_method": "/service.ServiceManager/UploadCatalogImages", "request": "UploadCatalogImagesRequest", "response": "CatalogImagesResponse", "public": false},
+          {"name": "GetCatalogImage", "full_method": "/service.ServiceManager/GetCatalogImage", "request": "GetCatalogImageRequest", "response": "CatalogImageContentResponse", "public": false},
+          {"name": "SetPrimaryCatalogImage", "full_method": "/service.ServiceManager/SetPrimaryCatalogImage", "request": "SetPrimaryCatalogImageRequest", "response": "CatalogImagesResponse", "public": false},
+          {"name": "DeleteCatalogImage", "full_method": "/service.ServiceManager/DeleteCatalogImage", "request": "DeleteCatalogImageRequest", "response": "DeleteCatalogImageResponse", "public": false},
+          {"name": "CreateCatalogDiscount", "full_method": "/service.ServiceManager/CreateCatalogDiscount", "request": "CreateCatalogDiscountRequest", "response": "CatalogDiscountResponse", "public": false},
+          {"name": "ListCatalogDiscounts", "full_method": "/service.ServiceManager/ListCatalogDiscounts", "request": "ListCatalogDiscountsRequest", "response": "ListCatalogDiscountsResponse", "public": false},
+          {"name": "UpdateCatalogDiscount", "full_method": "/service.ServiceManager/UpdateCatalogDiscount", "request": "UpdateCatalogDiscountRequest", "response": "CatalogDiscountResponse", "public": false},
+          {"name": "DeleteCatalogDiscount", "full_method": "/service.ServiceManager/DeleteCatalogDiscount", "request": "DeleteCatalogDiscountRequest", "response": "DeleteCatalogDiscountResponse", "public": false},
+          {
             "name": "GetCart",
             "full_method": "/service.ServiceManager/GetCart",
             "request": "GetCartRequest",
@@ -555,12 +591,33 @@
             "active",
             "created_at",
             "updated_at",
-            "category",
             "model",
             "currency",
             "inventory_count",
-            "variants"
+            "variants",
+            "categories",
+            "images",
+            "effective_price",
+            "discount_percent",
+            "discount_label",
+            "clearance",
+            "closeout"
           ]
+        },
+        {"name": "CatalogImage", "fields": ["id", "owner_type", "owner_id", "file_name", "content_type", "size_bytes", "sort_order", "primary", "created_at"]},
+        {"name": "CatalogImageUpload", "fields": ["file_name", "content_type", "data"]},
+        {"name": "CatalogDiscount", "fields": ["id", "name", "scope", "target_id", "percent_off", "active", "starts_at", "ends_at", "closeout", "created_at", "updated_at"]},
+        {
+          "name": "ProductCategory",
+          "fields": ["id", "name", "slug", "parent_id", "path", "level", "active", "created_at", "updated_at", "ancestor_ids"]
+        },
+        {
+          "name": "ProductSearchFacet",
+          "fields": ["field", "label", "values"]
+        },
+        {
+          "name": "ProductSearchFacetValue",
+          "fields": ["value", "label", "count"]
         },
         {
           "name": "ProductVariant",
@@ -677,10 +734,27 @@
             "page_size",
             "page_token",
             "query",
-            "category",
-            "sort"
+            "sort",
+            "category_ids",
+            "models",
+            "sizes",
+            "colors",
+            "price_bucket",
+            "availability"
           ]
         },
+        {"name": "CreateProductCategoryRequest", "fields": ["category"]},
+        {"name": "ListProductCategoriesRequest", "fields": ["active_only"]},
+        {"name": "UpdateProductCategoryRequest", "fields": ["category"]},
+        {"name": "DeleteProductCategoryRequest", "fields": ["id"]},
+        {"name": "UploadCatalogImagesRequest", "fields": ["owner_type", "owner_id", "images"]},
+        {"name": "GetCatalogImageRequest", "fields": ["id"]},
+        {"name": "SetPrimaryCatalogImageRequest", "fields": ["id"]},
+        {"name": "DeleteCatalogImageRequest", "fields": ["id"]},
+        {"name": "CreateCatalogDiscountRequest", "fields": ["discount"]},
+        {"name": "ListCatalogDiscountsRequest", "fields": ["scope", "target_id", "active_only"]},
+        {"name": "UpdateCatalogDiscountRequest", "fields": ["discount"]},
+        {"name": "DeleteCatalogDiscountRequest", "fields": ["id"]},
         {
           "name": "UpdateProductRequest",
           "fields": [
@@ -811,9 +885,19 @@
             "products",
             "next_page_token",
             "errors",
-            "total"
+            "total",
+            "facets"
           ]
         },
+        {"name": "ProductCategoryResponse", "fields": ["category", "errors"]},
+        {"name": "ListProductCategoriesResponse", "fields": ["categories", "errors"]},
+        {"name": "DeleteProductCategoryResponse", "fields": ["deleted", "errors"]},
+        {"name": "CatalogImagesResponse", "fields": ["images", "errors"]},
+        {"name": "CatalogImageContentResponse", "fields": ["image", "data", "errors"]},
+        {"name": "DeleteCatalogImageResponse", "fields": ["deleted", "errors"]},
+        {"name": "CatalogDiscountResponse", "fields": ["discount", "errors"]},
+        {"name": "ListCatalogDiscountsResponse", "fields": ["discounts", "errors"]},
+        {"name": "DeleteCatalogDiscountResponse", "fields": ["deleted", "errors"]},
         {
           "name": "DeleteProductResponse",
           "fields": [
@@ -2916,12 +3000,36 @@
         "Active",
         "CreatedAt",
         "UpdatedAt",
-        "Category",
         "Model",
         "Currency",
         "InventoryCount",
-        "Variants"
+        "Variants",
+        "Categories"
       ]
+    },
+    {
+      "name": "ProductCategory",
+      "fields": ["ID", "Name", "Slug", "ParentID", "Path", "Level", "Active", "CreatedAt", "UpdatedAt", "AncestorIDs"]
+    },
+    {
+      "name": "ProductSearchFilter",
+      "fields": ["Query", "CategoryIDs", "Models", "Sizes", "Colors", "PriceBucket", "Availability", "Sort", "ActiveOnly", "PageSize", "PageToken"]
+    },
+    {
+      "name": "ProductPriceBucket",
+      "fields": ["Value", "Label", "Min", "Max", "IncludesMax", "UnboundedMax"]
+    },
+    {
+      "name": "ProductSearchFacet",
+      "fields": ["Field", "Label", "Values"]
+    },
+    {
+      "name": "ProductSearchFacetValue",
+      "fields": ["Value", "Label", "Count"]
+    },
+    {
+      "name": "ProductSearchResult",
+      "fields": ["Products", "Facets", "Total", "NextPageToken"]
     },
     {
       "name": "ProductVariant",
@@ -3092,6 +3200,10 @@
     "ServicesToProto",
     "ProductFromProto",
     "ProductToProto",
+    "ProductCategoryFromProto",
+    "ProductCategoryToProto",
+    "ProductCategoriesFromProto",
+    "ProductCategoriesToProto",
     "ProductVariantFromProto",
     "ProductVariantToProto",
     "ProductVariantsFromProto",
@@ -3123,7 +3235,7 @@
     "CreateOrderServiceInputsFromProto"
   ],
   "security_contracts": {
-    "known_grpc_methods_count": 127,
+    "known_grpc_methods_count": 139,
     "known_grpc_methods": [
       "/admin.AdminService/GetCurrentAdmin",
       "/admin.AdminService/ListUsers",
@@ -3169,6 +3281,18 @@
       "/service.ServiceManager/UpdateProduct",
       "/service.ServiceManager/DeleteProduct",
       "/service.ServiceManager/BatchUpsertProducts",
+      "/service.ServiceManager/CreateProductCategory",
+      "/service.ServiceManager/ListProductCategories",
+      "/service.ServiceManager/UpdateProductCategory",
+      "/service.ServiceManager/DeleteProductCategory",
+      "/service.ServiceManager/UploadCatalogImages",
+      "/service.ServiceManager/GetCatalogImage",
+      "/service.ServiceManager/SetPrimaryCatalogImage",
+      "/service.ServiceManager/DeleteCatalogImage",
+      "/service.ServiceManager/CreateCatalogDiscount",
+      "/service.ServiceManager/ListCatalogDiscounts",
+      "/service.ServiceManager/UpdateCatalogDiscount",
+      "/service.ServiceManager/DeleteCatalogDiscount",
       "/service.ServiceManager/GetCart",
       "/service.ServiceManager/AddCartItem",
       "/service.ServiceManager/UpdateCartItem",
@@ -3279,6 +3403,18 @@
         "/service.ServiceManager/UpdateProduct",
         "/service.ServiceManager/DeleteProduct",
         "/service.ServiceManager/BatchUpsertProducts",
+        "/service.ServiceManager/CreateProductCategory",
+        "/service.ServiceManager/ListProductCategories",
+        "/service.ServiceManager/UpdateProductCategory",
+        "/service.ServiceManager/DeleteProductCategory",
+        "/service.ServiceManager/UploadCatalogImages",
+        "/service.ServiceManager/GetCatalogImage",
+        "/service.ServiceManager/SetPrimaryCatalogImage",
+        "/service.ServiceManager/DeleteCatalogImage",
+        "/service.ServiceManager/CreateCatalogDiscount",
+        "/service.ServiceManager/ListCatalogDiscounts",
+        "/service.ServiceManager/UpdateCatalogDiscount",
+        "/service.ServiceManager/DeleteCatalogDiscount",
         "/service.ServiceManager/GetCart",
         "/service.ServiceManager/AddCartItem",
         "/service.ServiceManager/UpdateCartItem",
@@ -3324,6 +3460,8 @@
         "/service.ServiceManager/ListServices",
         "/service.ServiceManager/GetProduct",
         "/service.ServiceManager/ListProducts",
+        "/service.ServiceManager/ListProductCategories",
+        "/service.ServiceManager/GetCatalogImage",
         "/service.ServiceManager/GetCart",
         "/service.ServiceManager/AddCartItem",
         "/service.ServiceManager/UpdateCartItem",

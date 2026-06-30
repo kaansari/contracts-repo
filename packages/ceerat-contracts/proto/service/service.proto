@@ -18,6 +18,18 @@ service ServiceManager {
   rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse) {}
   rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
   rpc BatchUpsertProducts(BatchUpsertProductsRequest) returns (BatchUpsertProductsResponse) {}
+  rpc CreateProductCategory(CreateProductCategoryRequest) returns (ProductCategoryResponse) {}
+  rpc ListProductCategories(ListProductCategoriesRequest) returns (ListProductCategoriesResponse) {}
+  rpc UpdateProductCategory(UpdateProductCategoryRequest) returns (ProductCategoryResponse) {}
+  rpc DeleteProductCategory(DeleteProductCategoryRequest) returns (DeleteProductCategoryResponse) {}
+  rpc UploadCatalogImages(UploadCatalogImagesRequest) returns (CatalogImagesResponse) {}
+  rpc GetCatalogImage(GetCatalogImageRequest) returns (CatalogImageContentResponse) {}
+  rpc SetPrimaryCatalogImage(SetPrimaryCatalogImageRequest) returns (CatalogImagesResponse) {}
+  rpc DeleteCatalogImage(DeleteCatalogImageRequest) returns (DeleteCatalogImageResponse) {}
+  rpc CreateCatalogDiscount(CreateCatalogDiscountRequest) returns (CatalogDiscountResponse) {}
+  rpc ListCatalogDiscounts(ListCatalogDiscountsRequest) returns (ListCatalogDiscountsResponse) {}
+  rpc UpdateCatalogDiscount(UpdateCatalogDiscountRequest) returns (CatalogDiscountResponse) {}
+  rpc DeleteCatalogDiscount(DeleteCatalogDiscountRequest) returns (DeleteCatalogDiscountResponse) {}
   rpc AssignServiceToCustomer(AssignServiceToCustomerRequest) returns (CustomerServiceResponse) {}
   rpc GetCustomerService(GetCustomerServiceRequest) returns (CustomerServiceResponse) {}
   rpc ListCustomerServices(ListCustomerServicesRequest) returns (ListCustomerServicesResponse) {}
@@ -49,9 +61,16 @@ message Service {
 
   string sku = 12;
   bool active = 13;
+  repeated CatalogImage images = 14;
+  double effective_price = 15;
+  double discount_percent = 16;
+  string discount_label = 17;
+  bool clearance = 18;
 }
 
 message Product {
+  reserved 9;
+
   string id = 1;
   string name = 2;
   string description = 3;
@@ -60,11 +79,17 @@ message Product {
   bool active = 6;
   string created_at = 7;
   string updated_at = 8;
-  string category = 9;
   string model = 10;
   string currency = 11;
   int32 inventory_count = 12;
   repeated ProductVariant variants = 13;
+  repeated ProductCategory categories = 14;
+  repeated CatalogImage images = 15;
+  double effective_price = 16;
+  double discount_percent = 17;
+  string discount_label = 18;
+  bool clearance = 19;
+  bool closeout = 20;
 }
 
 message ProductVariant {
@@ -80,6 +105,68 @@ message ProductVariant {
   int32 inventory_count = 10;
   string created_at = 11;
   string updated_at = 12;
+  double effective_price = 13;
+  double discount_percent = 14;
+  string discount_label = 15;
+  bool clearance = 16;
+  bool closeout = 17;
+}
+
+message CatalogImage {
+  string id = 1;
+  string owner_type = 2;
+  string owner_id = 3;
+  string file_name = 4;
+  string content_type = 5;
+  int64 size_bytes = 6;
+  int32 sort_order = 7;
+  bool primary = 8;
+  string created_at = 9;
+}
+
+message CatalogImageUpload {
+  string file_name = 1;
+  string content_type = 2;
+  bytes data = 3;
+}
+
+message CatalogDiscount {
+  string id = 1;
+  string name = 2;
+  string scope = 3;
+  string target_id = 4;
+  double percent_off = 5;
+  bool active = 6;
+  string starts_at = 7;
+  string ends_at = 8;
+  bool closeout = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message ProductCategory {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string parent_id = 4;
+  string path = 5;
+  int32 level = 6;
+  bool active = 7;
+  string created_at = 8;
+  string updated_at = 9;
+  repeated string ancestor_ids = 10;
+}
+
+message ProductSearchFacet {
+  string field = 1;
+  string label = 2;
+  repeated ProductSearchFacetValue values = 3;
+}
+
+message ProductSearchFacetValue {
+  string value = 1;
+  string label = 2;
+  int32 count = 3;
 }
 
 message CustomerService {
@@ -124,6 +211,11 @@ message CartItem {
   string updated_at = 13;
   string product_variant_id = 14;
   ProductVariant product_variant = 15;
+  double list_price = 16;
+  double discount_percent = 17;
+  string discount_label = 18;
+  bool clearance = 19;
+  bool closeout = 20;
 }
 
 message CreateServiceRequest {
@@ -158,12 +250,19 @@ message GetProductRequest {
 }
 
 message ListProductsRequest {
+  reserved 5, 12, 13;
+
   bool active_only = 1;
   int32 page_size = 2;
   string page_token = 3;
   string query = 4;
-  string category = 5;
   string sort = 6;
+  repeated string category_ids = 7;
+  repeated string models = 8;
+  repeated string sizes = 9;
+  repeated string colors = 10;
+  string price_bucket = 11;
+  string availability = 14;
 }
 
 message UpdateProductRequest {
@@ -176,6 +275,58 @@ message DeleteProductRequest {
 
 message BatchUpsertProductsRequest {
   repeated Product products = 1;
+}
+
+message CreateProductCategoryRequest {
+  ProductCategory category = 1;
+}
+
+message ListProductCategoriesRequest {
+  bool active_only = 1;
+}
+
+message UpdateProductCategoryRequest {
+  ProductCategory category = 1;
+}
+
+message DeleteProductCategoryRequest {
+  string id = 1;
+}
+
+message UploadCatalogImagesRequest {
+  string owner_type = 1;
+  string owner_id = 2;
+  repeated CatalogImageUpload images = 3;
+}
+
+message GetCatalogImageRequest {
+  string id = 1;
+}
+
+message SetPrimaryCatalogImageRequest {
+  string id = 1;
+}
+
+message DeleteCatalogImageRequest {
+  string id = 1;
+}
+
+message CreateCatalogDiscountRequest {
+  CatalogDiscount discount = 1;
+}
+
+message ListCatalogDiscountsRequest {
+  string scope = 1;
+  string target_id = 2;
+  bool active_only = 3;
+}
+
+message UpdateCatalogDiscountRequest {
+  CatalogDiscount discount = 1;
+}
+
+message DeleteCatalogDiscountRequest {
+  string id = 1;
 }
 
 message AssignServiceToCustomerRequest {
@@ -261,6 +412,7 @@ message ListProductsResponse {
   string next_page_token = 2;
   repeated Error errors = 3;
   int32 total = 4;
+  repeated ProductSearchFacet facets = 5;
 }
 
 message DeleteProductResponse {
@@ -274,6 +426,52 @@ message BatchUpsertProductsResponse {
   int32 succeeded = 3;
   int32 failed = 4;
   repeated Error errors = 5;
+}
+
+message ProductCategoryResponse {
+  ProductCategory category = 1;
+  repeated Error errors = 2;
+}
+
+message ListProductCategoriesResponse {
+  repeated ProductCategory categories = 1;
+  repeated Error errors = 2;
+}
+
+message DeleteProductCategoryResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
+}
+
+message CatalogImagesResponse {
+  repeated CatalogImage images = 1;
+  repeated Error errors = 2;
+}
+
+message CatalogImageContentResponse {
+  CatalogImage image = 1;
+  bytes data = 2;
+  repeated Error errors = 3;
+}
+
+message DeleteCatalogImageResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
+}
+
+message CatalogDiscountResponse {
+  CatalogDiscount discount = 1;
+  repeated Error errors = 2;
+}
+
+message ListCatalogDiscountsResponse {
+  repeated CatalogDiscount discounts = 1;
+  repeated Error errors = 2;
+}
+
+message DeleteCatalogDiscountResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
 }
 
 message CustomerServiceResponse {

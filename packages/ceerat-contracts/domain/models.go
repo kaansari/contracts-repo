@@ -39,51 +39,185 @@ type Customer struct {
 
 // Service is the shared business representation of a customer-orderable service.
 type Service struct {
-	ID           string
-	Name         string
-	Category     string
-	Price        float64
-	Type         string
-	ScheduleDate string
-	StartDate    string
-	AgentName    string
-	Description  string
-	CreatedAt    string
-	UpdatedAt    string
-	SKU          string
-	Active       bool
+	ID              string
+	Name            string
+	Category        string
+	Price           float64
+	Type            string
+	ScheduleDate    string
+	StartDate       string
+	AgentName       string
+	Description     string
+	CreatedAt       string
+	UpdatedAt       string
+	SKU             string
+	Active          bool
+	Images          []*CatalogImage
+	EffectivePrice  float64
+	DiscountPercent float64
+	DiscountLabel   string
+	Clearance       bool
 }
 
 // Product is a service-catalog product exposed through the catalog service boundary.
 type Product struct {
-	ID             string
-	Name           string
-	Description    string
-	SKU            string
-	Price          float64
-	Active         bool
-	CreatedAt      string
-	UpdatedAt      string
-	Category       string
-	Model          string
-	Currency       string
-	InventoryCount int32
-	Variants       []*ProductVariant
+	ID              string
+	Name            string
+	Description     string
+	SKU             string
+	Price           float64
+	Active          bool
+	CreatedAt       string
+	UpdatedAt       string
+	Model           string
+	Currency        string
+	InventoryCount  int32
+	Variants        []*ProductVariant
+	Categories      []*ProductCategory
+	Images          []*CatalogImage
+	EffectivePrice  float64
+	DiscountPercent float64
+	DiscountLabel   string
+	Clearance       bool
+	Closeout        bool
 }
 
 type ProductVariant struct {
-	ID             string
-	ProductID      string
-	Name           string
-	Model          string
-	Size           string
-	Color          string
-	SKU            string
-	Price          float64
-	Active         bool
-	InventoryCount int32
-	CreatedAt      string
-	UpdatedAt      string
+	ID              string
+	ProductID       string
+	Name            string
+	Model           string
+	Size            string
+	Color           string
+	SKU             string
+	Price           float64
+	Active          bool
+	InventoryCount  int32
+	CreatedAt       string
+	UpdatedAt       string
+	EffectivePrice  float64
+	DiscountPercent float64
+	DiscountLabel   string
+	Clearance       bool
+	Closeout        bool
+}
+
+type CatalogImage struct {
+	ID          string
+	OwnerType   string
+	OwnerID     string
+	FileName    string
+	ContentType string
+	SizeBytes   int64
+	SortOrder   int32
+	Primary     bool
+	CreatedAt   string
+}
+
+type CatalogImageUpload struct {
+	FileName    string
+	ContentType string
+	Data        []byte
+}
+
+type CatalogDiscount struct {
+	ID         string
+	Name       string
+	Scope      string
+	TargetID   string
+	PercentOff float64
+	Active     bool
+	StartsAt   string
+	EndsAt     string
+	Closeout   bool
+	CreatedAt  string
+	UpdatedAt  string
+}
+
+type ProductCategory struct {
+	ID          string
+	Name        string
+	Slug        string
+	ParentID    string
+	Path        string
+	Level       int32
+	Active      bool
+	CreatedAt   string
+	UpdatedAt   string
+	AncestorIDs []string
+}
+
+type ProductSearchFilter struct {
+	Query        string
+	CategoryIDs  []string
+	Models       []string
+	Sizes        []string
+	Colors       []string
+	PriceBucket  string
+	Availability string
+	Sort         string
+	ActiveOnly   bool
+	PageSize     int
+	PageToken    string
+}
+
+type ProductPriceBucket struct {
+	Value        string
+	Label        string
+	Min          float64
+	Max          float64
+	IncludesMax  bool
+	UnboundedMax bool
+}
+
+var ProductPriceBuckets = []ProductPriceBucket{
+	{Value: "price_0_50", Label: "0-50", Min: 0, Max: 50},
+	{Value: "price_50_100", Label: "50-100", Min: 50, Max: 100},
+	{Value: "price_100_200", Label: "100-200", Min: 100, Max: 200},
+	{Value: "price_200_500", Label: "200-500", Min: 200, Max: 500},
+	{Value: "price_500_1000", Label: "500-1,000", Min: 500, Max: 1000},
+	{Value: "price_1000_2000", Label: "1,000-2,000", Min: 1000, Max: 2000, IncludesMax: true},
+	{Value: "price_over_2000", Label: "Over 2,000", Min: 2000, UnboundedMax: true},
+}
+
+func ProductPriceBucketFor(price float64) ProductPriceBucket {
+	for _, bucket := range ProductPriceBuckets {
+		if price < bucket.Min {
+			continue
+		}
+		if bucket.UnboundedMax || price < bucket.Max || (bucket.IncludesMax && price <= bucket.Max) {
+			return bucket
+		}
+	}
+	return ProductPriceBuckets[0]
+}
+
+func ProductPriceBucketByValue(value string) (ProductPriceBucket, bool) {
+	for _, bucket := range ProductPriceBuckets {
+		if bucket.Value == value {
+			return bucket, true
+		}
+	}
+	return ProductPriceBucket{}, false
+}
+
+type ProductSearchFacet struct {
+	Field  string
+	Label  string
+	Values []ProductSearchFacetValue
+}
+
+type ProductSearchFacetValue struct {
+	Value string
+	Label string
+	Count int32
+}
+
+type ProductSearchResult struct {
+	Products      []*Product
+	Facets        []ProductSearchFacet
+	Total         int
+	NextPageToken string
 }
 
 // CustomerService links a customer to an ordered service.
@@ -127,6 +261,11 @@ type CartItem struct {
 	UpdatedAt        string
 	ProductVariantID string
 	ProductVariant   *ProductVariant
+	ListPrice        float64
+	DiscountPercent  float64
+	DiscountLabel    string
+	Clearance        bool
+	Closeout         bool
 }
 
 // Order groups one or more services for a customer.

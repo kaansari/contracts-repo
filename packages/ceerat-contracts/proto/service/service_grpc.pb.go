@@ -33,6 +33,18 @@ type ServiceManagerClient interface {
 	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error)
 	BatchUpsertProducts(ctx context.Context, in *BatchUpsertProductsRequest, opts ...grpc.CallOption) (*BatchUpsertProductsResponse, error)
+	CreateProductCategory(ctx context.Context, in *CreateProductCategoryRequest, opts ...grpc.CallOption) (*ProductCategoryResponse, error)
+	ListProductCategories(ctx context.Context, in *ListProductCategoriesRequest, opts ...grpc.CallOption) (*ListProductCategoriesResponse, error)
+	UpdateProductCategory(ctx context.Context, in *UpdateProductCategoryRequest, opts ...grpc.CallOption) (*ProductCategoryResponse, error)
+	DeleteProductCategory(ctx context.Context, in *DeleteProductCategoryRequest, opts ...grpc.CallOption) (*DeleteProductCategoryResponse, error)
+	UploadCatalogImages(ctx context.Context, in *UploadCatalogImagesRequest, opts ...grpc.CallOption) (*CatalogImagesResponse, error)
+	GetCatalogImage(ctx context.Context, in *GetCatalogImageRequest, opts ...grpc.CallOption) (*CatalogImageContentResponse, error)
+	SetPrimaryCatalogImage(ctx context.Context, in *SetPrimaryCatalogImageRequest, opts ...grpc.CallOption) (*CatalogImagesResponse, error)
+	DeleteCatalogImage(ctx context.Context, in *DeleteCatalogImageRequest, opts ...grpc.CallOption) (*DeleteCatalogImageResponse, error)
+	CreateCatalogDiscount(ctx context.Context, in *CreateCatalogDiscountRequest, opts ...grpc.CallOption) (*CatalogDiscountResponse, error)
+	ListCatalogDiscounts(ctx context.Context, in *ListCatalogDiscountsRequest, opts ...grpc.CallOption) (*ListCatalogDiscountsResponse, error)
+	UpdateCatalogDiscount(ctx context.Context, in *UpdateCatalogDiscountRequest, opts ...grpc.CallOption) (*CatalogDiscountResponse, error)
+	DeleteCatalogDiscount(ctx context.Context, in *DeleteCatalogDiscountRequest, opts ...grpc.CallOption) (*DeleteCatalogDiscountResponse, error)
 	AssignServiceToCustomer(ctx context.Context, in *AssignServiceToCustomerRequest, opts ...grpc.CallOption) (*CustomerServiceResponse, error)
 	GetCustomerService(ctx context.Context, in *GetCustomerServiceRequest, opts ...grpc.CallOption) (*CustomerServiceResponse, error)
 	ListCustomerServices(ctx context.Context, in *ListCustomerServicesRequest, opts ...grpc.CallOption) (*ListCustomerServicesResponse, error)
@@ -152,6 +164,114 @@ func (c *serviceManagerClient) BatchUpsertProducts(ctx context.Context, in *Batc
 	return out, nil
 }
 
+func (c *serviceManagerClient) CreateProductCategory(ctx context.Context, in *CreateProductCategoryRequest, opts ...grpc.CallOption) (*ProductCategoryResponse, error) {
+	out := new(ProductCategoryResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/CreateProductCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) ListProductCategories(ctx context.Context, in *ListProductCategoriesRequest, opts ...grpc.CallOption) (*ListProductCategoriesResponse, error) {
+	out := new(ListProductCategoriesResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/ListProductCategories", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) UpdateProductCategory(ctx context.Context, in *UpdateProductCategoryRequest, opts ...grpc.CallOption) (*ProductCategoryResponse, error) {
+	out := new(ProductCategoryResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/UpdateProductCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) DeleteProductCategory(ctx context.Context, in *DeleteProductCategoryRequest, opts ...grpc.CallOption) (*DeleteProductCategoryResponse, error) {
+	out := new(DeleteProductCategoryResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/DeleteProductCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) UploadCatalogImages(ctx context.Context, in *UploadCatalogImagesRequest, opts ...grpc.CallOption) (*CatalogImagesResponse, error) {
+	out := new(CatalogImagesResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/UploadCatalogImages", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) GetCatalogImage(ctx context.Context, in *GetCatalogImageRequest, opts ...grpc.CallOption) (*CatalogImageContentResponse, error) {
+	out := new(CatalogImageContentResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/GetCatalogImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) SetPrimaryCatalogImage(ctx context.Context, in *SetPrimaryCatalogImageRequest, opts ...grpc.CallOption) (*CatalogImagesResponse, error) {
+	out := new(CatalogImagesResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/SetPrimaryCatalogImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) DeleteCatalogImage(ctx context.Context, in *DeleteCatalogImageRequest, opts ...grpc.CallOption) (*DeleteCatalogImageResponse, error) {
+	out := new(DeleteCatalogImageResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/DeleteCatalogImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) CreateCatalogDiscount(ctx context.Context, in *CreateCatalogDiscountRequest, opts ...grpc.CallOption) (*CatalogDiscountResponse, error) {
+	out := new(CatalogDiscountResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/CreateCatalogDiscount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) ListCatalogDiscounts(ctx context.Context, in *ListCatalogDiscountsRequest, opts ...grpc.CallOption) (*ListCatalogDiscountsResponse, error) {
+	out := new(ListCatalogDiscountsResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/ListCatalogDiscounts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) UpdateCatalogDiscount(ctx context.Context, in *UpdateCatalogDiscountRequest, opts ...grpc.CallOption) (*CatalogDiscountResponse, error) {
+	out := new(CatalogDiscountResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/UpdateCatalogDiscount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceManagerClient) DeleteCatalogDiscount(ctx context.Context, in *DeleteCatalogDiscountRequest, opts ...grpc.CallOption) (*DeleteCatalogDiscountResponse, error) {
+	out := new(DeleteCatalogDiscountResponse)
+	err := c.cc.Invoke(ctx, "/service.ServiceManager/DeleteCatalogDiscount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceManagerClient) AssignServiceToCustomer(ctx context.Context, in *AssignServiceToCustomerRequest, opts ...grpc.CallOption) (*CustomerServiceResponse, error) {
 	out := new(CustomerServiceResponse)
 	err := c.cc.Invoke(ctx, "/service.ServiceManager/AssignServiceToCustomer", in, out, opts...)
@@ -257,6 +377,18 @@ type ServiceManagerServer interface {
 	UpdateProduct(context.Context, *UpdateProductRequest) (*ProductResponse, error)
 	DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error)
 	BatchUpsertProducts(context.Context, *BatchUpsertProductsRequest) (*BatchUpsertProductsResponse, error)
+	CreateProductCategory(context.Context, *CreateProductCategoryRequest) (*ProductCategoryResponse, error)
+	ListProductCategories(context.Context, *ListProductCategoriesRequest) (*ListProductCategoriesResponse, error)
+	UpdateProductCategory(context.Context, *UpdateProductCategoryRequest) (*ProductCategoryResponse, error)
+	DeleteProductCategory(context.Context, *DeleteProductCategoryRequest) (*DeleteProductCategoryResponse, error)
+	UploadCatalogImages(context.Context, *UploadCatalogImagesRequest) (*CatalogImagesResponse, error)
+	GetCatalogImage(context.Context, *GetCatalogImageRequest) (*CatalogImageContentResponse, error)
+	SetPrimaryCatalogImage(context.Context, *SetPrimaryCatalogImageRequest) (*CatalogImagesResponse, error)
+	DeleteCatalogImage(context.Context, *DeleteCatalogImageRequest) (*DeleteCatalogImageResponse, error)
+	CreateCatalogDiscount(context.Context, *CreateCatalogDiscountRequest) (*CatalogDiscountResponse, error)
+	ListCatalogDiscounts(context.Context, *ListCatalogDiscountsRequest) (*ListCatalogDiscountsResponse, error)
+	UpdateCatalogDiscount(context.Context, *UpdateCatalogDiscountRequest) (*CatalogDiscountResponse, error)
+	DeleteCatalogDiscount(context.Context, *DeleteCatalogDiscountRequest) (*DeleteCatalogDiscountResponse, error)
 	AssignServiceToCustomer(context.Context, *AssignServiceToCustomerRequest) (*CustomerServiceResponse, error)
 	GetCustomerService(context.Context, *GetCustomerServiceRequest) (*CustomerServiceResponse, error)
 	ListCustomerServices(context.Context, *ListCustomerServicesRequest) (*ListCustomerServicesResponse, error)
@@ -306,6 +438,42 @@ func (UnimplementedServiceManagerServer) DeleteProduct(context.Context, *DeleteP
 }
 func (UnimplementedServiceManagerServer) BatchUpsertProducts(context.Context, *BatchUpsertProductsRequest) (*BatchUpsertProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchUpsertProducts not implemented")
+}
+func (UnimplementedServiceManagerServer) CreateProductCategory(context.Context, *CreateProductCategoryRequest) (*ProductCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProductCategory not implemented")
+}
+func (UnimplementedServiceManagerServer) ListProductCategories(context.Context, *ListProductCategoriesRequest) (*ListProductCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProductCategories not implemented")
+}
+func (UnimplementedServiceManagerServer) UpdateProductCategory(context.Context, *UpdateProductCategoryRequest) (*ProductCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProductCategory not implemented")
+}
+func (UnimplementedServiceManagerServer) DeleteProductCategory(context.Context, *DeleteProductCategoryRequest) (*DeleteProductCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductCategory not implemented")
+}
+func (UnimplementedServiceManagerServer) UploadCatalogImages(context.Context, *UploadCatalogImagesRequest) (*CatalogImagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadCatalogImages not implemented")
+}
+func (UnimplementedServiceManagerServer) GetCatalogImage(context.Context, *GetCatalogImageRequest) (*CatalogImageContentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCatalogImage not implemented")
+}
+func (UnimplementedServiceManagerServer) SetPrimaryCatalogImage(context.Context, *SetPrimaryCatalogImageRequest) (*CatalogImagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPrimaryCatalogImage not implemented")
+}
+func (UnimplementedServiceManagerServer) DeleteCatalogImage(context.Context, *DeleteCatalogImageRequest) (*DeleteCatalogImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCatalogImage not implemented")
+}
+func (UnimplementedServiceManagerServer) CreateCatalogDiscount(context.Context, *CreateCatalogDiscountRequest) (*CatalogDiscountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCatalogDiscount not implemented")
+}
+func (UnimplementedServiceManagerServer) ListCatalogDiscounts(context.Context, *ListCatalogDiscountsRequest) (*ListCatalogDiscountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCatalogDiscounts not implemented")
+}
+func (UnimplementedServiceManagerServer) UpdateCatalogDiscount(context.Context, *UpdateCatalogDiscountRequest) (*CatalogDiscountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCatalogDiscount not implemented")
+}
+func (UnimplementedServiceManagerServer) DeleteCatalogDiscount(context.Context, *DeleteCatalogDiscountRequest) (*DeleteCatalogDiscountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCatalogDiscount not implemented")
 }
 func (UnimplementedServiceManagerServer) AssignServiceToCustomer(context.Context, *AssignServiceToCustomerRequest) (*CustomerServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignServiceToCustomer not implemented")
@@ -548,6 +716,222 @@ func _ServiceManager_BatchUpsertProducts_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceManager_CreateProductCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProductCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).CreateProductCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/CreateProductCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).CreateProductCategory(ctx, req.(*CreateProductCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_ListProductCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProductCategoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).ListProductCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/ListProductCategories",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).ListProductCategories(ctx, req.(*ListProductCategoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_UpdateProductCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).UpdateProductCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/UpdateProductCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).UpdateProductCategory(ctx, req.(*UpdateProductCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_DeleteProductCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProductCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).DeleteProductCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/DeleteProductCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).DeleteProductCategory(ctx, req.(*DeleteProductCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_UploadCatalogImages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadCatalogImagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).UploadCatalogImages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/UploadCatalogImages",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).UploadCatalogImages(ctx, req.(*UploadCatalogImagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_GetCatalogImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCatalogImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).GetCatalogImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/GetCatalogImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).GetCatalogImage(ctx, req.(*GetCatalogImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_SetPrimaryCatalogImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPrimaryCatalogImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).SetPrimaryCatalogImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/SetPrimaryCatalogImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).SetPrimaryCatalogImage(ctx, req.(*SetPrimaryCatalogImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_DeleteCatalogImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCatalogImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).DeleteCatalogImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/DeleteCatalogImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).DeleteCatalogImage(ctx, req.(*DeleteCatalogImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_CreateCatalogDiscount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCatalogDiscountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).CreateCatalogDiscount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/CreateCatalogDiscount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).CreateCatalogDiscount(ctx, req.(*CreateCatalogDiscountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_ListCatalogDiscounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCatalogDiscountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).ListCatalogDiscounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/ListCatalogDiscounts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).ListCatalogDiscounts(ctx, req.(*ListCatalogDiscountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_UpdateCatalogDiscount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCatalogDiscountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).UpdateCatalogDiscount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/UpdateCatalogDiscount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).UpdateCatalogDiscount(ctx, req.(*UpdateCatalogDiscountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceManager_DeleteCatalogDiscount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCatalogDiscountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).DeleteCatalogDiscount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.ServiceManager/DeleteCatalogDiscount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).DeleteCatalogDiscount(ctx, req.(*DeleteCatalogDiscountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ServiceManager_AssignServiceToCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AssignServiceToCustomerRequest)
 	if err := dec(in); err != nil {
@@ -778,6 +1162,54 @@ var ServiceManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchUpsertProducts",
 			Handler:    _ServiceManager_BatchUpsertProducts_Handler,
+		},
+		{
+			MethodName: "CreateProductCategory",
+			Handler:    _ServiceManager_CreateProductCategory_Handler,
+		},
+		{
+			MethodName: "ListProductCategories",
+			Handler:    _ServiceManager_ListProductCategories_Handler,
+		},
+		{
+			MethodName: "UpdateProductCategory",
+			Handler:    _ServiceManager_UpdateProductCategory_Handler,
+		},
+		{
+			MethodName: "DeleteProductCategory",
+			Handler:    _ServiceManager_DeleteProductCategory_Handler,
+		},
+		{
+			MethodName: "UploadCatalogImages",
+			Handler:    _ServiceManager_UploadCatalogImages_Handler,
+		},
+		{
+			MethodName: "GetCatalogImage",
+			Handler:    _ServiceManager_GetCatalogImage_Handler,
+		},
+		{
+			MethodName: "SetPrimaryCatalogImage",
+			Handler:    _ServiceManager_SetPrimaryCatalogImage_Handler,
+		},
+		{
+			MethodName: "DeleteCatalogImage",
+			Handler:    _ServiceManager_DeleteCatalogImage_Handler,
+		},
+		{
+			MethodName: "CreateCatalogDiscount",
+			Handler:    _ServiceManager_CreateCatalogDiscount_Handler,
+		},
+		{
+			MethodName: "ListCatalogDiscounts",
+			Handler:    _ServiceManager_ListCatalogDiscounts_Handler,
+		},
+		{
+			MethodName: "UpdateCatalogDiscount",
+			Handler:    _ServiceManager_UpdateCatalogDiscount_Handler,
+		},
+		{
+			MethodName: "DeleteCatalogDiscount",
+			Handler:    _ServiceManager_DeleteCatalogDiscount_Handler,
 		},
 		{
 			MethodName: "AssignServiceToCustomer",

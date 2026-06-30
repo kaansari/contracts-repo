@@ -125,19 +125,24 @@ func ServiceFromProto(in *servicepb.Service) *domain.Service {
 		return nil
 	}
 	return &domain.Service{
-		ID:           in.Id,
-		Name:         in.Name,
-		Category:     in.Category,
-		Price:        in.Price,
-		Type:         in.Type,
-		ScheduleDate: in.ScheduleDate,
-		StartDate:    in.StartDate,
-		AgentName:    in.AgentName,
-		Description:  in.Description,
-		CreatedAt:    in.CreatedAt,
-		UpdatedAt:    in.UpdatedAt,
-		SKU:          in.Sku,
-		Active:       in.Active,
+		ID:              in.Id,
+		Name:            in.Name,
+		Category:        in.Category,
+		Price:           in.Price,
+		Type:            in.Type,
+		ScheduleDate:    in.ScheduleDate,
+		StartDate:       in.StartDate,
+		AgentName:       in.AgentName,
+		Description:     in.Description,
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
+		SKU:             in.Sku,
+		Active:          in.Active,
+		Images:          CatalogImagesFromProto(in.Images),
+		EffectivePrice:  in.EffectivePrice,
+		DiscountPercent: in.DiscountPercent,
+		DiscountLabel:   in.DiscountLabel,
+		Clearance:       in.Clearance,
 	}
 }
 
@@ -146,19 +151,24 @@ func ServiceToProto(in *domain.Service) *servicepb.Service {
 		return nil
 	}
 	return &servicepb.Service{
-		Id:           in.ID,
-		Name:         in.Name,
-		Category:     in.Category,
-		Price:        in.Price,
-		Type:         in.Type,
-		ScheduleDate: in.ScheduleDate,
-		StartDate:    in.StartDate,
-		AgentName:    in.AgentName,
-		Description:  in.Description,
-		CreatedAt:    in.CreatedAt,
-		UpdatedAt:    in.UpdatedAt,
-		Sku:          in.SKU,
-		Active:       in.Active,
+		Id:              in.ID,
+		Name:            in.Name,
+		Category:        in.Category,
+		Price:           in.Price,
+		Type:            in.Type,
+		ScheduleDate:    in.ScheduleDate,
+		StartDate:       in.StartDate,
+		AgentName:       in.AgentName,
+		Description:     in.Description,
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
+		Sku:             in.SKU,
+		Active:          in.Active,
+		Images:          CatalogImagesToProto(in.Images),
+		EffectivePrice:  in.EffectivePrice,
+		DiscountPercent: in.DiscountPercent,
+		DiscountLabel:   in.DiscountLabel,
+		Clearance:       in.Clearance,
 	}
 }
 
@@ -175,19 +185,25 @@ func ProductFromProto(in *servicepb.Product) *domain.Product {
 		return nil
 	}
 	return &domain.Product{
-		ID:             in.Id,
-		Name:           in.Name,
-		Description:    in.Description,
-		SKU:            in.Sku,
-		Price:          in.Price,
-		Active:         in.Active,
-		CreatedAt:      in.CreatedAt,
-		UpdatedAt:      in.UpdatedAt,
-		Category:       in.Category,
-		Model:          in.Model,
-		Currency:       in.Currency,
-		InventoryCount: in.InventoryCount,
-		Variants:       ProductVariantsFromProto(in.Variants),
+		ID:              in.Id,
+		Name:            in.Name,
+		Description:     in.Description,
+		SKU:             in.Sku,
+		Price:           in.Price,
+		Active:          in.Active,
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
+		Model:           in.Model,
+		Currency:        in.Currency,
+		InventoryCount:  in.InventoryCount,
+		Variants:        ProductVariantsFromProto(in.Variants),
+		Categories:      ProductCategoriesFromProto(in.Categories),
+		Images:          CatalogImagesFromProto(in.Images),
+		EffectivePrice:  in.EffectivePrice,
+		DiscountPercent: in.DiscountPercent,
+		DiscountLabel:   in.DiscountLabel,
+		Clearance:       in.Clearance,
+		Closeout:        in.Closeout,
 	}
 }
 
@@ -196,20 +212,134 @@ func ProductToProto(in *domain.Product) *servicepb.Product {
 		return nil
 	}
 	return &servicepb.Product{
-		Id:             in.ID,
-		Name:           in.Name,
-		Description:    in.Description,
-		Sku:            in.SKU,
-		Price:          in.Price,
-		Active:         in.Active,
-		CreatedAt:      in.CreatedAt,
-		UpdatedAt:      in.UpdatedAt,
-		Category:       in.Category,
-		Model:          in.Model,
-		Currency:       in.Currency,
-		InventoryCount: in.InventoryCount,
-		Variants:       ProductVariantsToProto(in.Variants),
+		Id:              in.ID,
+		Name:            in.Name,
+		Description:     in.Description,
+		Sku:             in.SKU,
+		Price:           in.Price,
+		Active:          in.Active,
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
+		Model:           in.Model,
+		Currency:        in.Currency,
+		InventoryCount:  in.InventoryCount,
+		Variants:        ProductVariantsToProto(in.Variants),
+		Categories:      ProductCategoriesToProto(in.Categories),
+		Images:          CatalogImagesToProto(in.Images),
+		EffectivePrice:  in.EffectivePrice,
+		DiscountPercent: in.DiscountPercent,
+		DiscountLabel:   in.DiscountLabel,
+		Clearance:       in.Clearance,
+		Closeout:        in.Closeout,
 	}
+}
+
+func ProductCategoryFromProto(in *servicepb.ProductCategory) *domain.ProductCategory {
+	if in == nil {
+		return nil
+	}
+	return &domain.ProductCategory{
+		ID: in.Id, Name: in.Name, Slug: in.Slug, ParentID: in.ParentId,
+		Path: in.Path, Level: in.Level, Active: in.Active,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+		AncestorIDs: append([]string(nil), in.AncestorIds...),
+	}
+}
+
+func ProductCategoryToProto(in *domain.ProductCategory) *servicepb.ProductCategory {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.ProductCategory{
+		Id: in.ID, Name: in.Name, Slug: in.Slug, ParentId: in.ParentID,
+		Path: in.Path, Level: in.Level, Active: in.Active,
+		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+		AncestorIds: append([]string(nil), in.AncestorIDs...),
+	}
+}
+
+func ProductCategoriesFromProto(in []*servicepb.ProductCategory) []*domain.ProductCategory {
+	out := make([]*domain.ProductCategory, 0, len(in))
+	for _, category := range in {
+		out = append(out, ProductCategoryFromProto(category))
+	}
+	return out
+}
+
+func ProductCategoriesToProto(in []*domain.ProductCategory) []*servicepb.ProductCategory {
+	out := make([]*servicepb.ProductCategory, 0, len(in))
+	for _, category := range in {
+		out = append(out, ProductCategoryToProto(category))
+	}
+	return out
+}
+
+func CatalogImageFromProto(in *servicepb.CatalogImage) *domain.CatalogImage {
+	if in == nil {
+		return nil
+	}
+	return &domain.CatalogImage{
+		ID: in.Id, OwnerType: in.OwnerType, OwnerID: in.OwnerId,
+		FileName: in.FileName, ContentType: in.ContentType, SizeBytes: in.SizeBytes,
+		SortOrder: in.SortOrder, Primary: in.Primary, CreatedAt: in.CreatedAt,
+	}
+}
+
+func CatalogImageToProto(in *domain.CatalogImage) *servicepb.CatalogImage {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.CatalogImage{
+		Id: in.ID, OwnerType: in.OwnerType, OwnerId: in.OwnerID,
+		FileName: in.FileName, ContentType: in.ContentType, SizeBytes: in.SizeBytes,
+		SortOrder: in.SortOrder, Primary: in.Primary, CreatedAt: in.CreatedAt,
+	}
+}
+
+func CatalogImagesFromProto(in []*servicepb.CatalogImage) []*domain.CatalogImage {
+	out := make([]*domain.CatalogImage, 0, len(in))
+	for _, image := range in {
+		out = append(out, CatalogImageFromProto(image))
+	}
+	return out
+}
+
+func CatalogImagesToProto(in []*domain.CatalogImage) []*servicepb.CatalogImage {
+	out := make([]*servicepb.CatalogImage, 0, len(in))
+	for _, image := range in {
+		out = append(out, CatalogImageToProto(image))
+	}
+	return out
+}
+
+func CatalogDiscountFromProto(in *servicepb.CatalogDiscount) *domain.CatalogDiscount {
+	if in == nil {
+		return nil
+	}
+	return &domain.CatalogDiscount{
+		ID: in.Id, Name: in.Name, Scope: in.Scope, TargetID: in.TargetId,
+		PercentOff: in.PercentOff, Active: in.Active, StartsAt: in.StartsAt,
+		EndsAt: in.EndsAt, Closeout: in.Closeout, CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func CatalogDiscountToProto(in *domain.CatalogDiscount) *servicepb.CatalogDiscount {
+	if in == nil {
+		return nil
+	}
+	return &servicepb.CatalogDiscount{
+		Id: in.ID, Name: in.Name, Scope: in.Scope, TargetId: in.TargetID,
+		PercentOff: in.PercentOff, Active: in.Active, StartsAt: in.StartsAt,
+		EndsAt: in.EndsAt, Closeout: in.Closeout, CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func CatalogDiscountsToProto(in []*domain.CatalogDiscount) []*servicepb.CatalogDiscount {
+	out := make([]*servicepb.CatalogDiscount, 0, len(in))
+	for _, discount := range in {
+		out = append(out, CatalogDiscountToProto(discount))
+	}
+	return out
 }
 
 func ProductVariantFromProto(in *servicepb.ProductVariant) *domain.ProductVariant {
@@ -221,6 +351,8 @@ func ProductVariantFromProto(in *servicepb.ProductVariant) *domain.ProductVarian
 		Size: in.Size, Color: in.Color, SKU: in.Sku, Price: in.Price,
 		Active: in.Active, InventoryCount: in.InventoryCount,
 		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+		EffectivePrice: in.EffectivePrice, DiscountPercent: in.DiscountPercent,
+		DiscountLabel: in.DiscountLabel, Clearance: in.Clearance, Closeout: in.Closeout,
 	}
 }
 
@@ -233,6 +365,8 @@ func ProductVariantToProto(in *domain.ProductVariant) *servicepb.ProductVariant 
 		Size: in.Size, Color: in.Color, Sku: in.SKU, Price: in.Price,
 		Active: in.Active, InventoryCount: in.InventoryCount,
 		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+		EffectivePrice: in.EffectivePrice, DiscountPercent: in.DiscountPercent,
+		DiscountLabel: in.DiscountLabel, Clearance: in.Clearance, Closeout: in.Closeout,
 	}
 }
 
@@ -352,6 +486,11 @@ func CartItemFromProto(in *servicepb.CartItem) *domain.CartItem {
 		UpdatedAt:        in.UpdatedAt,
 		ProductVariantID: in.ProductVariantId,
 		ProductVariant:   ProductVariantFromProto(in.ProductVariant),
+		ListPrice:        in.ListPrice,
+		DiscountPercent:  in.DiscountPercent,
+		DiscountLabel:    in.DiscountLabel,
+		Clearance:        in.Clearance,
+		Closeout:         in.Closeout,
 	}
 }
 
@@ -375,6 +514,11 @@ func CartItemToProto(in *domain.CartItem) *servicepb.CartItem {
 		UpdatedAt:        in.UpdatedAt,
 		ProductVariantId: in.ProductVariantID,
 		ProductVariant:   ProductVariantToProto(in.ProductVariant),
+		ListPrice:        in.ListPrice,
+		DiscountPercent:  in.DiscountPercent,
+		DiscountLabel:    in.DiscountLabel,
+		Clearance:        in.Clearance,
+		Closeout:         in.Closeout,
 	}
 }
 
