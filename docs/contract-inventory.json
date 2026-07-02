@@ -734,7 +734,7 @@
       "package": "customer",
       "proto_path": "packages/ceerat-contracts/proto/customer/customer.proto",
       "service": {
-        "domain": "Customer profiles, ownership, and customer-to-user assignment",
+        "domain": "Customer profiles, explicit shipping/billing addresses, ownership, and customer-to-user assignment",
         "full_service": "customer.CustomerService",
         "name": "CustomerService",
         "rpcs": [
@@ -1989,7 +1989,7 @@
       "package": "order",
       "proto_path": "packages/ceerat-contracts/proto/order/order.proto",
       "service": {
-        "domain": "Orders, order status, order line items, and customer self-service order flows",
+        "domain": "Orders, checkout, address snapshots, tax, shipping, coupons, pricing rules, payment setup, and customer self-service flows",
         "full_service": "order.OrderManager",
         "name": "OrderManager",
         "rpcs": [
