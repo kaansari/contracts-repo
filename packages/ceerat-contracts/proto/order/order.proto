@@ -18,6 +18,12 @@ service OrderManager {
   rpc AddServiceToOrder(AddServiceToOrderRequest) returns (AddServiceToOrderResponse) {}
   rpc RemoveServiceFromOrder(RemoveServiceFromOrderRequest) returns (RemoveServiceFromOrderResponse) {}
   rpc CheckoutMyCart(CheckoutMyCartRequest) returns (CreateOrderResponse) {}
+  rpc QuoteMyCartPricing(QuoteMyCartPricingRequest) returns (OrderPricingQuoteResponse) {}
+  rpc RepriceOrder(RepriceOrderRequest) returns (CreateOrderResponse) {}
+  rpc CreateOrderPricingRule(OrderPricingRuleRequest) returns (OrderPricingRuleResponse) {}
+  rpc ListOrderPricingRules(ListOrderPricingRulesRequest) returns (ListOrderPricingRulesResponse) {}
+  rpc UpdateOrderPricingRule(OrderPricingRuleRequest) returns (OrderPricingRuleResponse) {}
+  rpc DeleteOrderPricingRule(DeleteOrderPricingRuleRequest) returns (DeleteOrderPricingRuleResponse) {}
   rpc CreatePaymentSession(CreatePaymentSessionRequest) returns (PaymentSessionResponse) {}
   rpc GetMyPaymentSession(GetPaymentSessionRequest) returns (PaymentSessionResponse) {}
 }
@@ -41,6 +47,16 @@ message Order {
   string updated_at = 16;
   repeated OrderProduct products = 17;
   string payment_status = 18;
+  double discount = 19;
+  double shipping = 20;
+  string discount_code = 21;
+  string discount_label = 22;
+  string shipping_method_id = 23;
+  string shipping_label = 24;
+  double tax_rate = 25;
+  string tax_label = 26;
+  customer.Address shipping_address = 27;
+  customer.Address billing_address = 28;
 }
 
 message OrderProduct {
@@ -186,6 +202,89 @@ message RemoveServiceFromOrderResponse {
 message CheckoutMyCartRequest {
   string idempotency_key = 1;
   string notes = 2;
+  string shipping_method_id = 3;
+  string discount_code = 4;
+}
+
+message OrderPricingRule {
+  string id = 1;
+  string name = 2;
+  string kind = 3;
+  string code = 4;
+  string calculation = 5;
+  double value = 6;
+  double minimum_subtotal = 7;
+  double free_shipping_over = 8;
+  string country = 9;
+  string state = 10;
+  bool taxable_shipping = 11;
+  bool active = 12;
+  string starts_at = 13;
+  string ends_at = 14;
+  int32 priority = 15;
+  string created_at = 16;
+  string updated_at = 17;
+}
+
+message OrderPricingSummary {
+  double subtotal = 1;
+  double discount = 2;
+  double shipping = 3;
+  double taxable_amount = 4;
+  double tax = 5;
+  double total = 6;
+  string discount_code = 7;
+  string discount_label = 8;
+  string shipping_method_id = 9;
+  string shipping_label = 10;
+  double tax_rate = 11;
+  string tax_label = 12;
+}
+
+message QuoteMyCartPricingRequest {
+  string shipping_method_id = 1;
+  string discount_code = 2;
+}
+
+message OrderPricingQuoteResponse {
+  OrderPricingSummary pricing = 1;
+  repeated OrderPricingRule shipping_methods = 2;
+  repeated Error errors = 3;
+}
+
+message RepriceOrderRequest {
+  string order_id = 1;
+  string user_id = 2;
+  string shipping_method_id = 3;
+  string discount_code = 4;
+}
+
+message OrderPricingRuleRequest {
+  OrderPricingRule rule = 1;
+}
+
+message OrderPricingRuleResponse {
+  OrderPricingRule rule = 1;
+  repeated Error errors = 2;
+}
+
+message ListOrderPricingRulesRequest {
+  string kind = 1;
+  bool active_only = 2;
+}
+
+message ListOrderPricingRulesResponse {
+  repeated OrderPricingRule rules = 1;
+  repeated Error errors = 2;
+}
+
+message DeleteOrderPricingRuleRequest {
+  string id = 1;
+}
+
+message DeleteOrderPricingRuleResponse {
+  bool deleted = 1;
+  repeated Error errors = 2;
 }
 
 message PaymentSession {

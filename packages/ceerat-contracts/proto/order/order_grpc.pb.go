@@ -32,6 +32,12 @@ type OrderManagerClient interface {
 	AddServiceToOrder(ctx context.Context, in *AddServiceToOrderRequest, opts ...grpc.CallOption) (*AddServiceToOrderResponse, error)
 	RemoveServiceFromOrder(ctx context.Context, in *RemoveServiceFromOrderRequest, opts ...grpc.CallOption) (*RemoveServiceFromOrderResponse, error)
 	CheckoutMyCart(ctx context.Context, in *CheckoutMyCartRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	QuoteMyCartPricing(ctx context.Context, in *QuoteMyCartPricingRequest, opts ...grpc.CallOption) (*OrderPricingQuoteResponse, error)
+	RepriceOrder(ctx context.Context, in *RepriceOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	CreateOrderPricingRule(ctx context.Context, in *OrderPricingRuleRequest, opts ...grpc.CallOption) (*OrderPricingRuleResponse, error)
+	ListOrderPricingRules(ctx context.Context, in *ListOrderPricingRulesRequest, opts ...grpc.CallOption) (*ListOrderPricingRulesResponse, error)
+	UpdateOrderPricingRule(ctx context.Context, in *OrderPricingRuleRequest, opts ...grpc.CallOption) (*OrderPricingRuleResponse, error)
+	DeleteOrderPricingRule(ctx context.Context, in *DeleteOrderPricingRuleRequest, opts ...grpc.CallOption) (*DeleteOrderPricingRuleResponse, error)
 	CreatePaymentSession(ctx context.Context, in *CreatePaymentSessionRequest, opts ...grpc.CallOption) (*PaymentSessionResponse, error)
 	GetMyPaymentSession(ctx context.Context, in *GetPaymentSessionRequest, opts ...grpc.CallOption) (*PaymentSessionResponse, error)
 }
@@ -134,6 +140,60 @@ func (c *orderManagerClient) CheckoutMyCart(ctx context.Context, in *CheckoutMyC
 	return out, nil
 }
 
+func (c *orderManagerClient) QuoteMyCartPricing(ctx context.Context, in *QuoteMyCartPricingRequest, opts ...grpc.CallOption) (*OrderPricingQuoteResponse, error) {
+	out := new(OrderPricingQuoteResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/QuoteMyCartPricing", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) RepriceOrder(ctx context.Context, in *RepriceOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
+	out := new(CreateOrderResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/RepriceOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) CreateOrderPricingRule(ctx context.Context, in *OrderPricingRuleRequest, opts ...grpc.CallOption) (*OrderPricingRuleResponse, error) {
+	out := new(OrderPricingRuleResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/CreateOrderPricingRule", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) ListOrderPricingRules(ctx context.Context, in *ListOrderPricingRulesRequest, opts ...grpc.CallOption) (*ListOrderPricingRulesResponse, error) {
+	out := new(ListOrderPricingRulesResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/ListOrderPricingRules", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) UpdateOrderPricingRule(ctx context.Context, in *OrderPricingRuleRequest, opts ...grpc.CallOption) (*OrderPricingRuleResponse, error) {
+	out := new(OrderPricingRuleResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/UpdateOrderPricingRule", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderManagerClient) DeleteOrderPricingRule(ctx context.Context, in *DeleteOrderPricingRuleRequest, opts ...grpc.CallOption) (*DeleteOrderPricingRuleResponse, error) {
+	out := new(DeleteOrderPricingRuleResponse)
+	err := c.cc.Invoke(ctx, "/order.OrderManager/DeleteOrderPricingRule", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderManagerClient) CreatePaymentSession(ctx context.Context, in *CreatePaymentSessionRequest, opts ...grpc.CallOption) (*PaymentSessionResponse, error) {
 	out := new(PaymentSessionResponse)
 	err := c.cc.Invoke(ctx, "/order.OrderManager/CreatePaymentSession", in, out, opts...)
@@ -166,6 +226,12 @@ type OrderManagerServer interface {
 	AddServiceToOrder(context.Context, *AddServiceToOrderRequest) (*AddServiceToOrderResponse, error)
 	RemoveServiceFromOrder(context.Context, *RemoveServiceFromOrderRequest) (*RemoveServiceFromOrderResponse, error)
 	CheckoutMyCart(context.Context, *CheckoutMyCartRequest) (*CreateOrderResponse, error)
+	QuoteMyCartPricing(context.Context, *QuoteMyCartPricingRequest) (*OrderPricingQuoteResponse, error)
+	RepriceOrder(context.Context, *RepriceOrderRequest) (*CreateOrderResponse, error)
+	CreateOrderPricingRule(context.Context, *OrderPricingRuleRequest) (*OrderPricingRuleResponse, error)
+	ListOrderPricingRules(context.Context, *ListOrderPricingRulesRequest) (*ListOrderPricingRulesResponse, error)
+	UpdateOrderPricingRule(context.Context, *OrderPricingRuleRequest) (*OrderPricingRuleResponse, error)
+	DeleteOrderPricingRule(context.Context, *DeleteOrderPricingRuleRequest) (*DeleteOrderPricingRuleResponse, error)
 	CreatePaymentSession(context.Context, *CreatePaymentSessionRequest) (*PaymentSessionResponse, error)
 	GetMyPaymentSession(context.Context, *GetPaymentSessionRequest) (*PaymentSessionResponse, error)
 	mustEmbedUnimplementedOrderManagerServer()
@@ -204,6 +270,24 @@ func (UnimplementedOrderManagerServer) RemoveServiceFromOrder(context.Context, *
 }
 func (UnimplementedOrderManagerServer) CheckoutMyCart(context.Context, *CheckoutMyCartRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckoutMyCart not implemented")
+}
+func (UnimplementedOrderManagerServer) QuoteMyCartPricing(context.Context, *QuoteMyCartPricingRequest) (*OrderPricingQuoteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuoteMyCartPricing not implemented")
+}
+func (UnimplementedOrderManagerServer) RepriceOrder(context.Context, *RepriceOrderRequest) (*CreateOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RepriceOrder not implemented")
+}
+func (UnimplementedOrderManagerServer) CreateOrderPricingRule(context.Context, *OrderPricingRuleRequest) (*OrderPricingRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOrderPricingRule not implemented")
+}
+func (UnimplementedOrderManagerServer) ListOrderPricingRules(context.Context, *ListOrderPricingRulesRequest) (*ListOrderPricingRulesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrderPricingRules not implemented")
+}
+func (UnimplementedOrderManagerServer) UpdateOrderPricingRule(context.Context, *OrderPricingRuleRequest) (*OrderPricingRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrderPricingRule not implemented")
+}
+func (UnimplementedOrderManagerServer) DeleteOrderPricingRule(context.Context, *DeleteOrderPricingRuleRequest) (*DeleteOrderPricingRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteOrderPricingRule not implemented")
 }
 func (UnimplementedOrderManagerServer) CreatePaymentSession(context.Context, *CreatePaymentSessionRequest) (*PaymentSessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePaymentSession not implemented")
@@ -404,6 +488,114 @@ func _OrderManager_CheckoutMyCart_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderManager_QuoteMyCartPricing_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuoteMyCartPricingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).QuoteMyCartPricing(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/QuoteMyCartPricing",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).QuoteMyCartPricing(ctx, req.(*QuoteMyCartPricingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_RepriceOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RepriceOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).RepriceOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/RepriceOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).RepriceOrder(ctx, req.(*RepriceOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_CreateOrderPricingRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderPricingRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).CreateOrderPricingRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/CreateOrderPricingRule",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).CreateOrderPricingRule(ctx, req.(*OrderPricingRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_ListOrderPricingRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOrderPricingRulesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).ListOrderPricingRules(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/ListOrderPricingRules",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).ListOrderPricingRules(ctx, req.(*ListOrderPricingRulesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_UpdateOrderPricingRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderPricingRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).UpdateOrderPricingRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/UpdateOrderPricingRule",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).UpdateOrderPricingRule(ctx, req.(*OrderPricingRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderManager_DeleteOrderPricingRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteOrderPricingRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderManagerServer).DeleteOrderPricingRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderManager/DeleteOrderPricingRule",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderManagerServer).DeleteOrderPricingRule(ctx, req.(*DeleteOrderPricingRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderManager_CreatePaymentSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreatePaymentSessionRequest)
 	if err := dec(in); err != nil {
@@ -486,6 +678,30 @@ var OrderManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckoutMyCart",
 			Handler:    _OrderManager_CheckoutMyCart_Handler,
+		},
+		{
+			MethodName: "QuoteMyCartPricing",
+			Handler:    _OrderManager_QuoteMyCartPricing_Handler,
+		},
+		{
+			MethodName: "RepriceOrder",
+			Handler:    _OrderManager_RepriceOrder_Handler,
+		},
+		{
+			MethodName: "CreateOrderPricingRule",
+			Handler:    _OrderManager_CreateOrderPricingRule_Handler,
+		},
+		{
+			MethodName: "ListOrderPricingRules",
+			Handler:    _OrderManager_ListOrderPricingRules_Handler,
+		},
+		{
+			MethodName: "UpdateOrderPricingRule",
+			Handler:    _OrderManager_UpdateOrderPricingRule_Handler,
+		},
+		{
+			MethodName: "DeleteOrderPricingRule",
+			Handler:    _OrderManager_DeleteOrderPricingRule_Handler,
 		},
 		{
 			MethodName: "CreatePaymentSession",

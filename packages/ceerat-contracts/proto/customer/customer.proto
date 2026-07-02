@@ -44,6 +44,8 @@ message Customer {
 
   string created_at = 9;
   string updated_at = 10;
+  Address shipping_address = 11;
+  Address billing_address = 12;
 }
 
 message CreateCustomerRequest {
@@ -75,6 +77,8 @@ message UpdateMyCustomerProfileRequest {
   string email = 3;
   string phone = 4;
   Address address = 5;
+  Address shipping_address = 6;
+  Address billing_address = 7;
 }
 
 message DeleteCustomerRequest {

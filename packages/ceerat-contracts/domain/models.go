@@ -25,16 +25,18 @@ type Address struct {
 
 // Customer is the shared business representation of a customer assigned to a user.
 type Customer struct {
-	ID        string
-	FirstName string
-	LastName  string
-	Email     string
-	Phone     string
-	Address   *Address
-	UserID    string
-	User      *User
-	CreatedAt string
-	UpdatedAt string
+	ID              string
+	FirstName       string
+	LastName        string
+	Email           string
+	Phone           string
+	Address         *Address
+	ShippingAddress *Address
+	BillingAddress  *Address
+	UserID          string
+	User            *User
+	CreatedAt       string
+	UpdatedAt       string
 }
 
 // Service is the shared business representation of a customer-orderable service.
@@ -270,24 +272,69 @@ type CartItem struct {
 
 // Order groups one or more services for a customer.
 type Order struct {
-	ID            string
-	CustomerID    string
-	UserID        string
-	OrderNumber   string
-	Status        string
-	ScheduleDate  string
-	StartDate     string
-	DueDate       string
-	Subtotal      float64
-	Tax           float64
-	Total         float64
-	Notes         string
-	Customer      *Customer
-	Services      []*OrderService
-	Products      []*OrderProduct
-	PaymentStatus string
-	CreatedAt     string
-	UpdatedAt     string
+	ID               string
+	CustomerID       string
+	UserID           string
+	OrderNumber      string
+	Status           string
+	ScheduleDate     string
+	StartDate        string
+	DueDate          string
+	Subtotal         float64
+	Discount         float64
+	Tax              float64
+	Shipping         float64
+	Total            float64
+	DiscountCode     string
+	DiscountLabel    string
+	ShippingMethodID string
+	ShippingLabel    string
+	TaxRate          float64
+	TaxLabel         string
+	ShippingAddress  *Address
+	BillingAddress   *Address
+	Notes            string
+	Customer         *Customer
+	Services         []*OrderService
+	Products         []*OrderProduct
+	PaymentStatus    string
+	CreatedAt        string
+	UpdatedAt        string
+}
+
+type OrderPricingRule struct {
+	ID               string
+	Name             string
+	Kind             string
+	Code             string
+	Calculation      string
+	Value            float64
+	MinimumSubtotal  float64
+	FreeShippingOver float64
+	Country          string
+	State            string
+	TaxableShipping  bool
+	Active           bool
+	StartsAt         string
+	EndsAt           string
+	Priority         int32
+	CreatedAt        string
+	UpdatedAt        string
+}
+
+type OrderPricingSummary struct {
+	Subtotal         float64
+	Discount         float64
+	Shipping         float64
+	TaxableAmount    float64
+	Tax              float64
+	Total            float64
+	DiscountCode     string
+	DiscountLabel    string
+	ShippingMethodID string
+	ShippingLabel    string
+	TaxRate          float64
+	TaxLabel         string
 }
 
 type OrderProduct struct {

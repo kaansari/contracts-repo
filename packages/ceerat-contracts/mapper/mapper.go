@@ -81,16 +81,18 @@ func CustomerFromProto(in *customerpb.Customer) *domain.Customer {
 		return nil
 	}
 	return &domain.Customer{
-		ID:        in.Id,
-		FirstName: in.FirstName,
-		LastName:  in.LastName,
-		Email:     in.Email,
-		Phone:     in.Phone,
-		Address:   AddressFromProto(in.Address),
-		UserID:    in.UserId,
-		User:      UserFromProto(in.User),
-		CreatedAt: in.CreatedAt,
-		UpdatedAt: in.UpdatedAt,
+		ID:              in.Id,
+		FirstName:       in.FirstName,
+		LastName:        in.LastName,
+		Email:           in.Email,
+		Phone:           in.Phone,
+		Address:         AddressFromProto(in.Address),
+		ShippingAddress: AddressFromProto(in.ShippingAddress),
+		BillingAddress:  AddressFromProto(in.BillingAddress),
+		UserID:          in.UserId,
+		User:            UserFromProto(in.User),
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
 	}
 }
 
@@ -99,16 +101,18 @@ func CustomerToProto(in *domain.Customer) *customerpb.Customer {
 		return nil
 	}
 	return &customerpb.Customer{
-		Id:        in.ID,
-		FirstName: in.FirstName,
-		LastName:  in.LastName,
-		Email:     in.Email,
-		Phone:     in.Phone,
-		Address:   AddressToProto(in.Address),
-		UserId:    in.UserID,
-		User:      UserToProto(in.User),
-		CreatedAt: in.CreatedAt,
-		UpdatedAt: in.UpdatedAt,
+		Id:              in.ID,
+		FirstName:       in.FirstName,
+		LastName:        in.LastName,
+		Email:           in.Email,
+		Phone:           in.Phone,
+		Address:         AddressToProto(in.Address),
+		ShippingAddress: AddressToProto(in.ShippingAddress),
+		BillingAddress:  AddressToProto(in.BillingAddress),
+		UserId:          in.UserID,
+		User:            UserToProto(in.User),
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
 	}
 }
 
@@ -543,24 +547,34 @@ func OrderFromProto(in *orderpb.Order) *domain.Order {
 		return nil
 	}
 	return &domain.Order{
-		ID:            in.Id,
-		CustomerID:    in.CustomerId,
-		UserID:        in.UserId,
-		OrderNumber:   in.OrderNumber,
-		Status:        in.Status,
-		ScheduleDate:  in.ScheduleDate,
-		StartDate:     in.StartDate,
-		DueDate:       in.DueDate,
-		Subtotal:      in.Subtotal,
-		Tax:           in.Tax,
-		Total:         in.Total,
-		Notes:         in.Notes,
-		Customer:      CustomerFromProto(in.Customer),
-		Services:      OrderServicesFromProto(in.Services),
-		Products:      OrderProductsFromProto(in.Products),
-		PaymentStatus: in.PaymentStatus,
-		CreatedAt:     in.CreatedAt,
-		UpdatedAt:     in.UpdatedAt,
+		ID:               in.Id,
+		CustomerID:       in.CustomerId,
+		UserID:           in.UserId,
+		OrderNumber:      in.OrderNumber,
+		Status:           in.Status,
+		ScheduleDate:     in.ScheduleDate,
+		StartDate:        in.StartDate,
+		DueDate:          in.DueDate,
+		Subtotal:         in.Subtotal,
+		Discount:         in.Discount,
+		Tax:              in.Tax,
+		Shipping:         in.Shipping,
+		Total:            in.Total,
+		DiscountCode:     in.DiscountCode,
+		DiscountLabel:    in.DiscountLabel,
+		ShippingMethodID: in.ShippingMethodId,
+		ShippingLabel:    in.ShippingLabel,
+		TaxRate:          in.TaxRate,
+		TaxLabel:         in.TaxLabel,
+		ShippingAddress:  AddressFromProto(in.ShippingAddress),
+		BillingAddress:   AddressFromProto(in.BillingAddress),
+		Notes:            in.Notes,
+		Customer:         CustomerFromProto(in.Customer),
+		Services:         OrderServicesFromProto(in.Services),
+		Products:         OrderProductsFromProto(in.Products),
+		PaymentStatus:    in.PaymentStatus,
+		CreatedAt:        in.CreatedAt,
+		UpdatedAt:        in.UpdatedAt,
 	}
 }
 
@@ -569,24 +583,83 @@ func OrderToProto(in *domain.Order) *orderpb.Order {
 		return nil
 	}
 	return &orderpb.Order{
-		Id:            in.ID,
-		CustomerId:    in.CustomerID,
-		UserId:        in.UserID,
-		OrderNumber:   in.OrderNumber,
-		Status:        in.Status,
-		ScheduleDate:  in.ScheduleDate,
-		StartDate:     in.StartDate,
-		DueDate:       in.DueDate,
-		Subtotal:      in.Subtotal,
-		Tax:           in.Tax,
-		Total:         in.Total,
-		Notes:         in.Notes,
-		Customer:      CustomerToProto(in.Customer),
-		Services:      OrderServicesToProto(in.Services),
-		Products:      OrderProductsToProto(in.Products),
-		PaymentStatus: in.PaymentStatus,
-		CreatedAt:     in.CreatedAt,
-		UpdatedAt:     in.UpdatedAt,
+		Id:               in.ID,
+		CustomerId:       in.CustomerID,
+		UserId:           in.UserID,
+		OrderNumber:      in.OrderNumber,
+		Status:           in.Status,
+		ScheduleDate:     in.ScheduleDate,
+		StartDate:        in.StartDate,
+		DueDate:          in.DueDate,
+		Subtotal:         in.Subtotal,
+		Discount:         in.Discount,
+		Tax:              in.Tax,
+		Shipping:         in.Shipping,
+		Total:            in.Total,
+		DiscountCode:     in.DiscountCode,
+		DiscountLabel:    in.DiscountLabel,
+		ShippingMethodId: in.ShippingMethodID,
+		ShippingLabel:    in.ShippingLabel,
+		TaxRate:          in.TaxRate,
+		TaxLabel:         in.TaxLabel,
+		ShippingAddress:  AddressToProto(in.ShippingAddress),
+		BillingAddress:   AddressToProto(in.BillingAddress),
+		Notes:            in.Notes,
+		Customer:         CustomerToProto(in.Customer),
+		Services:         OrderServicesToProto(in.Services),
+		Products:         OrderProductsToProto(in.Products),
+		PaymentStatus:    in.PaymentStatus,
+		CreatedAt:        in.CreatedAt,
+		UpdatedAt:        in.UpdatedAt,
+	}
+}
+
+func OrderPricingRuleFromProto(in *orderpb.OrderPricingRule) *domain.OrderPricingRule {
+	if in == nil {
+		return nil
+	}
+	return &domain.OrderPricingRule{
+		ID: in.Id, Name: in.Name, Kind: in.Kind, Code: in.Code,
+		Calculation: in.Calculation, Value: in.Value,
+		MinimumSubtotal: in.MinimumSubtotal, FreeShippingOver: in.FreeShippingOver,
+		Country: in.Country, State: in.State, TaxableShipping: in.TaxableShipping,
+		Active: in.Active, StartsAt: in.StartsAt, EndsAt: in.EndsAt,
+		Priority: in.Priority, CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func OrderPricingRuleToProto(in *domain.OrderPricingRule) *orderpb.OrderPricingRule {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.OrderPricingRule{
+		Id: in.ID, Name: in.Name, Kind: in.Kind, Code: in.Code,
+		Calculation: in.Calculation, Value: in.Value,
+		MinimumSubtotal: in.MinimumSubtotal, FreeShippingOver: in.FreeShippingOver,
+		Country: in.Country, State: in.State, TaxableShipping: in.TaxableShipping,
+		Active: in.Active, StartsAt: in.StartsAt, EndsAt: in.EndsAt,
+		Priority: in.Priority, CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+	}
+}
+
+func OrderPricingRulesToProto(in []*domain.OrderPricingRule) []*orderpb.OrderPricingRule {
+	out := make([]*orderpb.OrderPricingRule, 0, len(in))
+	for _, rule := range in {
+		out = append(out, OrderPricingRuleToProto(rule))
+	}
+	return out
+}
+
+func OrderPricingSummaryToProto(in *domain.OrderPricingSummary) *orderpb.OrderPricingSummary {
+	if in == nil {
+		return nil
+	}
+	return &orderpb.OrderPricingSummary{
+		Subtotal: in.Subtotal, Discount: in.Discount, Shipping: in.Shipping,
+		TaxableAmount: in.TaxableAmount, Tax: in.Tax, Total: in.Total,
+		DiscountCode: in.DiscountCode, DiscountLabel: in.DiscountLabel,
+		ShippingMethodId: in.ShippingMethodID, ShippingLabel: in.ShippingLabel,
+		TaxRate: in.TaxRate, TaxLabel: in.TaxLabel,
 	}
 }
 
